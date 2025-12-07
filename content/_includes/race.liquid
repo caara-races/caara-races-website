@@ -1,0 +1,15 @@
+---
+layout: base.liquid
+---
+
+<p>{{ page.date | date: "%b %d (%a)", "UTC"}}</p>
+
+<div class="cover">
+{% if image %}
+<img src="{{ image }}">
+{% endif %}
+</div>
+
+<div class="sheet">
+<iframe style="height: 890px; width: 650px;" src="{{ sheet }}"></iframe>
+</div>

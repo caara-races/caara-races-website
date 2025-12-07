@@ -1,0 +1,59 @@
+---
+permalink: /css/custom.css
+layout: raw
+---
+
+body {
+  max-width: 1024px;
+}
+
+#header {
+	height: 200px;
+	border: thin solid black;
+
+  background-image: url({{ "/image/race-background.png" | htmlBaseUrl }});
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+  font-size: 36pt;
+  font-weight: bold;
+  color: white;
+
+  padding: 1ex;
+
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+#footer {
+	border-top: thin solid black;
+}
+
+#navigation ul {
+	list-style-type: none;
+	margin: 0;
+	background-color: #4078c0;
+	padding: 1ex;
+}
+
+#navigation ul li {
+	display: inline;
+	border-left: thin solid white;
+	padding: 5px;
+}
+
+#navigation ul li:first-child {
+	border: none;
+}
+
+#navigation ul li a {
+	color: white;
+	text-decoration: none;
+}
+
+@media print {
+  .noprint {
+    display: none;
+  }
+}
