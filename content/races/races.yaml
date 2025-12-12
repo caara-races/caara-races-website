@@ -1,13 +1,13 @@
 races:
   - title: Marblehead Half Marathon
     sheet: https://docs.google.com/spreadsheets/d/18KnWOi8yuT6gY05C9ayRyOeG40r-zbre4FBj6aA0vhk/htmlembed?authuser=0
-    image: marblehead/cover.jpg
+    image: /image/race/marblehead.jpg
     date: 2026-04-12
     start_time: 9:00
     location: Marblehead, MA
   - title: Fool's Dual Half Marathon
     sheet: https://docs.google.com/spreadsheets/d/1R1KS2LwOrlsyDlQ03bne81hdAZNHMgpIbHciwGzbT28/htmlembed?authuser=0&amp;gid=923758388
-    image: foolsdual/cover.png
+    image: /image/race/foolsdual.png
     date: 2026-03-28
     start_time: 9:00
     location: Gloucester, MA
