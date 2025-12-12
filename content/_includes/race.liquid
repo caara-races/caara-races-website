@@ -2,15 +2,19 @@
 layout: base.liquid
 ---
 
-<div class="cover">
-{% if race.image %}
+<div class="race-cover noprint"> {% if race.image %}
 <img src="{{ race.image }}">
 {% endif %}
 </div>
 
-<h2>When &amp; Where</h2>
-
-<p>{{ race.date | date: "%b %d, %Y (%a)", "UTC"}} in {{ race.location }}</p>
+<table>
+  <tr>
+    <td><b>When</b></td><td>{{ race.date | date: "%b %d, %Y (%a)" }}</td>
+  </tr>
+  <tr>
+    <td><b>Where</b></td><td>{{ race.location }}</td>
+  </tr>
+</table>
 
 <p class="noprint"><a href="race.ics">Add to calendar</a></p>
 
