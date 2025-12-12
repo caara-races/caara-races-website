@@ -56,6 +56,11 @@ export default function (eleventyConfig) {
 		(callsign) => `[${callsign}](https://www.qrz.com/db/${callsign})`,
 	);
 
+	eleventyConfig.addFilter("lastModified", (filePath) => {
+		const stats = fs.statSync(filePath);
+		return stats.mtime;
+	});
+
 	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));
 
 	eleventyConfig.addFilter("dirExists", (dirPath) => {
