@@ -2,14 +2,22 @@
 layout: base.liquid
 ---
 
-<p>{{ page.date | date: "%b %d (%a)", "UTC"}}</p>
-
 <div class="cover">
-{% if image %}
-<img src="{{ image }}">
+{% if race.image %}
+<img src="/races/{{ race.image }}">
 {% endif %}
 </div>
 
+<h2>When &amp; Where</h2>
+
+<p>{{ race.date | date: "%b %d, %Y (%a)", "UTC"}} in {{ race.location }}</p>
+
+<h2>Staffing</h2>
+
+{% if race.sheet %}
 <div class="sheet">
-<iframe style="height: 890px; width: 650px;" src="{{ sheet }}"></iframe>
+<iframe style="height: 890px; width: 650px;" src="{{ race.sheet }}"></iframe>
 </div>
+{% else %}
+  <p>Race details are not available at this time.</p>
+{% endif %}
