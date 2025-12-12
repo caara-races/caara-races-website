@@ -1,9 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
+import { v5 as uuidv5 } from "uuid";
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import pluginTOC from "eleventy-plugin-toc";
 import YAML from "yaml";
+
+// This is used as the uuid v5 namespace by the uuid filter
+const CAARA_RACES_NS = "7bdc4d20-17a0-466f-996a-4dea5666969b";
 
 // Helper function for configuring passthrough copy by extension
 function passthroughCopyExtension(eleventyConfig, ext) {
@@ -59,6 +63,10 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter("lastModified", (filePath) => {
 		const stats = fs.statSync(filePath);
 		return stats.mtime;
+	});
+	eleventyConfig.addFilter("uuid", (s) => {
+		const u = uuidv5(s, CAARA_RACES_NS);
+		return u;
 	});
 
 	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));

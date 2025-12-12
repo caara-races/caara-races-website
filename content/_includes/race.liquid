@@ -12,6 +12,8 @@ layout: base.liquid
 
 <p>{{ race.date | date: "%b %d, %Y (%a)", "UTC"}} in {{ race.location }}</p>
 
+<p><a href="race.ics">Add to calendar</a></p>
+
 <h2>Staffing</h2>
 
 {% if race.sheet %}

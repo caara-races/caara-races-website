@@ -1,0 +1,27 @@
+---
+layout: raw
+permalink: /races/races.ics
+---
+{% assign sorted_races = races | sort: 'date' -%}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CAARA Race Schedule//caara.org//
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALDESC:Half Marathon and Marathon Schedule
+X-WR-CALNAME:CAARA Race Schedule 2026
+{{ ical.tz_us_eastern -}}
+{% for race in sorted_races -%}
+BEGIN:VEVENT
+SUMMARY:{{ race.title }}
+DTSTART;TZID=US/Eastern:{{ race.date | date: "%Y%m%dT%H%M%S"}}
+DTEND;TZID=US/Eastern:{{ race.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S"}}
+DTSTAMP;TZID=US/Eastern:{{ "now" | date: "%Y%m%dT%H%M%S" }}
+UID:{{ race.date | date: "%Y-%m-%d" | append: race.title | uuid }}@caara-schedule
+DESCRIPTION:{{ race.title }}\nWhen: {{ race.date | date: "%b %d, %Y" }}\n
+  Location: {{ race.location }}\n
+  Start time: {{ race.date | date: "%H:%M %p"}}
+LOCATION:{{ race.location }}
+END:VEVENT
+{% endfor -%}
+END:VCALENDAR
