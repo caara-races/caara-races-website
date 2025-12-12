@@ -1,5 +1,8 @@
-import pluginTOC from "eleventy-plugin-toc";
+import fs from "node:fs";
+import path from "node:path";
+
 import { HtmlBasePlugin } from "@11ty/eleventy";
+import pluginTOC from "eleventy-plugin-toc";
 import YAML from "yaml";
 
 // Helper function for configuring passthrough copy by extension
@@ -54,6 +57,18 @@ export default function (eleventyConfig) {
 	);
 
 	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));
+
+	eleventyConfig.addFilter("dirExists", (dirPath) => {
+		// Resolve the path relative to the project root (or input dir, as needed)
+		const absolutePath = path.join(eleventyConfig.dir.input, dirPath);
+
+		try {
+			const stats = fs.statSync(absolutePath);
+			return stats.isDirectory(); // Returns true if it is a directory
+		} catch (e) {
+			return false; // If an error occurs (e.g., directory doesn't exist), return false
+		}
+	});
 
 	return {
 		dir: {
