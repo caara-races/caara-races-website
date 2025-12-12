@@ -33,6 +33,7 @@ jobs:
       - name: Build pages
         run: |
           npm run build
+          find _site -type f -print
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
