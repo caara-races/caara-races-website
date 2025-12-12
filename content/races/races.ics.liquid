@@ -19,8 +19,8 @@ DTEND;TZID=US/Eastern:{{ race.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H
 DTSTAMP;TZID=US/Eastern:{{ "now" | date: "%Y%m%dT%H%M%S" }}
 UID:{{ race.date | date: "%Y-%m-%d" | append: race.title | uuid }}@caara-schedule
 DESCRIPTION:{{ race.title }}\nWhen: {{ race.date | date: "%b %d, %Y" }}\n
-  Location: {{ race.location }}\n
-  Start time: {{ race.date | date: "%H:%M %p"}}
+ Location: {{ race.location }}\n
+ Start time: {{ race.date | date: "%H:%M %p"}}
 LOCATION:{{ race.location }}
 END:VEVENT
 {% endfor -%}
