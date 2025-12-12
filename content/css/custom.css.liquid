@@ -3,74 +3,145 @@ permalink: /css/custom.css
 layout: raw
 ---
 
-body {
-  max-width: 1280px;
+:root {
+  /* Colors */
+  --color-primary: #4078c0;
+  --color-text: #000;
+  --color-bg: #fff;
+  --color-border: #000;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+
+  /* Typography */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-header: Lato, var(--font-system);
+  --font-size-header: min(48px, 4vw);
+
+  /* Layout */
+  --max-width: 1280px;
+  --header-height: 200px;
+  --border-width: 1px;
 }
 
-#header {
-	height: 200px;
-	border: thin solid black;
+body {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-sm);
+  font-family: var(--font-system);
+  color: var(--color-text);
+}
+
+/* Restore vertical spacing for content elements */
+p, ul, ol, blockquote, pre, table {
+  margin-block: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-block: 1.5rem;
+}
+
+/* Add indent for lists */
+ul, ol {
+  padding-inline-start: 2rem;
+}
+
+/* Remove top margin from first child to prevent extra space */
+:is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table):first-child {
+  margin-block-start: 0;
+}
+
+.race-schedule {
+  border-collapse: collapse;
+}
+.race-schedule th, .race-schedule td {
+  padding: 6px 12px;
+  border: thin solid black;
+}
+
+.race-schedule tbody tr:nth-child(odd) {
+  background-color: #f2f2f2; /* A light gray color */
+}
+
+.race-schedule tbody tr:nth-child(even) {
+  background-color: #fcfcfc; /* A white color */
+}
+
+.site-header {
+	height: var(--header-height);
+	border: var(--border-width) solid var(--color-border);
 
   background-image: url({{ "/image/race-background.png" | htmlBaseUrl }});
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 
-  font-family: Lato, sans-serif;
-  font-size: min(48px,4vw);
+  font-family: var(--font-header);
+  font-size: var(--font-size-header);
   font-weight: bold;
-  color: white;
+  color: var(--color-bg);
 
-  padding: 1ex;
+  padding: var(--space-sm);
 
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
+  /* Fallback text shadow for non-webkit browsers */
+  text-shadow:
+    -1px -1px 0 var(--color-text),
+    1px -1px 0 var(--color-text),
+    -1px 1px 0 var(--color-text),
+    1px 1px 0 var(--color-text);
+  /* Modern webkit stroke on top */
+  -webkit-text-stroke-width: var(--border-width);
+  -webkit-text-stroke-color: var(--color-text);
 }
 
 footer {
-	border-top: thin solid black;
+  margin-top: 2lh;
+	border-top: var(--border-width) solid var(--color-border);
 }
 
-main {
-}
-
-#navigation {
+.site-nav {
   display: flex;
-  background-color: #4078c0;
+  background-color: var(--color-primary);
 }
 
-#navigation ul {
+.site-nav ul {
 	list-style-type: none;
 	margin: 0;
-	background-color: #4078c0;
-	padding: 1ex;
+	background-color: var(--color-primary);
+	padding: var(--space-sm);
 }
 
-#navigation ul li {
+.site-nav ul li {
 	display: inline;
-	border-left: thin solid white;
+	border-left: var(--border-width) solid var(--color-bg);
 	padding: 5px;
 }
 
-#navigation ul li:first-child {
+.site-nav ul li:first-child {
 	border: none;
 }
 
-#navigation ul li a {
-	color: white;
+.site-nav ul li a {
+	color: var(--color-bg);
 	text-decoration: none;
 }
 
-#navigation .left {
+.nav-main {
   flex-grow: 1;
 }
 
-.left {
-  float: left;
+/* Modern focus indicators for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-.right {
-  float: right;
+.site-nav a:focus-visible {
+  outline-color: var(--color-bg);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 @media print {
@@ -78,11 +149,64 @@ main {
     display: none;
   }
 
-  #header {
-    font-size: 24pt;
+  /* Remove all link underlines in print */
+  a {
+    text-decoration: none;
   }
 
+  .site-header {
+    font-size: 24pt;
+    page-break-after: avoid;
+    border: 2px solid var(--color-border);
+  }
+
+  /* Better table printing */
   table {
     page-break-inside: auto;
+    width: 100%;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group; /* Repeat on each page */
+  }
+
+  /* Prevent orphaned headers */
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  /* Show URLs for external links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Don't show URLs for internal navigation */
+  .site-nav a[href^="http"]::after {
+    content: "";
+  }
+
+  /* Optimize spacing for print */
+  body {
+    padding: 0;
+  }
+
+  .page-content {
+    margin: 0;
+  }
+
+  .race-schedule {
+    border: none;
+  }
+
+  .race-schedule td,.race-schedule th {
+    border: none;
+    padding: 4px 2px;
   }
 }

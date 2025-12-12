@@ -5,12 +5,15 @@ layout: page
 weight: 10
 ---
 
-<p><a href="races.ics">Add to calendar</a></p>
+<p class="noprint"><a href="races.ics">Add to calendar</a></p>
 
 {% assign sorted_races = races | sort: 'date' %}
 
-<table id="race_schedule">
-<tr><th>#</th><th>Date</th><th>Description</th><th>Start time</th><th>Location</th></tr>
+<table class="race-schedule">
+<thead>
+<tr><th scope="col">#</th><th scope="col">Date</th><th scope="col">Description</th><th scope="col">Start time</th><th scope="col">Location</th></tr>
+</thead>
+<tbody>
 {% for race in sorted_races %}
   <tr>
     <td>{{ forloop.index }}</td>
@@ -20,5 +23,6 @@ weight: 10
     <td>{{ race.location }}</td>
   </tr>
 {% endfor %}
+</tbody>
 </table>
 
