@@ -12,7 +12,7 @@ layout: base.liquid
     <td><b>When</b></td><td>{{ race.date | date: "%b %d, %Y (%a)" }}</td>
   </tr>
   <tr>
-    <td><b>Where</b></td><td>{{ race.location }}</td>
+    <td><b>Where</b></td><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
   </tr>
 </table>
 

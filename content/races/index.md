@@ -20,7 +20,7 @@ weight: 10
     <td>{{ race.date | date: "%b %d (%a)" }}</td>
     <td><a href="/race/{{ race.title | slugify }}">{{ race.title }}</a></td>
     <td>{{ race.date | date: "%H:%M %p" }}</td>
-    <td>{{ race.location }}</td>
+    <td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
   </tr>
 {% endfor %}
 </tbody>
