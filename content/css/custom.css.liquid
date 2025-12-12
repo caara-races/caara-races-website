@@ -4,7 +4,7 @@ layout: raw
 ---
 
 body {
-  max-width: 1024px;
+  max-width: 1280px;
 }
 
 #header {
@@ -16,6 +16,7 @@ body {
 	background-position: center;
 	background-size: cover;
 
+  font-family: Lato, sans-serif;
   font-size: 36pt;
   font-weight: bold;
   color: white;
@@ -28,6 +29,15 @@ body {
 
 #footer {
 	border-top: thin solid black;
+}
+
+.clear {
+  clear: both;
+}
+
+#navigation {
+  display: flex;
+  background-color: #4078c0;
 }
 
 #navigation ul {
@@ -52,8 +62,28 @@ body {
 	text-decoration: none;
 }
 
+#navigation .left {
+  flex-grow: 1;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 @media print {
   .noprint {
     display: none;
+  }
+
+  #header {
+    font-size: 24pt;
+  }
+
+  table {
+    page-break-inside: auto;
   }
 }

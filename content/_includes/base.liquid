@@ -8,18 +8,25 @@
 </head>
 <body>
   <div id="header">
-    Cape Ann Amateur Radio Association (CAARA)
+    Cape Ann Amateur Radio Association<br/>
+    Race &amp; Event Support
   </div>
 
 {% assign pages = collections.page | sort: 'data.weight' %}
 
   <div id="navigation" class="noprint">
-    <ul>
+    <ul class="left noprint">
       {% for page in pages %}
         <li><a href="{{ page.url }}">{{ page.data.short_title | default: page.data.title }}</a></li>
       {% endfor %}
     </ul>
+
+    <ul class="right noprint">
+      <li><a href="https://caara.net/">CAARA</a></li>
+    </ul>
   </div>
+
+  <div class="clear"></div>
 
   <div id="title">
     <h1>{{ title }}</h1>
