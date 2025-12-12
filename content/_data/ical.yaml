@@ -1,7 +1,7 @@
 tz_us_eastern: |
   BEGIN:VTIMEZONE
-  TZID:US/Eastern
-  X-LIC-LOCATION:US/Eastern
+  TZID:America/New_York
+  X-LIC-LOCATION:America/New_York
   BEGIN:DAYLIGHT
   TZOFFSETFROM:-0500
   TZOFFSETTO:-0400
