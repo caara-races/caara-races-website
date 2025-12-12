@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="en-US">
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="description" content="Cape Ann Amateur Radio Association provides volunteer radio communication support for races and events in the Cape Ann region of Massachusetts.">
+  <meta name="theme-color" content="#4078c0">
+
+  <!-- Open Graph tags for social sharing -->
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="Cape Ann Amateur Radio Association provides volunteer radio communication support for races and events in the Cape Ann region of Massachusetts.">
+  <meta property="og:type" content="website">
+
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/css/normalize.css" />
   <link rel="stylesheet" href="/css/custom.css" />
 </head>
 <body>
-  <div id="header">
+  <header class="site-header">
     Cape Ann Amateur Radio Association<br/>
     Race &amp; Event Support
-  </div>
+  </header>
 
   {% assign pages = collections.page | sort: 'data.weight' -%}
-  <div id="navigation" class="noprint">
-    <ul class="left noprint">
+  <nav class="site-nav noprint" aria-label="Main navigation">
+    <ul class="nav-main">
       {% for page in pages %}
         <li><a href="{{ page.url }}">{{ page.data.short_title | default: page.data.title }}</a></li>
       {% endfor %}
     </ul>
 
-    <ul class="right noprint">
+    <ul class="nav-external">
       <li><a href="https://caara.net/">CAARA</a></li>
     </ul>
-  </div>
+  </nav>
 
-  <div id="title">
+  <div class="page-title">
     <h1>{{ title }}</h1>
   </div>
 
-  <main id="content">
+  <main class="page-content">
   {{ content }}
   </main>
 
