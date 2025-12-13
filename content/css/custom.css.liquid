@@ -64,7 +64,7 @@ blockquote {
   border-collapse: collapse;
 }
 .race-schedule th, .race-schedule td {
-  padding: 6px 12px;
+  padding: 10px;
   border: thin solid black;
 }
 
@@ -97,7 +97,9 @@ blockquote {
   color: var(--color-bg);
 
   padding: var(--space-sm);
+}
 
+unused {
   /* Fallback text shadow for non-webkit browsers */
   text-shadow:
     -1px -1px 0 var(--color-text),
@@ -169,7 +171,9 @@ footer {
   .site-header {
     font-size: 24pt;
     page-break-after: avoid;
-    border: 2px solid var(--color-border);
+    background-image: none;
+    border: none;
+    color: var(--color-text);
   }
 
   /* Better table printing */
@@ -193,11 +197,13 @@ footer {
   }
 
   /* Show URLs for external links */
+  /*
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
     color: #666;
   }
+  */
 
   /* Don't show URLs for internal navigation */
   .site-nav a[href^="http"]::after {
@@ -219,6 +225,6 @@ footer {
 
   .race-schedule td,.race-schedule th {
     border: none;
-    padding: 4px 2px;
+    padding: 8px;
   }
 }
