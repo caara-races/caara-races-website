@@ -3,6 +3,7 @@ import path from "node:path";
 import { escape as url_escape } from "node:querystring";
 import { v5 as uuidv5 } from "uuid";
 
+import markdownItAnchor from "markdown-it-anchor";
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import YAML from "yaml";
 
@@ -70,6 +71,8 @@ function setupFilters(eleventyConfig) {
 }
 
 export default function (eleventyConfig) {
+	eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(markdownItAnchor));
+
 	exposeRunMode(eleventyConfig);
 	setupPassthroughCopy(eleventyConfig);
 	setupFilters(eleventyConfig);
