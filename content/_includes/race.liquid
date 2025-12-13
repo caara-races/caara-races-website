@@ -2,10 +2,15 @@
 layout: base.liquid
 ---
 
-<div class="race-cover noprint"> {% if race.image %}
-<img src="{{ race.image }}">
-{% endif %}
+{% assign cover_image_path = "/race/" | append: race.slug | append: "/cover.jpg" %}
+{% assign map_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".gpx" %}
+
+{% if cover_image_path | fileExists %}
+<div class="race-cover noprint">
+  <img src="{{ cover_image_path }}">
 </div>
+{% endif %}
 
 <table>
   <tr>
@@ -14,12 +19,18 @@ layout: base.liquid
   <tr>
     <td><b>Where</b></td><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
   </tr>
-  <tr>
-    <td><b>Website</b></td><td><a href="{{ race.url }}">{{ race.url }}</a></td>
-  </tr>
 </table>
 
 <p class="noprint"><a href="race.ics">Add to calendar</a></p>
+
+<ul>
+  {% if map_path | fileExists %}
+    <li><a href="{{ map_path }}">Map</a></li>
+  {% endif %}
+  {% if course_path | fileExists %}
+    <li><a href="{{ course_path }}">GPX Course</a></li>
+  {% endif %}
+</ul>
 
 <h2>Staffing</h2>
 

@@ -57,13 +57,26 @@ function setupFilters(eleventyConfig) {
 	eleventyConfig.addFilter("googleMapSearch", (s) => {
 		return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
 	});
-	eleventyConfig.addFilter("dirExists", (dirPath) => {
+	eleventyConfig.addFilter("dirExists", (relpath) => {
 		// Resolve the path relative to the project root (or input dir, as needed)
-		const absolutePath = path.join(eleventyConfig.dir.input, dirPath);
+		const absolutePath = path.join(eleventyConfig.dir.input, relpath);
 
 		try {
 			const stats = fs.statSync(absolutePath);
 			return stats.isDirectory(); // Returns true if it is a directory
+		} catch (e) {
+			return false; // If an error occurs (e.g., directory doesn't exist), return false
+		}
+	});
+	eleventyConfig.addFilter("fileExists", (relpath) => {
+		// Resolve the path relative to the project root (or input dir, as needed)
+		const absolutePath = path.join(eleventyConfig.dir.input, relpath);
+
+		console.log(`checking for path ${absolutePath}`);
+
+		try {
+			const stats = fs.statSync(absolutePath);
+			return stats.isFile(); // Returns true if it is a directory
 		} catch (e) {
 			return false; // If an error occurs (e.g., directory doesn't exist), return false
 		}
