@@ -4,7 +4,6 @@ import { escape as url_escape } from "node:querystring";
 import { v5 as uuidv5 } from "uuid";
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
-import pluginTOC from "eleventy-plugin-toc";
 import YAML from "yaml";
 
 // This is used as the uuid v5 namespace by the uuid filter
@@ -29,6 +28,7 @@ function setupPassthroughCopy(eleventyConfig) {
 	passthroughCopyExtension(eleventyConfig, "css");
 }
 
+// Expose current run mode as global runMode variable
 function exposeRunMode(eleventyConfig) {
 	let currentRunMode = "build";
 
@@ -40,27 +40,8 @@ function exposeRunMode(eleventyConfig) {
 	eleventyConfig.addGlobalData("runMode", () => currentRunMode);
 }
 
-export default function (eleventyConfig) {
-	exposeRunMode(eleventyConfig);
-	setupPassthroughCopy(eleventyConfig);
-
-	eleventyConfig.addWatchTarget("content/css/normalize.css");
-
-	eleventyConfig.addPlugin(pluginTOC, {
-		ul: true,
-	});
-	eleventyConfig.addPlugin(HtmlBasePlugin, {
-		baseHref: process.env.ELEVENTY_BASEURL || "",
-	});
-
-	// This shortcode is used in the copyright notice to ensure it always shows
-	// the current year.
-	eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
-	eleventyConfig.addShortcode(
-		"qrz",
-		(callsign) => `[${callsign}](https://www.qrz.com/db/${callsign})`,
-	);
-
+// Configure filters
+function setupFilters(eleventyConfig) {
 	eleventyConfig.addFilter("lastModified", (filePath) => {
 		const stats = fs.statSync(filePath);
 		return stats.mtime;
@@ -75,9 +56,6 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter("googleMapSearch", (s) => {
 		return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
 	});
-
-	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));
-
 	eleventyConfig.addFilter("dirExists", (dirPath) => {
 		// Resolve the path relative to the project root (or input dir, as needed)
 		const absolutePath = path.join(eleventyConfig.dir.input, dirPath);
@@ -89,6 +67,36 @@ export default function (eleventyConfig) {
 			return false; // If an error occurs (e.g., directory doesn't exist), return false
 		}
 	});
+}
+
+export default function (eleventyConfig) {
+	exposeRunMode(eleventyConfig);
+	setupPassthroughCopy(eleventyConfig);
+	setupFilters(eleventyConfig);
+
+	// Setting a watch target on a file means that changes to that file will
+	// trigger a site rebuild. This happens by default for files that
+	// eleventy normally processes (.md, .liquid, etc), but needs explicit
+	// configuration for other file types.
+	eleventyConfig.addWatchTarget("content/css/normalize.css");
+
+	// Permit setting base url from the environment.
+	eleventyConfig.addPlugin(HtmlBasePlugin, {
+		baseHref: process.env.ELEVENTY_BASEURL || "",
+	});
+
+	// This shortcode is used in the copyright notice to ensure it always shows
+	// the current year.
+	eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+
+	// Create callsign links to qrz
+	eleventyConfig.addShortcode(
+		"qrz",
+		(callsign) => `[${callsign}](https://www.qrz.com/db/${callsign})`,
+	);
+
+	// Allow the use of YAML for data files
+	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));
 
 	return {
 		dir: {
