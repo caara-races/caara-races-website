@@ -1,44 +1,68 @@
 races:
   - title: Fool's Dual Half Marathon
     sheet: https://docs.google.com/spreadsheets/d/1R1KS2LwOrlsyDlQ03bne81hdAZNHMgpIbHciwGzbT28/htmlembed?authuser=0&amp;gid=923758388
-    image: /image/race/foolsdual.png
+    image: /image/race/foolsdual.jpg
     date: 2026-03-28T09:00:00-04:00
     location: Gloucester, MA
+    url: https://www.yukanrun.com/fools-dual-half-marathon-5k
   - title: Marblehead Half Marathon
     sheet: https://docs.google.com/spreadsheets/d/18KnWOi8yuT6gY05C9ayRyOeG40r-zbre4FBj6aA0vhk/htmlembed?authuser=0
     image: /image/race/marblehead.jpg
     date: 2026-04-12T09:00:00-04:00
     location: Marblehead, MA
+    url: https://www.yukanrun.com/marblehead-half-marathon
   - title: Twin Lights Half Marathon
+    image: /image/race/twinlights.jpg
     date: 2026-05-03T08:00:00-04:00
     location: Glocester, MA
+    url: https://www.yukanrun.com/twin-lights-half-marathon
   - title: Barns and Blooms Half Marathon
+    image: /image/race/barns-and-blooms.jpg
     date: 2026-05-09T08:00:00-04:00
     location: Hamilton
+    url: https://www.yukanrun.com/barns-blooms-half-marathon
   - title: Twin Lobster Half Marathon
+    image: /image/race/twinlobster.jpg
     date: 2026-06-07T08:00:00-04:00
     location: Gloucester, MA
+    url: https://www.yukanrun.com/twin-lobster-half-marathon
   - title: Town and Country Half Marathon
+    image: /image/race/town-and-country.jpg
     date: 2026-06-28T08:00:00-04:00
     location: Newburyport, MA
+    url: https://www.yukanrun.com/town-and-country-half-marathon
   - title: IPA Half Marathon
+    image: /image/race/ipa.jpg
     date: 2026-07-19T08:00:00-04:00
     location: Newburyport, MA
+    url: https://www.yukanrun.com/ipa5kandhalf
   - title: Triple Threat Half Marathon
+    image: /image/race/triplethreat.jpg
     date: 2026-08-02T08:00:00-04:00
     location: Rockport, MA
+    url: https://www.yukanrun.com/triplethreat-half-marathon-5k
   - title: Half Marathon By-The-Sea
+    image: /image/race/bythesea.jpg
     date: 2026-09-13T09:00:00-04:00
     location: Manchester-by-the-sea, MA
+    url: https://www.yukanrun.com/half-marathon-by-the-sea
   - title: Port Run Half Marathon
+    image: /image/race/portrun.jpg
     date: 2026-09-27T08:00:00-04:00
     location: Newburyport, MA
+    url: https://www.yukanrun.com/portrun-half-marathon-5k
   - title: Around Cape Ann Half Marathon
+    image: /image/race/around-cape-ann.jpg
     date: 2026-10-18T09:00:00-04:00
     location: Gloucester, MA
+    url: https://www.yukanrun.com/around-cape-ann-half-marathon
   - title: Oean View Half Marathon
+    image: /image/race/oceanview.jpg
     date: 2026-11-01T09:00:00-04:00
     location: Ipswich, MA
+    url: https://www.yukanrun.com/oceanview-half-marathon-5k
   - title: Happy Holidays Half Marathon
+    image: /image/race/happyholidays.jpg
     date: 2026-12-06T09:00:00-04:00
     location: Gloucester, MA
+    url: https://www.yukanrun.com/happy-holidays-half-merrython-5k
