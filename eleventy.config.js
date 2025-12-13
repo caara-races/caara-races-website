@@ -47,16 +47,25 @@ function setupFilters(eleventyConfig) {
 		const stats = fs.statSync(filePath);
 		return stats.mtime;
 	});
+
+	// Generate a UUIDv5.
 	eleventyConfig.addFilter("uuid", (s) => {
 		const u = uuidv5(s, CAARA_RACES_NS);
 		return u;
 	});
+
+	// URL-escape the given string.
 	eleventyConfig.addFilter("urlEscape", (url) => {
 		return url_escape(url);
 	});
+
+	// Transform the given input into a URL for a google map search.
 	eleventyConfig.addFilter("googleMapSearch", (s) => {
 		return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
 	});
+
+	// Return true if the given path is a directory. The path is relative to
+	// the input directory.
 	eleventyConfig.addFilter("dirExists", (relpath) => {
 		// Resolve the path relative to the project root (or input dir, as needed)
 		const absolutePath = path.join(eleventyConfig.dir.input, relpath);
@@ -68,6 +77,9 @@ function setupFilters(eleventyConfig) {
 			return false; // If an error occurs (e.g., directory doesn't exist), return false
 		}
 	});
+
+	// Return true if the given path is a regular file. The path is relative to
+	// the input directory.
 	eleventyConfig.addFilter("fileExists", (relpath) => {
 		// Resolve the path relative to the project root (or input dir, as needed)
 		const absolutePath = path.join(eleventyConfig.dir.input, relpath);
