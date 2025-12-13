@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { escape as url_escape } from "node:querystring";
 import { v5 as uuidv5 } from "uuid";
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
@@ -67,6 +68,12 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter("uuid", (s) => {
 		const u = uuidv5(s, CAARA_RACES_NS);
 		return u;
+	});
+	eleventyConfig.addFilter("urlEscape", (url) => {
+		return url_escape(url);
+	});
+	eleventyConfig.addFilter("googleMapSearch", (s) => {
+		return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
 	});
 
 	eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));
