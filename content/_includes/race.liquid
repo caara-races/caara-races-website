@@ -24,6 +24,9 @@ layout: base.liquid
 <p class="noprint"><a href="race.ics">Add to calendar</a></p>
 
 <ul>
+  {% if race.url %}
+    <li><a href="{{ race.url }}">YuKanRun Page</a></li>
+    {% endif %}
   {% if map_path | fileExists %}
     <li><a href="{{ map_path }}">Map</a></li>
   {% endif %}
