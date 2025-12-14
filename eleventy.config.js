@@ -19,14 +19,11 @@ function passthroughCopyExtension(eleventyConfig, ext) {
 
 // Define files that should be copied into the rendered content directory.
 function setupPassthroughCopy(eleventyConfig) {
-	passthroughCopyExtension(eleventyConfig, "kmz");
-	passthroughCopyExtension(eleventyConfig, "kml");
-	passthroughCopyExtension(eleventyConfig, "png");
-	passthroughCopyExtension(eleventyConfig, "jpg");
-	passthroughCopyExtension(eleventyConfig, "pdf");
-	passthroughCopyExtension(eleventyConfig, "txt");
-	passthroughCopyExtension(eleventyConfig, "gpx");
-	passthroughCopyExtension(eleventyConfig, "css");
+	["kmz", "kml", "png", "jpg", "pdf", "txt", "gpx", "css"].forEach(
+		(item, _) => {
+			passthroughCopyExtension(eleventyConfig, item);
+		},
+	);
 }
 
 // Expose current run mode as global runMode variable
