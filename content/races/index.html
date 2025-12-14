@@ -34,15 +34,23 @@ weight: 10
       <ul>
   {% if race.url %}
     <li><a title="YuKanRun Page" href="{{ race.url }}"><img src="/image/web.png"></a></li>
+  {% else %}
+    <li><img src="/image/web-grey.png"></li>
   {% endif %}
   {% if race.sheet %}
     <li><a title="CAARA Staffing" href="{{ race.sheet }}"><img src="/image/people.png"></a></li>
+  {% else %}
+    <li><img src="/image/people-grey.png"></li>
   {% endif %}
   {% if map_path | fileExists %}
     <li><a title="Map" href="{{ map_path }}"><img src="/image/map.png"></a></li>
+  {% else %}
+    <li><img src="/image/map-grey.png"></li>
   {% endif %}
   {% if course_path | fileExists %}
     <li><a title="GPX" href="{{ course_path }}"><img src="/image/path.png"></a></li>
+  {% else %}
+    <li><img src="/image/path-grey.png"></li>
   {% endif %}
       </ul>
     </td>
