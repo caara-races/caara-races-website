@@ -1,0 +1,58 @@
+---
+title: Race Schedule
+tags: page
+layout: page
+weight: 10
+---
+
+<p class="noprint"><a href="races.ics">Add to calendar</a></p>
+
+{% assign sorted_races = races | sort: 'date' %}
+
+<table class="race-schedule">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Start time</th>
+      <th scope="col">Location</th>
+      <th scope="col" class="noprint">Links</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for race in sorted_races %}
+{% assign map_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".gpx" %}
+  <tr>
+    <td>{{ forloop.index }}</td>
+    <td>{{ race.date | date: "%b %d (%a)" }}</td>
+    <td><a href="/race/{{ race.slug }}">{{ race.title }}</a></td>
+    <td>{{ race.date | date: "%H:%M %p" }}</td>
+    <td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
+    <td class="icons noprint">
+      <ul>
+  {% if race.url %}
+    <li><a title="YuKanRun Page" href="{{ race.url }}"><img src="/image/web.png"></a></li>
+  {% endif %}
+  {% if race.sheet %}
+    <li><a title="CAARA Staffing" href="{{ race.sheet }}"><img src="/image/people.png"></a></li>
+  {% endif %}
+  {% if map_path | fileExists %}
+    <li><a title="Map" href="{{ map_path }}"><img src="/image/map.png"></a></li>
+  {% endif %}
+  {% if course_path | fileExists %}
+    <li><a title="GPX" href="{{ course_path }}"><img src="/image/path.png"></a></li>
+  {% endif %}
+      </ul>
+    </td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+<!--
+- Maps by Skyyy from <a href="https://thenounproject.com/browse/icons/term/maps/" target="_blank" title="Maps Icons">Noun Project</a> (CC BY 3.0)
+- path by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/path/" target="_blank" title="path Icons">Noun Project</a> (CC BY 3.0)
+- website by Omah Icon from <a href="https://thenounproject.com/browse/icons/term/website/" target="_blank" title="website Icons">Noun Project</a> (CC BY 3.0)
+-->
