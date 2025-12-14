@@ -1,24 +1,26 @@
-# Cape Anne Amateur Radio Association Race Support Materials
+# Cape Anne Amateur Radio Association Race & Event Support
 
-## Volunteers Needed
+This repository is an example of how to use a static site generator like [Eleventy] to maintain a website for the [CAARA] Race & Event Support organization.
 
-CAARA is always looking for ham volunteers to assist with the Race Safety Support program and with other Public Service Events that CAARA supports. Volunteering for these activities  is great training for emergency preparedness, it is social and fun, and it benefits the runners in races we support by providing a radio safety net and benefits other public activities such as parades and celebrations by assisting with safety of participants and event logistics.
+[eleventy]: https://www.11ty.dev/
+[caara]: https://caara.net/
 
-CAARA is an [ARRL] recognized [Special Service Club] and we strive to live up to that honor.
+## Generate the site
 
-[ARRL]: https://www.arrl.org/
-[special service club]: https://www.arrl.org/ssc-application
+Ensure that you have previously installed the prerequisites:
 
-Safety Support is a team endeavor. Real-time training is provided to all volunteers. Licensed hams do not even need a radio, the club can provide dual band HTs for volunteers.
+```
+npm install
+```
 
-Volunteering can be on a trial basis with no long-term commitment.  Join the team!
+To generate the site content, run:
 
-Interested? [Email Kevin, K1KL] to learn more or sign-up.
+```
+npm run build
+```
 
-[email kevin, k1kl]: kevinlyonsk1kl@gmail.com
+This will populate the `_site` directory with the site content.
 
-## Half Marathons Are Our Largest Activity
+## Notes on navigation links
 
-CAARA provides Radio Safety Net support for all YuKanRun  sponsored races in the greater Cape Ann area.  Races are mostly on Sunday mornings and generally begin at 8:00 or 9:00 a.m. We are usually "on station" at 7:30 or 8:30 a.m. and typically finish by 12:00 p.m. Each race typically has a Net Controller, 6 checkpoints, a lead car and a trail car operated by our volunteers. 
-
-Sign up for a future race now and request a preferred available checkpoint or role.
+The links in the top navigation menu are ordered by their `weight` attribute. This defaults to `100` (from `content/_data/weight.json`), which means that pages *without* a weight will appear after items with a `weight` less than 100. The sort order for items of the same weight is unspecified, so if you want a particular ordering, set the weight values as appropriate.
