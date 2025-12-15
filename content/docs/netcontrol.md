@@ -36,119 +36,99 @@ The CAARA race net Net Control operator:
 
 ### Opening the net
 
-```
-This is <callsign>, net control for the <event name> safety net. We
-are using the <repeater name> repeater, operating on frequency
-<frequency> with a tone of <pl tone>. Before opening the net, if there
-are any stations with emergency or priority traffic for the repeater,
-please call now.
-
-(*pause*)
-
-I am now opening the <event name> safety net. I request that all
-stations not participating as volunteers for this event STAND BY for
-the duration of the net. This is a directed net. Unless you have
-priority traffic, please make no transmissions unless directed to do
-so by net control. This net will operate for approximately the next
-three hours.
-```
+> This is CALLSIGN, net control for the EVENT NAME safety net. We are
+> using the REPEATER NAME repeater, operating on frequency FREQUENCY
+> with a tone of PL TONE. Before opening the net, if there are any
+> stations with emergency or priority traffic for the repeater, please
+> call now.
+> 
+> (*pause*)
+> 
+> I am now opening the EVENT NAME safety net. I request that all
+> stations not participating as volunteers for this event stand by for
+> the duration of the net. This is a directed net. Unless you have
+> priority traffic, please make no transmissions unless directed to do
+> so by net control. This net will operate for approximately the next
+> three hours.
 
 ### Roll call
 
-```
-I will now begin the initial roll call. I will call with your tactical
-callsign. Please respond with your tactical callsign and your personal
-callsign and indicate whether or not you are at your station and ready
-for service.
-
-(* begin roll call; record check-ins on staffing sheet *)
-
-The race will start at <start time>. <callsign>, standing by.
-```
+> This is net control. I will now begin the initial roll call for the
+> EVENT NAME safety net. I will call with your tactical callsign.
+> Please respond with your tactical callsign and your personal
+> callsign and indicate whether or not you are at your station and
+> ready for service.
+> 
+> (*begin roll call; record check-ins on staffing sheet*)
+> 
+> The race will start at START TIME. CALLSIGN, standing by.
 
 Follow up as necessary if there are stations that don't respond to the initial roll call.
 
 ### Pre-race instructions
 
-```
-This is <callsign> with some pre-race instructions for volunteers
-participating in today's net.
-
-If you have traffic for the net, call net control and identify with
-your tactical callsign, then wait to be acknowledged by net control.
-When net control has confirmed receipt of your message, you can end
-with your callsign to meet FCC requirements.
-
-(* pause *)
-
-Checkpoints report to the net when the lead runner and when the trail
-runner passes their location.  There is no need to include other
-information such as bib number, gender or clothing colors.
-
-Immediately report medical or serious incidents to net control and
-wait for any directions. If there is any delay in reaching net control
-and getting a response, call 911. When reporting an emergency,
-identify your location by street address or by the nearest
-intersection.
-```
+> This is CALLSIGN with some pre-race instructions for volunteers
+> participating in today's net.
+> 
+> If you have traffic for the net, call net control and identify with
+> your tactical callsign, then wait to be acknowledged by net control.
+> When net control has confirmed receipt of your message, you can end
+> with your callsign to meet FCC requirements.
+> 
+> (*pause*)
+> 
+> Checkpoints report to the net when the lead runner and when the
+> trail runner passes their location.  There is no need to include
+> other information such as bib number, gender or clothing colors.
+> 
+> Immediately report medical or serious incidents to net control and
+> wait for any directions. If there is any delay in reaching net
+> control and getting a response, call 911. When reporting an
+> emergency, identify your location by street address or by the
+> nearest intersection.
 
 ### Start of race
 
-```
-This is net control. The half marathon has started at <time>. <Callsign>,
-standing by.
-```
+> This is net control. The half marathon has started at TIME. CALLSIGN,
+> standing by.
 
 ### Closing the net
 
-```
-This is <callsign>, net control for <event> safety net. At this time,
-the directed net is now closed. I would like to thank all stations who
-participated as volunteers in today's event. I would also like to
-thank all stations who stood by while the net was in service. This
-repeater is now available for regular use. <callsign>, clear.
-```
+> This is CALLSIGN, net control for EVENT safety net. At this time,
+> the directed net is now closed. I would like to thank all stations
+> who participated as volunteers in today's event. I would also like
+> to thank all stations who stood by while the net was in service.
+> This repeater is now available for regular use. CALLSIGN, clear.
 
 ## Operating notes
 
 Respond to calling stations by repeating what you heard as the station's tactical call:
 
-```
-This is net control answering checkpoint 5. Go ahead.
-```
+> This is net control answering checkpoint 5. Go ahead.
 
 After receiving a message, repeat the station's tactical call and repeat or paraphrase the message:
 
-```
-Net control copied Checkpoint 5. Lead vehicle and lead runner have
-passed Checkpoint 5. net control, <callsign>, standing by."
-```
+> Net control copied Checkpoint 5. Lead vehicle and lead runner have
+> passed Checkpoint 5. net control, CALLSIGN, standing by."
 
 Every half hour or so, during a lull in radio traffic, announce that a Directed Net is in progress:
 
-```
-This is <callsign>, net control for the <event> safety net. A directed
-net is now in progress. I request that all stations not participating
-as volunteers for this event please stand by for the duration of the
-net. This net should be over by <end time>.
-```
+> This is CALLSIGN, net control for the EVENT safety net. A directed
+> net is now in progress. I request that all stations not
+> participating as volunteers for this event please stand by for the
+> duration of the net. This net should be over by END TIME.
 
 As needed, remind stations that they should identify first by tactical callsign, e.g., "checkpoint 6", and clear using their personal callsign:
 
-```
-This is net control. Please use your tactical callsign when contacting
-net control and then complete the exchange with your personal
-callsign. <callsign>, standing by.
-```
+> This is net control. Please use your tactical callsign when
+> contacting net control and then complete the exchange with your
+> personal callsign. CALLSIGN, standing by.
 
 As needed, remind stations that all traffic must go through net control unless specifically authorized by net control when circumstances warrant:
 
-```
-This is net control. This is a directed net. Please do not call other
-stations unless explicitly directed to do so by net control. Thank
-you. <callsign>, standing by.
-```
-
+> This is net control. This is a directed net. Please do not call
+> other stations unless explicitly directed to do so by net control.
+> Thank you. CALLSIGN, standing by.
 
 ## Additional Notes
 
