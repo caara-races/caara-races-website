@@ -36,11 +36,11 @@ The CAARA race net Net Control operator:
 
 ### Opening the net
 
-> This is CALLSIGN, net control for the EVENT NAME safety net. We are
-> using the REPEATER NAME repeater, operating on frequency FREQUENCY
-> with a tone of PL TONE. Before opening the net, if there are any
-> stations with emergency or priority traffic for the repeater, please
-> call now.
+> This is CALLSIGN. My name is NAME. I will be your net control for
+> the EVENT NAME safety net. We are using the REPEATER NAME repeater,
+> operating on frequency FREQUENCY with a tone of PL TONE. Before
+> opening the net, if there are any stations with emergency or
+> priority traffic for the repeater, please call now.
 > 
 > (*pause*)
 > 
