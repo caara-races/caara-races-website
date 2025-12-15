@@ -1,5 +1,11 @@
 ---
-layout: base.liquid
+pagination:
+  data: races
+  size: 1
+  alias: race
+permalink: /race/{{ race.slug }}/
+eleventyComputed:
+  title: "{{ race.title }}"
 ---
 
 {% assign cover_image_path = "/race/" | append: race.slug | append: "/cover.jpg" %}
@@ -44,3 +50,4 @@ layout: base.liquid
 {% else %}
   <p>Race details are not available at this time.</p>
 {% endif %}
+
