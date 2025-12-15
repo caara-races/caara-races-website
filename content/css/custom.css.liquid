@@ -6,6 +6,7 @@ layout: raw
 :root {
   /* Colors */
   --color-primary: #4078c0;
+  --color-active: #2f598f;
   --color-text: #000;
   --color-bg: #fff;
   --color-border: #000;
@@ -122,7 +123,7 @@ footer {
 	padding: var(--space-sm);
 }
 
-.icons ul li {
+.icons li {
 	display: inline-block;
   padding: 0 4px;
 }
@@ -139,19 +140,23 @@ footer {
 	padding: var(--space-sm);
 }
 
-.site-nav ul li {
+.site-nav li {
 	display: inline;
 	border-left: var(--border-width) solid var(--color-bg);
 	padding: 5px;
 }
 
-.site-nav ul li:first-child {
+.site-nav li:first-child {
 	border: none;
 }
 
-.site-nav ul li a {
+.site-nav a {
 	color: var(--color-bg);
 	text-decoration: none;
+}
+
+.site-nav li.active {
+  font-weight: bold;
 }
 
 .nav-main {

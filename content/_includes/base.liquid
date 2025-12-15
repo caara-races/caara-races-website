@@ -24,8 +24,8 @@
   {% assign pages = collections.page | sort: 'data.weight' -%}
   <nav class="site-nav noprint" aria-label="Main navigation">
     <ul class="nav-main">
-      {% for page in pages %}
-        <li><a href="{{ page.url }}">{{ page.data.short_title | default: page.data.title }}</a></li>
+      {% for item in pages %}
+        <li {% if page.url == item.url %}class="active"{% endif %}><a href="{{ item.url }}">{{ item.data.short_title | default: item.data.title }}</a></li>
       {% endfor %}
     </ul>
 
