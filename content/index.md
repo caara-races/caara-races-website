@@ -24,8 +24,9 @@ Interested? Email [Kevin, K1KL] to learn more or sign-up.
 
 ## Half Marathons Are Our Largest Activity
 
-CAARA provides Radio Safety Net support for all YuKanRun  sponsored races in the greater Cape Ann area.  Races are mostly on Sunday mornings and generally begin at 8:00 or 9:00 a.m. We are usually "on station" at 7:30 or 8:30 a.m. and typically finish by 12:00 p.m. Each race typically has a Net Controller, 6 checkpoints, a lead car and a trail car operated by our volunteers. 
+CAARA provides Radio Safety Net support for all YuKanRun  sponsored races in the greater Cape Ann area.  Races are mostly on Sunday mornings and generally begin at 8:00 or 9:00 a.m. We are usually "on station" at 7:30 or 8:30 a.m. and typically finish by 12:00 p.m. Each race typically has a Net Controller, 6 checkpoints, a lead car and a trail car operated by our volunteers.
 
+<!-- markdownlint-disable-next-line MD026 -->
 ## Pick your spot!
 
 Find a preferred check point (CP) or vehicle role (Lead or Trail Vehicle) in each of the races in which you can participate and email [Kevin, K1KL] to request your preferences. If you are looking to be a new participant, Kevin will pair you up with a veteran for your first race experience.

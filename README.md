@@ -9,13 +9,13 @@ This repository is an example of how to use a static site generator like [Eleven
 
 Ensure that you have previously installed the prerequisites:
 
-```
+```sh
 npm install
 ```
 
 To generate the site content, run:
 
-```
+```sh
 npm run build
 ```
 

@@ -1,0 +1,13 @@
+name: Validate races.yaml
+on:
+  workflow_call:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install dependencies
+        run: npm install
+      - name: Run validations
+        run: bash scripts/validate-all.sh
