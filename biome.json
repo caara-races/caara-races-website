@@ -1,0 +1,16 @@
+{
+  "files": {
+    "includes": [
+      "**",
+      "!!_site",
+      "!!package.json",
+      "!!firebase.json",
+      "!!content/css/normalize.css",
+      "!!**/*.html"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  }
+}

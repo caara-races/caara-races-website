@@ -12,8 +12,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate:
+    uses: ./.github/workflows/validate.yaml
+
   build_and_deploy:
     runs-on: ubuntu-latest
+    needs: validate
     steps:
       - uses: actions/checkout@v6
       - run: npm install && npm run build

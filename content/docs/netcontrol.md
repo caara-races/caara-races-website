@@ -41,9 +41,9 @@ The CAARA race net Net Control operator:
 > operating on frequency FREQUENCY with a tone of PL TONE. Before
 > opening the net, if there are any stations with emergency or
 > priority traffic for the repeater, please call now.
-> 
+>
 > (*pause*)
-> 
+>
 > I am now opening the EVENT NAME safety net. I request that all
 > stations not participating as volunteers for this event stand by for
 > the duration of the net. This is a directed net. Unless you have
@@ -58,9 +58,9 @@ The CAARA race net Net Control operator:
 > Please respond with your tactical callsign and your personal
 > callsign and indicate whether or not you are at your station and
 > ready for service.
-> 
+>
 > (*begin roll call; record check-ins on staffing sheet*)
-> 
+>
 > The race will start at START TIME. CALLSIGN, standing by.
 
 Follow up as necessary if there are stations that don't respond to the initial roll call.
@@ -69,18 +69,18 @@ Follow up as necessary if there are stations that don't respond to the initial r
 
 > This is CALLSIGN with some pre-race instructions for volunteers
 > participating in today's net.
-> 
+>
 > If you have traffic for the net, call net control and identify with
 > your tactical callsign, then wait to be acknowledged by net control.
 > When net control has confirmed receipt of your message, you can end
 > with your callsign to meet FCC requirements.
-> 
+>
 > (*pause*)
-> 
+>
 > Checkpoints report to the net when the lead runner and when the
 > trail runner passes their location.  There is no need to include
 > other information such as bib number, gender or clothing colors.
-> 
+>
 > Immediately report medical or serious incidents to net control and
 > wait for any directions. If there is any delay in reaching net
 > control and getting a response, call 911. When reporting an
@@ -138,8 +138,8 @@ The Newburyport races when the CAARA Lead Vehicle leads the 5K and not the Half-
 Runners who can be identified as 5K runners who have made a wrong turn and are lost (or may not know they are lost) should be reported to net control. Net control will advise Race Director and YuKanRun Safety Van (by text group message) .
 
 * Net control should have race documents printed out and available, namely:
-  - Staffing Sheet and extra copy
-  - Race Day Info Sheet (especially locations of aid stations and toilets)
-  - Course map
+  * Staffing Sheet and extra copy
+  * Race Day Info Sheet (especially locations of aid stations and toilets)
+  * Course map
 * Net control should review the Staffing Sheet to specifically identify which Checkpoints will see runners going outbound and inbound. This sets up a schedule for securing (releasing) checkpoint personnel.
 * Net control should (like all volunteers) read the Volunteer Guidelines before every race. It is helpful for the net controller to have a copy of the Volunteer Guidelines accessible.

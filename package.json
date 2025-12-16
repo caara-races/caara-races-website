@@ -9,6 +9,15 @@
 	},
 	"scripts": {
 		"build": "eleventy",
-		"serve": "eleventy --watch --serve"
+		"serve": "eleventy --watch --serve",
+		"validate-races": "node scripts/validate-races.js",
+		"validate-markdown": "node scripts/validate-markdown.js",
+		"validate": "bash scripts/validate-all.sh"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.9",
+		"ajv": "^8.17.1",
+		"ajv-draft-04": "^1.0.0",
+		"markdownlint": "^0.40.0"
 	}
 }
