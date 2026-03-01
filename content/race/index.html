@@ -31,7 +31,7 @@ permalink: /races/
     <td>
       <a href="/race/{{ race.slug }}">{{ race.title }}</a>
       {% if race.want %}
-      <p>Needs {{race.want}} additional volunteers</p>
+      <p class="noprint">Needs {{race.want}} additional volunteers</p>
       {% endif %}
     </td>
     <td>{{ race.date | date: "%H:%M %p" }}</td>
