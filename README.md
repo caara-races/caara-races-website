@@ -27,7 +27,7 @@ The links in the top navigation menu are ordered by their `weight` attribute. Th
 
 ## Data-driven content
 
-The list of races in [content/races/races.yaml](content/races/races.yaml) is used to the drive the generation of several pages:
+The list of races in [content/_data/races.yaml](content/races/races.yaml) is used to the drive the generation of several pages:
 
 - The race schedule (`/races`)
 - An [iCalendar] file containing all the races (`/races/races.ics`)
@@ -42,6 +42,7 @@ Each race entry contains the following information:
 - `date` -- the date of the event
 - `location` -- the city and state in which the event is located
 - `url` -- URL of the YuKanRun page for the event
+- `want` -- (optional) number of volunteers still required for this event
 
 Additionally, some content depends on the presence of specific files:
 
