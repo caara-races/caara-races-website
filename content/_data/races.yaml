@@ -1,0 +1,91 @@
+- title: Fool's Dual Half Marathon
+  slug: foolsdual
+  sheet: https://docs.google.com/spreadsheets/d/1R1KS2LwOrlsyDlQ03bne81hdAZNHMgpIbHciwGzbT28
+  date: 2026-03-28T09:00:00-04:00
+  location: Gloucester, MA
+  url: https://www.yukanrun.com/fools-dual-half-marathon-5k
+  want: 3
+- title: Marblehead Half Marathon
+  slug: marblehead
+  sheet: https://docs.google.com/spreadsheets/d/18KnWOi8yuT6gY05C9ayRyOeG40r-zbre4FBj6aA0vhk
+  date: 2026-04-12T09:00:00-04:00
+  location: Marblehead, MA
+  url: https://www.yukanrun.com/marblehead-half-marathon
+  want: 3
+- title: Twin Lights Half Marathon
+  slug: twinlights
+  sheet: https://docs.google.com/spreadsheets/d/1yjAJN0_8nHl7zp7Gc7m-30oQJySWz2sA1_odi49sMgA
+  date: 2026-05-03T08:00:00-04:00
+  location: Gloucester, MA
+  url: https://www.yukanrun.com/twin-lights-half-marathon
+  want: 3
+- title: Barns and Blooms Half Marathon
+  slug: barns-and-blooms
+  sheet: https://docs.google.com/spreadsheets/d/171ixX8Z2OVt3-4qG0N0rYUZYHwYgExsbPIBLvz-i9NU
+  date: 2026-05-09T08:00:00-04:00
+  location: Hamilton, MA
+  url: https://www.yukanrun.com/barns-blooms-half-marathon
+  want: 4
+- title: Twin Lobster Half Marathon
+  slug: twinlobster
+  sheet: https://docs.google.com/spreadsheets/d/1BovmGWio2ppReXla3M8F2WcSfjqg1yRBXPiExZ25FKk
+  date: 2026-06-07T08:00:00-04:00
+  location: Gloucester, MA
+  url: https://www.yukanrun.com/twin-lobster-half-marathon
+  want: 2
+- title: Town and Country Half Marathon
+  slug: town-and-country
+  sheet: https://docs.google.com/spreadsheets/d/1CmYP2aSG8op3iLslFFAZu2O1pSH_0dxOhjO9XOS-0jE
+  date: 2026-06-28T08:00:00-04:00
+  location: Newburyport, MA
+  url: https://www.yukanrun.com/town-and-country-half-marathon
+  want: 4
+- title: IPA Half Marathon
+  slug: ipa
+  sheet: https://docs.google.com/spreadsheets/d/1yy5c2tX3MtFiFoNOUzcNspo50u3o7vpdK-9acrWHBu4
+  date: 2026-07-19T08:00:00-04:00
+  location: Newburyport, MA
+  url: https://www.yukanrun.com/ipa5kandhalf
+  want: 4
+- title: Triple Threat Half Marathon
+  slug: triplethreat
+  sheet: https://docs.google.com/spreadsheets/d/1MDj48xay1ALbQ7j5NZHEKrrQ6uHLntQffi1aS9Bb0wM
+  date: 2026-08-02T08:00:00-04:00
+  location: Rockport, MA
+  url: https://www.yukanrun.com/triplethreat-half-marathon-5k
+  want: 3
+- title: Half Marathon By-The-Sea
+  slug: bythesea
+  sheet: https://docs.google.com/spreadsheets/d/1atemuC_9RmlWgzlO2sA5jeX1yhzMbORe7sKe7GRBGJc
+  date: 2026-09-13T09:00:00-04:00
+  location: Manchester-by-the-sea, MA
+  url: https://www.yukanrun.com/half-marathon-by-the-sea
+  want: 4
+- title: Port Run Half Marathon
+  slug: portrun
+  sheet: https://docs.google.com/spreadsheets/d/1u2qlpI37MOFHPzmcVSrDiPZadun4AEwXSOm5zLlyDGo
+  date: 2026-09-27T08:00:00-04:00
+  location: Newburyport, MA
+  url: https://www.yukanrun.com/portrun-half-marathon-5k
+  want: 5
+- title: Around Cape Ann Half Marathon
+  slug: around-cape-ann
+  sheet: https://docs.google.com/spreadsheets/d/1chZ2taEDK62caIkFw2-HU1FWliqTfpeeb7DWAkzhEs0
+  date: 2026-10-18T09:00:00-04:00
+  location: Gloucester, MA
+  url: https://www.yukanrun.com/around-cape-ann-half-marathon
+  want: 4
+- title: Oean View Half Marathon
+  slug: oceanview
+  sheet: https://docs.google.com/spreadsheets/d/1Rwa6gSOjcFoWg5vNaUI3E_2qADTgSErgomOaH7nup98
+  date: 2026-11-01T09:00:00-04:00
+  location: Ipswich, MA
+  url: https://www.yukanrun.com/oceanview-half-marathon-5k
+  want: 5
+- title: Happy Holidays Half Marathon
+  slug: happyholidays
+  sheet: https://docs.google.com/spreadsheets/d/1ZP6uIarccok-U-jlEnsTo3Yi6pAwS6acQ51VyAAQ-wE
+  date: 2026-12-06T09:00:00-04:00
+  location: Gloucester, MA
+  url: https://www.yukanrun.com/happy-holidays-half-merrython-5k
+  want: 3
