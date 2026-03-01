@@ -19,7 +19,7 @@ BEGIN:VEVENT
 SUMMARY:{{ race.title }}
 DTSTART:{{ race.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
 DTEND:{{ race.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S" }}Z
+DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
 UID:{{ race.date | date: "%Y-%m-%d" | append: race.title | uuid }}@caara-schedule
 DESCRIPTION:{{ race.title }}\nWhen: {{ race.date | date: "%b %d, %Y" }}\n
  Location: {{ race.location }}\n
