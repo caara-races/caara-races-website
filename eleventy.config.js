@@ -81,8 +81,6 @@ function setupFilters(eleventyConfig) {
     // Resolve the path relative to the project root (or input dir, as needed)
     const absolutePath = path.join(eleventyConfig.dir.input, relpath);
 
-    console.log(`checking for path ${absolutePath}`);
-
     try {
       const stats = fs.statSync(absolutePath);
       return stats.isFile(); // Returns true if it is a directory
