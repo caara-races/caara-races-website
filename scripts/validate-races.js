@@ -5,11 +5,11 @@ import yaml from "yaml";
 async function validateRaces() {
   try {
     // Read and parse the JSON schema
-    const schemaRaw = await readFile("content/races/races.schema.json", "utf8");
+    const schemaRaw = await readFile("content/race/races.schema.json", "utf8");
     const schema = JSON.parse(schemaRaw);
 
     // Read and parse the YAML file
-    const yamlRaw = await readFile("content/races/races.yaml", "utf8");
+    const yamlRaw = await readFile("content/race/races.yaml", "utf8");
     const data = yaml.parse(yamlRaw);
 
     // Validate using Ajv
