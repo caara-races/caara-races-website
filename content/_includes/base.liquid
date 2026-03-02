@@ -21,6 +21,13 @@
     Race &amp; Event Support
   </header>
 
+  <!--
+    The links in the top navigation menu are ordered by their `weight`
+    attribute. This defaults to `100` (from `content/_data/weight.json`), which
+    means that pages *without* a weight will appear after items with a `weight`
+    less than 100. The sort order for items of the same weight is unspecified,
+    so if you want a particular ordering, set the weight values as appropriate.
+  -->
   {% assign pages = collections.page | sort: 'data.weight' -%}
   <nav class="site-nav noprint" aria-label="Main navigation">
     <ul class="nav-main">
