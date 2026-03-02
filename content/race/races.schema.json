@@ -1,34 +1,28 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "properties": {
-    "races": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "slug": {
-            "type": "string"
-          },
-          "sheet": {
-            "type": "string"
-          },
-          "date": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          }
-        },
-        "required": ["title", "slug", "date", "location"]
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "slug": {
+        "type": "string"
+      },
+      "sheet": {
+        "type": "string"
+      },
+      "date": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
       }
-    }
-  },
-  "required": ["races"]
+    },
+    "required": ["title", "slug", "date", "location"]
+  }
 }
