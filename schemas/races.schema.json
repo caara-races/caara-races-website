@@ -3,24 +3,31 @@
   "type": "array",
   "items": {
     "type": "object",
+    "additionalProperties": false,
     "properties": {
       "title": {
         "type": "string"
       },
       "slug": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
       },
       "sheet": {
         "type": "string"
       },
       "date": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}$"
       },
       "location": {
         "type": "string"
       },
       "url": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^https?://"
+      },
+      "want": {
+        "type": "integer"
       }
     },
     "required": ["title", "slug", "date", "location"]
