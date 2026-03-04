@@ -10,7 +10,8 @@ tags: page
 {% assign sorted = collections.docs | sort: 'data.title' %}
 {% for doc in sorted -%}
 - [{{ doc.data.title }}]({{ doc.url }})
-{% endfor %}
+{% endfor -%}
+- [Public service event log](Public_Service_Net_Log.pdf)
 
 ## Additional sources of information
 
