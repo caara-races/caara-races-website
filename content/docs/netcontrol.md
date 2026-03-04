@@ -5,21 +5,21 @@ tags: docs
 
 The CAARA race net Net Control operator:
 
-- Runs the [CAARA] Race Net as a directed net
-- Leads enforcement of protocols and guidelines
-- Is the one direct liaison to [YuKanRun] race directors/coordinators
+- Runs the [CAARA] Race Net as a directed net.
+- Leads enforcement of protocols and guidelines.
+- Is the one direct liaison to [YuKanRun] race directors/coordinators.
 - Shares emergency situation and other important information with the
-  YuKanRun Race Director
-- Is usually stationed at Start/Finish Line
+  YuKanRun Race Director.
+- Is usually stationed at Start/Finish Line.
 - Directs movement of CAARA Net personnel, e.g., permission to secure or
-  leave checkpoint, move to new location, or function as Rover
-- All radio traffic goes through the net control operator who may grant
-  permission for two stations to talk to each other directly if circumstances
-  warrant
-- Checks volunteers into and out of Net
-- Provides post-race report to CAARA Race Coordinator as needed
+  leave checkpoint, move to new location, or function as Rover.
+- All radio traffic goes through the net control operator. The net control
+  operator may grant permission for two stations to talk to each other
+  directly if circumstances warrant.
+- Checks volunteers into and out of Net.
+- Provides post-race report to CAARA Race Coordinator as needed.
 - Relays post-race feedback from YuKanRun administrators to the CAARA Race
-  Coordinator
+  Coordinator.
 - Must be 100% reliable and clearly copyable at all the assigned locations.
 - Must be 100% responsive to communications from stations on the net in a
   reliable and timely fashion.
@@ -38,7 +38,7 @@ The CAARA race net Net Control operator:
 | ...                           | Handle traffic         |
 | END                           | Close the net          |
 
-## Mini-scripts
+## Net control scripts
 
 ### Opening the net
 
@@ -50,39 +50,41 @@ The CAARA race net Net Control operator:
 >
 > (*pause*)
 >
-> I am now opening the EVENT NAME safety net. I request that all
-> stations not participating as volunteers for this event stand by for
-> the duration of the net. This is a directed net. Unless you have
-> priority traffic, please make no transmissions unless directed to do
-> so by net control. This net will operate for approximately the next
-> four hours.
+> The EVENT NAME safety net is now active. I request that all stations not
+> participating as volunteers for this event stand by for the duration of
+> the net. This is a directed net. Please do not call other stations unless
+> explicitly directed to do so by net control. This net will operate for
+> approximately the next four hours.
+>
+> I will perform the initial roll call in approximately five minutes.
+> CALLSIGN, standing by.
 
 ### Roll call
 
-> This is CALLSIGN, net control for the EVENT NAME safety net. I will now begin
-> the roll call. I will call with your tactical callsign. Please respond with
-> your name and FCC callsign and indicate whether or not you are at your
-> station and ready for service.
+> This is CALLSIGN, net control for the EVENT NAME safety net, with the
+> initial roll call. I will call with your tactical callsign. Please
+> respond with your name and FCC callsign and indicate whether or not you
+> are at your station and ready for service.
 >
 > (*begin roll call; record check-ins on staffing sheet*)
 >
-> Thank you everyone for participating. The race will start at START TIME.
+> Thank you everyone for volunteering. The race will start at START TIME.
 > CALLSIGN, standing by.
 
 Follow up as necessary if there are stations that don't respond to the initial roll call.
 
 ### Pre-race instructions
 
-> This is CALLSIGN with some pre-race instructions for volunteers
-> participating in today's net.
+> This is CALLSIGN, net control for the EVENT NAME safety net, with some
+> pre-race instructions for volunteers participating in today's net.
 >
 > If you have traffic for the net, call net control and identify with
 > your tactical callsign, then wait to be acknowledged by net control.
-> When net control has confirmed receipt of your message, you can end
-> with your FCC callsign to meet identification requirements.
+> When net control has confirmed receipt of your message, you can conclude
+> your call with your FCC callsign to meet identification requirements.
 >
 > Checkpoints report to the net when the lead runner and when the
-> trail runner pass their location.  There is no need to include
+> tail runner pass their location.  There is no need to include
 > other information such as bib number, gender or clothing colors.
 >
 > Immediately report medical or serious incidents to net control and wait
@@ -92,11 +94,36 @@ Follow up as necessary if there are stations that don't respond to the initial r
 
 ### Start of race
 
-> This is net control. The race has started at TIME. CALLSIGN, standing by.
+If the number of runners is known:
+
+> This is net control. The race has started at TIME with NUMBER OF RUNNERS
+> runners.
+
+If the number of runners is unknown:
+
+> This is net control. The race has started at TIME.
+
+And then:
+
+> I request that all stations not participating as volunteers in
+> this event stand by for the duration of the race. The repeater will be
+> returned to regular amateur radio use at or around 12:00PM. CALLSIGN,
+> standing by.
+
+### Periodic announcement
+
+Announce this approximately every half hour when there is a lull in radio
+traffic:
+
+> This is CALLSIGN, net control for the EVENT NAME safety net. A directed
+> net is now active. I request that all stations not participating as
+> volunteers for this event stand by for the duration of the net. The
+> repeater will be returned to regular amateur radio use at or around
+> 12:00PM. Thank you. CALLSIGN standing by.
 
 ### Closing the net
 
-> This is CALLSIGN, net control for EVENT NAME safety net. At this time,
+> This is CALLSIGN, net control for the EVENT NAME safety net. At this time,
 > the directed net is now closed. I would like to thank all stations who
 > participated as volunteers in today's event. I would also like to thank
 > all stations who stood by while the net was in service. This repeater is
@@ -112,13 +139,6 @@ After receiving a message, repeat the station's tactical call and repeat or para
 
 > Net control copied Checkpoint 5. Lead vehicle and lead runner have
 > passed Checkpoint 5. Net control, CALLSIGN, standing by."
-
-Every half hour or so, during a lull in radio traffic, announce that a Directed Net is in progress:
-
-> This is CALLSIGN, net control for the EVENT safety net. A directed
-> net is now in progress. I request that all stations not
-> participating as volunteers for this event please stand by for the
-> duration of the net. This net should be over by END TIME.
 
 As needed, remind stations that they should identify first by tactical callsign, e.g., "checkpoint 6", and clear using their personal callsign:
 
@@ -140,7 +160,7 @@ The Newburyport races when the CAARA Lead Vehicle leads the 5K and not the Half-
 Runners who can be identified as 5K runners who have made a wrong turn and are lost (or may not know they are lost) should be reported to net control. Net control will advise Race Director and YuKanRun Safety Van (by text group message) .
 
 - Net control should have race documents printed out and available, namely:
-  - Staffing Sheet and extra copy
+  - Two copies of the staffing sheet
   - Race Day Info Sheet (especially locations of aid stations and toilets)
   - Course map
 - Net control should review the Staffing Sheet to specifically identify which
