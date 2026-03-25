@@ -56,7 +56,7 @@ The CAARA race net Net Control operator:
 > explicitly directed to do so by net control. This net will operate for
 > approximately the next four hours.
 >
-> I will perform the initial roll call in approximately five minutes.
+> I will make the initial roll call in approximately five minutes.
 > CALLSIGN, standing by.
 
 ### Roll call
@@ -151,6 +151,10 @@ As needed, remind stations that all traffic must go through net control unless s
 > This is net control. This is a directed net. Please do not call
 > other stations unless explicitly directed to do so by net control.
 > Thank you. CALLSIGN, standing by.
+
+Don't forget to tell stations they can secure after the tail runner has passed their location.
+
+> This is net control to TACTICAL CALLSIGN. You may now secure your station.
 
 ## Additional Notes
 
