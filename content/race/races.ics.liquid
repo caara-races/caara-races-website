@@ -2,7 +2,7 @@
 layout: raw
 permalink: /races/races.ics
 ---
-{% assign sorted_races = races | sort: 'date' -%}
+{% assign sorted_races = collections.race | sort: 'data.date' -%}
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//CAARA Race Schedule//caara.org//
@@ -12,15 +12,15 @@ X-WR-CALDESC:Half Marathon and Marathon Schedule
 X-WR-CALNAME:CAARA Race Schedule 2026
 {% for race in sorted_races -%}
 BEGIN:VEVENT
-SUMMARY:{{ race.title }}
-DTSTART:{{ race.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTEND:{{ race.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+SUMMARY:{{ race.data.title }}
+DTSTART:{{ race.data.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+DTEND:{{ race.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
 DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
-UID:{{ race.date | date: "%Y-%m-%d" | append: race.title | uuid }}@caara-schedule
-DESCRIPTION:{{ race.title }}\nWhen: {{ race.date | date: "%b %d, %Y" }}\n
- Location: {{ race.location }}\n
- Start time: {{ race.date | date: "%H:%M %p"}}
-LOCATION:{{ race.location }}
+UID:{{ race.data.date | date: "%Y-%m-%d" | append: race.data.title | uuid }}@caara-schedule
+DESCRIPTION:{{ race.data.title }}\nWhen: {{ race.data.date | date: "%b %d, %Y" }}\n
+ Location: {{ race.data.location }}\n
+ Start time: {{ race.data.date | date: "%H:%M %p"}}
+LOCATION:{{ race.data.location }}
 END:VEVENT
 {% endfor -%}
 END:VCALENDAR

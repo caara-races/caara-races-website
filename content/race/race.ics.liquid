@@ -1,12 +1,12 @@
 ---
 layout: raw
-permalink: /race/{{ race.slug }}/race.ics
+permalink: /race/{{ race.data.slug }}/race.ics
 pagination:
-  data: races
+  data: collections.race
   size: 1
   alias: race
 eleventyComputed:
-  title: "{{ race.title }}"
+  title: "{{ race.data.title }}"
 ---
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -14,16 +14,16 @@ PRODID:-//CAARA Race Schedule//caara.org//
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALDESC:Half Marathon and Marathon Schedule
-X-WR-CALNAME:CAARA Race Schedule 2026 ({{ race.title }})
+X-WR-CALNAME:CAARA Race Schedule 2026 ({{ race.data.title }})
 BEGIN:VEVENT
-SUMMARY:{{ race.title }}
-DTSTART:{{ race.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTEND:{{ race.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+SUMMARY:{{ race.data.title }}
+DTSTART:{{ race.data.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+DTEND:{{ race.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
 DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
-UID:{{ race.date | date: "%Y-%m-%d" | append: race.title | uuid }}@caara-schedule
-DESCRIPTION:{{ race.title }}\nWhen: {{ race.date | date: "%b %d, %Y" }}\n
- Location: {{ race.location }}\n
- Start time: {{ race.date | date: "%H:%M %p"}}
-LOCATION:{{ race.location }}
+UID:{{ race.data.date | date: "%Y-%m-%d" | append: race.data.title | uuid }}@caara-schedule
+DESCRIPTION:{{ race.data.title }}\nWhen: {{ race.data.date | date: "%b %d, %Y" }}\n
+ Location: {{ race.data.location }}\n
+ Start time: {{ race.data.date | date: "%H:%M %p"}}
+LOCATION:{{ race.data.location }}
 END:VEVENT
 END:VCALENDAR

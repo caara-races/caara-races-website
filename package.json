@@ -3,6 +3,7 @@
 	"dependencies": {
 		"@11ty/eleventy": "github:11ty/eleventy",
 		"@11ty/parse-date-strings": "^2.0.6",
+		"glob": "^13.0.6",
 		"markdown-it-anchor": "^9.2.0",
 		"uuid": "^13.0.0",
 		"yaml": "^2.8.2"
