@@ -8,7 +8,7 @@ permalink: /races/
 
 <p class="noprint"><a href="races.ics">Add to calendar</a></p>
 
-{% assign sorted_races = races | sort: 'date' %}
+{% assign sorted_races = collections.race | sort: 'data.date' %}
 
 <table class="race-schedule">
   <thead>
@@ -23,28 +23,28 @@ permalink: /races/
   </thead>
   <tbody>
 {% for race in sorted_races %}
-{% assign map_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".pdf" %}
-{% assign course_path = "/race/" | append: race.slug | append: "/" | append: race.slug | append: ".gpx" %}
+{% assign map_path = "/race/" | append: race.data.slug | append: "/" | append: race.data.slug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: race.data.slug | append: "/" | append: race.data.slug | append: ".gpx" %}
   <tr>
     <td>{{ forloop.index }}</td>
-    <td>{{ race.date | date: "%b %d (%a)" }}</td>
+    <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
     <td>
-      <a href="/race/{{ race.slug }}">{{ race.title }}</a>
-      {% if race.want %}
-      <p class="noprint">Needs {{race.want}} additional volunteers</p>
+      <a href="/race/{{ race.data.slug }}">{{ race.data.title }}</a>
+      {% if race.data.want %}
+      <p class="noprint">Needs {{race.data.want}} additional volunteers</p>
       {% endif %}
     </td>
-    <td>{{ race.date | date: "%H:%M %p" }}</td>
-    <td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
+    <td>{{ race.data.date | date: "%H:%M %p" }}</td>
+    <td><a href="{{ race.data.location | googleMapSearch }}">{{ race.data.location }}</a></td>
     <td class="icons noprint">
       <ul>
-  {% if race.url %}
-    <li><a title="YuKanRun Page" href="{{ race.url }}"><img src="/image/web.png"></a></li>
+  {% if race.data.url %}
+    <li><a title="YuKanRun Page" href="{{ race.data.url }}"><img src="/image/web.png"></a></li>
   {% else %}
     <li><img src="/image/web-grey.png"></li>
   {% endif %}
-  {% if race.sheet %}
-    <li><a title="CAARA Staffing" href="{{ race.sheet }}"><img src="/image/people.png"></a></li>
+  {% if race.data.sheet %}
+    <li><a title="CAARA Staffing" href="{{ race.data.sheet }}"><img src="/image/people.png"></a></li>
   {% else %}
     <li><img src="/image/people-grey.png"></li>
   {% endif %}

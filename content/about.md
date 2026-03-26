@@ -56,10 +56,9 @@ It also enables multiple people to collaborate on a project. In fact, it can all
 
 ## What is data driven content?
 
-Information about the race season is stored in a [structured file] written using [YAML] syntax. This allows us to generate several different views of that data, including:
+Information about the race season is stored in individual markdown files using [YAML frontmatter]. This allows us to generate several different views of that data, including:
 
-[structured file]: https://github.com/larsks/caara-races/raw/refs/heads/main/content/_data/races.yaml
-[yaml]: https://en.wikipedia.org/wiki/YAML
+[yaml frontmatter]: https://www.11ty.dev/docs/data-frontmatter/
 
 - [The overall race schedule](https://caara-races.oddbit.com/races/)
 - [An iCalendar file of the overall schedule](https://caara-races.oddbit.com/races/races.ics), allowing you to import the schedule into Google Calendar, Outlook, etc.

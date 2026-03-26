@@ -1,0 +1,13 @@
+---
+layout: race
+tags: race
+title: Happy Holidays Half Marathon
+slug: happyholidays
+sheet: https://docs.google.com/spreadsheets/d/1ZP6uIarccok-U-jlEnsTo3Yi6pAwS6acQ51VyAAQ-wE
+date: 2026-12-06T09:00:00-04:00
+location: Gloucester, MA
+url: https://www.yukanrun.com/happy-holidays-half-merrython-5k
+want: 3
+permalink: /race/happyholidays/
+---
+

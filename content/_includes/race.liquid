@@ -1,0 +1,57 @@
+---
+layout: base
+---
+
+{% assign cover_image_path = "/race/" | append: slug | append: "/cover.jpg" %}
+{% assign map_path = "/race/" | append: slug | append: "/" | append: slug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: slug | append: "/" | append: slug | append: ".gpx" %}
+
+{% if cover_image_path | fileExists %}
+<div class="race-cover noprint">
+  <img src="{{ cover_image_path }}">
+</div>
+{% endif %}
+
+<table>
+  <tr>
+    <td><b>When</b></td><td>{{ date | date: "%b %d, %Y (%a)" }}</td>
+  </tr>
+  <tr>
+    <td><b>Where</b></td><td><a href="{{ location | googleMapSearch }}">{{ location }}</a></td>
+  </tr>
+</table>
+
+<div class="noprint">
+<p class="noprint"><a href="race.ics">Add to calendar</a></p>
+
+<ul>
+  {% if url %}
+    <li><a href="{{ url }}">YuKanRun Page</a></li>
+  {% endif %}
+  {% if map_path | fileExists %}
+    <li><a href="{{ map_path }}">Map</a></li>
+  {% endif %}
+  {% if course_path | fileExists %}
+    <li><a href="{{ course_path }}">GPX Course</a></li>
+  {% endif %}
+</ul>
+</div>
+
+<h2>Staffing</h2>
+
+{% if want %}
+<p class="wantnote">We are in need of {{ want }} additional volunteers for
+this event. Please email <a href="mailto:kevinlyonsk1kl@gmail.com">Kevin,
+K1KML</a> if you can help.</p>
+{% endif %}
+
+{% if sheet %}
+<p><a href="{{ sheet }}">Link to spreadsheet</a></p>
+<div class="sheet">
+<iframe style="height: 890px; width: 650px;" src="{{ sheet }}/htmlembed"></iframe>
+</div>
+{% else %}
+  <p>Race details are not available at this time.</p>
+{% endif %}
+
+{{ content }}
