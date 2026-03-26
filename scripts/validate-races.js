@@ -41,10 +41,6 @@ async function validateRaces() {
 
       // Remove Eleventy-specific fields before validation
       const raceData = { ...frontmatter };
-      delete raceData.layout;
-      delete raceData.tags;
-      delete raceData.permalink;
-
       const valid = validate(raceData);
 
       if (!valid) {
