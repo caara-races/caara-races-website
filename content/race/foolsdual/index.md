@@ -11,3 +11,10 @@ want: 1
 permalink: /race/foolsdual/
 ---
 
+## Course Info
+
+There will be six aid stations with water near miles 2, 4, 5, 6, 9 and 11.
+Sports drink and energy gel will be available on course as well. A portable
+restroom will be available along the course near mile 4 & 9.  Portable
+restrooms will be available at the start/finish. All roads are open to traffic.
+PLEASE stay to the side of the road.
