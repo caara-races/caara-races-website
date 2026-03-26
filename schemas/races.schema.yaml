@@ -33,6 +33,7 @@ properties:
     required:
       - slug
       - location
+      - frequency
 required:
   - date
   - race

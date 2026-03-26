@@ -12,12 +12,21 @@ layout: base
 </div>
 {% endif %}
 
-<table>
+<table class="raceinfo">
   <tr>
-    <td><b>When</b></td><td>{{ date | date: "%b %d, %Y (%a)" }}</td>
+    <th>When</th><td>{{ date | date: "%b %d, %Y (%a)"}}</td>
   </tr>
   <tr>
-    <td><b>Where</b></td><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
+    <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
+  </tr>
+  <tr>
+    <th>Where</th><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
+  </tr>
+  <tr>
+    <th>Frequencies</th><td>Primary: {{ race.frequency.primary }}</td>
+  </tr>
+  <tr>
+    <th></th><td>Backup: {{ race.frequency.backup }}</td>
   </tr>
 </table>
 
