@@ -1,7 +1,7 @@
 import { glob } from "glob";
 import { validateFiles } from "./validate-data.js";
 
-const raceFiles = await glob("content/race/*/index.md");
+const raceFiles = await glob("content/race/**/index.md");
 
 if (raceFiles.length === 0) {
   console.error("No race files found");

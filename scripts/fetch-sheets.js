@@ -20,6 +20,23 @@ export function extractSpreadsheetId(url) {
   return match[1];
 }
 
+export async function resolveSheetUrl(filePath, frontmatter) {
+  if (frontmatter.race?.sheet) return frontmatter.race.sheet;
+
+  const parentDataFile = path.join(
+    path.dirname(filePath),
+    "..",
+    "_data.11tydata.json",
+  );
+  try {
+    const content = await readFile(parentDataFile, "utf8");
+    const data = JSON.parse(content);
+    return data.race?.sheet ?? null;
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
   const creds = JSON.parse(await readFile(CREDS_PATH, "utf8"));
   const auth = new JWT({
@@ -28,27 +45,44 @@ async function main() {
     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
   });
 
-  const raceFiles = await glob("content/race/*/index.md");
+  const raceFiles = await glob("content/race/*/*/index.md");
+
+  // Group races by spreadsheet URL so each sheet is loaded only once.
+  const bySheet = new Map();
   for (const filePath of raceFiles) {
     const content = await readFile(filePath, "utf8");
-    const data = extractFrontmatter(filePath, content);
-    if (!data.race?.sheet) continue;
-
-    console.log(`${filePath}: fetching sheet data...`);
-    const id = extractSpreadsheetId(data.race.sheet);
-    const doc = new GoogleSpreadsheet(id, auth);
-    await doc.loadInfo();
+    const frontmatter = extractFrontmatter(filePath, content);
+    const sheetUrl = await resolveSheetUrl(filePath, frontmatter);
+    if (!sheetUrl) {
+      console.warn(`${filePath}: no sheet URL found, skipping`);
+      continue;
+    }
     const slug = path
       .basename(path.dirname(filePath))
       .replace(/^\d{4}-\d{2}-\d{2}-/, "");
-    const sheet = doc.sheetsByTitle[slug];
-    if (!sheet) throw new Error(`No sheet tab named "${slug}" in spreadsheet`);
-    const rows = await sheet.getRows();
-    const volunteers = rows.map((row) => row.toObject());
+    if (!bySheet.has(sheetUrl)) bySheet.set(sheetUrl, []);
+    bySheet.get(sheetUrl).push({ filePath, slug });
+  }
 
-    const outPath = path.join(path.dirname(filePath), "_data.11tydata.json");
-    await writeFile(outPath, JSON.stringify({ volunteers }, null, 2));
-    console.log(`${filePath}: wrote ${volunteers.length} rows → ${outPath}`);
+  for (const [sheetUrl, races] of bySheet) {
+    const id = extractSpreadsheetId(sheetUrl);
+    const doc = new GoogleSpreadsheet(id, auth);
+    await doc.loadInfo();
+
+    for (const { filePath, slug } of races) {
+      console.log(`${filePath}: fetching sheet data...`);
+      const sheet = doc.sheetsByTitle[slug];
+      if (!sheet) {
+        console.warn(`${filePath}: no sheet tab named "${slug}", skipping`);
+        continue;
+      }
+      const rows = await sheet.getRows();
+      const volunteers = rows.map((row) => row.toObject());
+
+      const outPath = path.join(path.dirname(filePath), "_data.11tydata.json");
+      await writeFile(outPath, JSON.stringify({ volunteers }, null, 2));
+      console.log(`${filePath}: wrote ${volunteers.length} rows → ${outPath}`);
+    }
   }
 }
 

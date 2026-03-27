@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { describe, it } from "node:test";
-import { extractFrontmatter, extractSpreadsheetId } from "./fetch-sheets.js";
+import {
+  extractFrontmatter,
+  extractSpreadsheetId,
+  resolveSheetUrl,
+} from "./fetch-sheets.js";
 
 describe("extractSpreadsheetId", () => {
   it("extracts ID from a standard Google Sheets URL", () => {
@@ -40,3 +47,76 @@ describe("extractFrontmatter", () => {
     );
   });
 });
+
+describe("resolveSheetUrl", () => {
+  const SHEET_URL = "https://docs.google.com/spreadsheets/d/abc123/";
+
+  it("returns sheet URL from frontmatter when present", async () => {
+    const result = await resolveSheetUrl("any/path/index.md", {
+      race: { sheet: SHEET_URL },
+    });
+    assert.equal(result, SHEET_URL);
+  });
+
+  it("reads sheet URL from parent _data.11tydata.json when not in frontmatter", async () => {
+    const tmp = await mkdtemp();
+    try {
+      const raceDir = path.join(tmp, "2026", "2026-03-28-foolsdual");
+      await mkdir(raceDir, { recursive: true });
+      await writeFile(
+        path.join(tmp, "2026", "_data.11tydata.json"),
+        JSON.stringify({ race: { sheet: SHEET_URL } }),
+      );
+      const result = await resolveSheetUrl(path.join(raceDir, "index.md"), {});
+      assert.equal(result, SHEET_URL);
+    } finally {
+      await rm(tmp, { recursive: true });
+    }
+  });
+
+  it("returns null when neither frontmatter nor parent file has sheet", async () => {
+    const tmp = await mkdtemp();
+    try {
+      const raceDir = path.join(tmp, "2026", "2026-03-28-foolsdual");
+      await mkdir(raceDir, { recursive: true });
+      await writeFile(
+        path.join(tmp, "2026", "_data.11tydata.json"),
+        JSON.stringify({ race: {} }),
+      );
+      const result = await resolveSheetUrl(path.join(raceDir, "index.md"), {});
+      assert.equal(result, null);
+    } finally {
+      await rm(tmp, { recursive: true });
+    }
+  });
+
+  it("returns null when parent file does not exist", async () => {
+    const result = await resolveSheetUrl(
+      "/nonexistent/deep/path/race/index.md",
+      {},
+    );
+    assert.equal(result, null);
+  });
+
+  it("returns null when parent file has invalid JSON", async () => {
+    const tmp = await mkdtemp();
+    try {
+      const raceDir = path.join(tmp, "2026", "2026-03-28-foolsdual");
+      await mkdir(raceDir, { recursive: true });
+      await writeFile(
+        path.join(tmp, "2026", "_data.11tydata.json"),
+        "not valid json",
+      );
+      const result = await resolveSheetUrl(path.join(raceDir, "index.md"), {});
+      assert.equal(result, null);
+    } finally {
+      await rm(tmp, { recursive: true });
+    }
+  });
+});
+
+async function mkdtemp() {
+  const tmp = path.join(tmpdir(), `fetch-sheets-test-${Date.now()}`);
+  await mkdir(tmp, { recursive: true });
+  return tmp;
+}
