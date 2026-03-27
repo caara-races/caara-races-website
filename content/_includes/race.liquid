@@ -63,6 +63,7 @@ layout: base
 {% endif %}
 {% endfor %}
 
+<div class="staffing">
 <h2>Staffing</h2>
 
 {% if race.want %}
@@ -72,19 +73,19 @@ K1KML</a> if you can help.</p>
 {% endif %}
 
 {% if volunteers %}
-  <table class="staffing">
+  <table>
     <tr>
       <th>Role</th>
       <th>Callsign</th>
       <th>Name</th>
-      <th>On Station</th>
+      <th>On station</th>
     </tr>
 {% for aro in volunteers %}
   <tr>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
     <td>{{ aro.Callsign }}</td>
     <td>{{ aro.Name }}</td>
-    <td>{{ aro["On Station"] }}</td>
+    <td>{{ aro["On station"] }}</td>
   </tr>
 {% endfor %}
   </table>
@@ -92,3 +93,4 @@ K1KML</a> if you can help.</p>
 {% else %}
   <p>Race details are not available at this time.</p>
 {% endif %}
+</div>
