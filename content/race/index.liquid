@@ -23,13 +23,13 @@ permalink: /races/
   </thead>
   <tbody>
 {% for race in sorted_races %}
-{% assign map_path = "/race/" | append: race.data.race.slug | append: "/" | append: race.data.race.slug | append: ".pdf" %}
-{% assign course_path = "/race/" | append: race.data.race.slug | append: "/" | append: race.data.race.slug | append: ".gpx" %}
+{% assign map_path = "/race/" | append: race.page.fileSlug | append: "/" | append: race.page.fileSlug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: race.page.fileSlug | append: "/" | append: race.page.fileSlug | append: ".gpx" %}
   <tr>
     <td>{{ forloop.index }}</td>
     <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
     <td>
-      <a href="/race/{{ race.data.race.slug }}">{{ race.data.title }}</a>
+      <a href="/race/{{ race.page.fileSlug }}">{{ race.data.title }}</a>
       {% if race.data.race.want %}
       <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
       {% endif %}
