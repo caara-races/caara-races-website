@@ -60,8 +60,8 @@ Information about the race season is stored in individual markdown files using [
 
 [yaml frontmatter]: https://www.11ty.dev/docs/data-frontmatter/
 
-- [The overall race schedule](https://caara-races.oddbit.com/races/)
-- [An iCalendar file of the overall schedule](https://caara-races.oddbit.com/races/races.ics), allowing you to import the schedule into Google Calendar, Outlook, etc.
+- [The overall race schedule](https://caara-races.oddbit.com/race/)
+- [An iCalendar file of the overall schedule](https://caara-races.oddbit.com/race/races.ics), allowing you to import the schedule into Google Calendar, Outlook, etc.
 - Individual race web pages, such as [this one for the Fool's Dual Half Marathon](https://caara-races.oddbit.com/race/foolsdual/)
 - iCalendar files for individual races, such as [this one for the Fool's Dual Half Marathon](https://caara-races.oddbit.com/race/foolsdual/race.ics)
 

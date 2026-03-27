@@ -38,8 +38,61 @@ function exposeRunMode(eleventyConfig) {
   eleventyConfig.addGlobalData("runMode", () => currentRunMode);
 }
 
+// Configure collections
+function setupCollections(eleventyConfig) {
+  // Group races by year, sorted chronologically within each year.
+  eleventyConfig.addCollection("raceYears", (collection) => {
+    const races = collection.getFilteredByTag("race");
+    const yearMap = new Map();
+    for (const race of races) {
+      const year = new Date(race.data.date).getFullYear();
+      if (!yearMap.has(year)) yearMap.set(year, []);
+      yearMap.get(year).push(race);
+    }
+    return [...yearMap.entries()]
+      .sort(([a], [b]) => a - b)
+      .map(([year, races]) => ({
+        year,
+        races: races.sort(
+          (a, b) => new Date(a.data.date) - new Date(b.data.date),
+        ),
+      }));
+  });
+
+  // Group races by year+month, sorted chronologically within each month.
+  eleventyConfig.addCollection("raceMonths", (collection) => {
+    const races = collection.getFilteredByTag("race");
+    const monthMap = new Map();
+    for (const race of races) {
+      const d = new Date(race.data.date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const key = `${year}-${month}`;
+      if (!monthMap.has(key)) monthMap.set(key, { year, month, races: [] });
+      monthMap.get(key).races.push(race);
+    }
+    return [...monthMap.values()]
+      .sort((a, b) => a.year - b.year || a.month.localeCompare(b.month))
+      .map((m) => ({
+        ...m,
+        races: m.races.sort(
+          (a, b) => new Date(a.data.date) - new Date(b.data.date),
+        ),
+      }));
+  });
+}
+
 // Configure filters
 function setupFilters(eleventyConfig) {
+  // Return the web-accessible base path for a race's static assets (cover
+  // image, PDF, GPX). Assets are passthrough-copied from the source directory,
+  // so their web path mirrors the source tree (e.g. /race/2026-03-28-foolsdual/)
+  // regardless of the page's computed permalink.
+  eleventyConfig.addFilter("raceAssetBase", (inputPath) => {
+    const sourceDir = path.basename(path.dirname(inputPath));
+    return `/race/${sourceDir}/`;
+  });
+
   eleventyConfig.addFilter("lastModified", (filePath) => {
     const stats = fs.statSync(filePath);
     return stats.mtime;
@@ -96,6 +149,7 @@ export default function (eleventyConfig) {
   exposeRunMode(eleventyConfig);
   setupPassthroughCopy(eleventyConfig);
   setupFilters(eleventyConfig);
+  setupCollections(eleventyConfig);
 
   // Setting a watch target on a file means that changes to that file will
   // trigger a site rebuild. This happens by default for files that
