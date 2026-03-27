@@ -2,9 +2,10 @@
 layout: base
 ---
 
-{% assign cover_image_path = "/race/" | append: page.fileSlug | append: "/cover.jpg" %}
-{% assign map_path = "/race/" | append: page.fileSlug | append: "/" | append: page.fileSlug | append: ".pdf" %}
-{% assign course_path = "/race/" | append: page.fileSlug | append: "/" | append: page.fileSlug | append: ".gpx" %}
+{% assign asset_base = page.inputPath | raceAssetBase %}
+{% assign cover_image_path = asset_base | append: "cover.jpg" %}
+{% assign map_path = asset_base | append: page.fileSlug | append: ".pdf" %}
+{% assign course_path = asset_base | append: page.fileSlug | append: ".gpx" %}
 
 {% if cover_image_path | fileExists %}
 <div class="race-cover noprint">

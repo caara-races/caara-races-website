@@ -1,14 +1,15 @@
 ---
-title: Race Schedule
-tags: page
 layout: page
-weight: 10
+pagination:
+  data: collections.raceYears
+  size: 1
+  alias: yearData
+permalink: /race/{{ yearData.year }}/
+eleventyComputed:
+  title: "Race Schedule {{ yearData.year }}"
 ---
 
-{% assign current_year = "now" | date: "%Y" %}
-<p class="noprint"><a href="/race/{{ current_year }}/races.ics">Add to calendar</a></p>
-
-{% assign sorted_races = collections.race | sort: 'data.date' %}
+<p class="noprint"><a href="races.ics">Add to calendar</a></p>
 
 <table class="race-schedule">
   <thead>
@@ -22,16 +23,12 @@ weight: 10
     </tr>
   </thead>
   <tbody>
-{% assign race_index = 0 %}
-{% for race in sorted_races %}
-{% assign race_year = race.data.date | date: "%Y" %}
-{% if race_year == current_year %}
-{% assign race_index = race_index | plus: 1 %}
+{% for race in yearData.races %}
 {% assign asset_base = race.page.inputPath | raceAssetBase %}
 {% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
 {% assign course_path = asset_base | append: race.page.fileSlug | append: ".gpx" %}
   <tr>
-    <td>{{ race_index }}</td>
+    <td>{{ forloop.index }}</td>
     <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
     <td>
       <a href="{{ race.page.url }}">{{ race.data.title }}</a>
@@ -66,7 +63,6 @@ weight: 10
       </ul>
     </td>
   </tr>
-{% endif %}
 {% endfor %}
 </tbody>
 </table>

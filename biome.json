@@ -2,6 +2,7 @@
   "files": {
     "includes": [
       "**",
+      "!!.worktrees",
       "!!_site",
       "!!package.json",
       "!!firebase.json",
