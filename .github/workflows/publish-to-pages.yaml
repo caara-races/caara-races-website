@@ -31,10 +31,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Write google sheets secret to file
+        env:
+          GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
+        run: |
+          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
+        shell: bash
       - name: Install packages
         run: |
           npm install
       - name: Fetch data
+        env:
+          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
         run: |
           npm run fetch
       - name: Build pages
