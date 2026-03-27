@@ -6,9 +6,8 @@ import yaml from "yaml";
 async function validateRaces() {
   try {
     // Read schema and extract item schema
-    const schemaRaw = await readFile("schemas/races.schema.json", "utf8");
-    const schema = JSON.parse(schemaRaw);
-    const itemSchema = schema.items; // Validate single object, not array
+    const schemaRaw = await readFile("schemas/races.schema.yaml", "utf8");
+    const schema = yaml.parse(schemaRaw);
 
     // Find all race markdown files
     const raceFiles = await glob("content/race/*/index.md");
@@ -20,7 +19,7 @@ async function validateRaces() {
 
     // Setup validation
     const ajv = new Ajv();
-    const validate = ajv.compile(itemSchema);
+    const validate = ajv.compile(schema);
 
     let hasErrors = false;
     const races = [];

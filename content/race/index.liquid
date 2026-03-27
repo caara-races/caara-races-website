@@ -23,28 +23,28 @@ permalink: /races/
   </thead>
   <tbody>
 {% for race in sorted_races %}
-{% assign map_path = "/race/" | append: race.data.slug | append: "/" | append: race.data.slug | append: ".pdf" %}
-{% assign course_path = "/race/" | append: race.data.slug | append: "/" | append: race.data.slug | append: ".gpx" %}
+{% assign map_path = "/race/" | append: race.data.race.slug | append: "/" | append: race.data.race.slug | append: ".pdf" %}
+{% assign course_path = "/race/" | append: race.data.race.slug | append: "/" | append: race.data.race.slug | append: ".gpx" %}
   <tr>
     <td>{{ forloop.index }}</td>
     <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
     <td>
-      <a href="/race/{{ race.data.slug }}">{{ race.data.title }}</a>
-      {% if race.data.want %}
-      <p class="noprint">Needs {{race.data.want}} additional volunteers</p>
+      <a href="/race/{{ race.data.race.slug }}">{{ race.data.title }}</a>
+      {% if race.data.race.want %}
+      <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
       {% endif %}
     </td>
     <td>{{ race.data.date | date: "%H:%M %p" }}</td>
-    <td><a href="{{ race.data.location | googleMapSearch }}">{{ race.data.location }}</a></td>
+    <td><a href="{{ race.data.race.location | googleMapSearch }}">{{ race.data.race.location }}</a></td>
     <td class="icons noprint">
       <ul>
-  {% if race.data.url %}
-    <li><a title="YuKanRun Page" href="{{ race.data.url }}"><img src="/image/web.png"></a></li>
+  {% if race.data.race.url %}
+    <li><a title="YuKanRun Page" href="{{ race.data.race.url }}"><img src="/image/web.png"></a></li>
   {% else %}
     <li><img src="/image/web-grey.png"></li>
   {% endif %}
-  {% if race.data.sheet %}
-    <li><a title="CAARA Staffing" href="{{ race.data.sheet }}"><img src="/image/people.png"></a></li>
+  {% if race.data.race.sheet %}
+    <li><a title="CAARA Staffing" href="{{ race.data.race.sheet }}"><img src="/image/people.png"></a></li>
   {% else %}
     <li><img src="/image/people-grey.png"></li>
   {% endif %}
