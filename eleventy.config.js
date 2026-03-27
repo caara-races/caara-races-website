@@ -89,8 +89,8 @@ function setupFilters(eleventyConfig) {
   // so their web path mirrors the source tree (e.g. /race/2026-03-28-foolsdual/)
   // regardless of the page's computed permalink.
   eleventyConfig.addFilter("raceAssetBase", (inputPath) => {
-    const sourceDir = path.basename(path.dirname(inputPath));
-    return `/race/${sourceDir}/`;
+    const relDir = path.relative("content", path.dirname(inputPath));
+    return `/${relDir}/`;
   });
 
   eleventyConfig.addFilter("lastModified", (filePath) => {
