@@ -4,6 +4,8 @@
 		"@11ty/eleventy": "github:11ty/eleventy",
 		"@11ty/parse-date-strings": "^2.0.6",
 		"glob": "^13.0.6",
+		"google-auth-library": "^10.6.2",
+		"google-spreadsheet": "^5.2.0",
 		"markdown-it-anchor": "^9.2.0",
 		"uuid": "^13.0.0",
 		"yaml": "^2.8.2"
@@ -11,6 +13,8 @@
 	"scripts": {
 		"build": "eleventy",
 		"serve": "eleventy --watch --serve",
+		"fetch": "node scripts/fetch-sheets.js",
+		"test": "node --test scripts/*.test.js",
 		"validate-races": "node scripts/validate-races.js",
 		"validate-towns": "node scripts/validate-data.js schemas/towns.yaml content/_data/towns.yaml",
 		"validate-markdown": "node scripts/validate-markdown.js",

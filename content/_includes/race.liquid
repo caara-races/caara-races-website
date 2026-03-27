@@ -71,7 +71,24 @@ this event. Please email <a href="mailto:kevinlyonsk1kl@gmail.com">Kevin,
 K1KML</a> if you can help.</p>
 {% endif %}
 
-{% if race.sheet %}
+{% if volunteers %}
+  <table class="staffing">
+    <tr>
+      <th>Role</th>
+      <th>Callsign</th>
+      <th>Name</th>
+      <th>On Station</th>
+    </tr>
+{% for aro in volunteers %}
+  <tr>
+    <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
+    <td>{{ aro.Callsign }}</td>
+    <td>{{ aro.Name }}</td>
+    <td>{{ aro["On Station"] }}</td>
+  </tr>
+{% endfor %}
+  </table>
+
 {% else %}
   <p>Race details are not available at this time.</p>
 {% endif %}
