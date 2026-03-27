@@ -23,3 +23,15 @@ Sports drink and energy gel will be available on course as well. A portable
 restroom will be available along the course near mile 4 & 9.  Portable
 restrooms will be available at the start/finish. All roads are open to traffic.
 PLEASE stay to the side of the road.
+
+## Emergency contacts
+
+### Gloucester
+
+- Police 978-325-5400
+- Fire 978-325-5300
+
+### Rockport
+
+- Police 978-546-1212
+- Fire 978-375-2103
