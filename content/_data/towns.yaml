@@ -1,0 +1,67 @@
+rockport:
+  contacts:
+    - name: Fire
+      number: 978-375-2103
+    - name: Police
+      number: 978-546-1212
+gloucester:
+  contacts:
+    - name: Fire
+      number: 978-325-5300
+    - name: Police
+      number: 978-325-5400
+marblehead:
+  contacts:
+    - name: Police
+      number: 781-631-1212
+    - name: Fire
+      number: 781-631-0142
+salem:
+  contacts:
+    - name: Police
+      number: 978-744-1212
+    - name: Fire
+      number: 978-744-1235
+hamilton:
+  contacts:
+    - name: Police
+      number: 978-468-1212
+    - name: Fire
+      number: 978-468-5560
+essex:
+  contacts:
+    - name: Police
+      number: 978-768-6628
+    - name: Fire
+      number: 978-768-6363
+ipswich:
+  contacts:
+    - name: Fire
+      number: 978-356-4343
+    - name: Police
+      number: 978-356-6630
+newburyport:
+  contacts:
+    - name: Police
+      number: 978-462-4411
+    - name: Fire
+      number: 978-465-4427
+west newbury:
+  contacts:
+    - name: Police
+      number: 978-363-1212
+    - name: Fire
+      number: 978-363-1112
+newbury:
+  contacts:
+    - name: Police
+      number: 978-462-4440
+    - name: Fire
+      number: 978-462-2282
+manchester-by-the-sea:
+  display: Manchester-by-the-Sea
+  contacts:
+    - name: Police
+      number: 978-526-1212
+    - name: Fire
+      number: 978-526-4040

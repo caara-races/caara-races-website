@@ -12,16 +12,7 @@ race:
   frequency:
     primary: W1GLO 2m 145.13  (Dup-)  PL Tone 107.2
     backup: W1GLO 70cm 440 443.7 (Dup+)  PL Tone:107.2
+  towns:
+    - rockport
+    - gloucester
 ---
-
-## Emergency contacts
-
-### Gloucester
-
-- Police 978-325-5400
-- Fire 978-325-5300
-
-### Rockport
-
-- Police 978-546-1212
-- Fire 978-375-2103

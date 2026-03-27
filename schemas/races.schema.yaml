@@ -10,6 +10,10 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      towns:
+        type: array
+        items:
+          type: string
       sheet:
         type: string
       location:

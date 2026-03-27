@@ -13,5 +13,8 @@ race:
   frequency:
     primary: Salem 2m NS1RA 146.88 (Dup-) PL 118.8
     backup: Danvers 2m NS1RA 145.470 (Dup-) PL 136.5
+  towns:
+    - marblehead
+    - salem
 ---
 

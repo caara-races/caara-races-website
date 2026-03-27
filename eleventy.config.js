@@ -128,6 +128,10 @@ function setupFilters(eleventyConfig) {
     }
   });
 
+  eleventyConfig.addFilter("townName", (slug, town) => {
+    return town?.display ?? slug.charAt(0).toUpperCase() + slug.slice(1);
+  });
+
   // Return true if the given path is a regular file. The path is relative to
   // the input directory.
   eleventyConfig.addFilter("fileExists", (relpath) => {

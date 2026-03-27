@@ -49,6 +49,20 @@ layout: base
 
 {{ content }}
 
+<h2>Emergency contacts</h2>
+
+{% for townslug in race.towns %}
+{% assign town = towns[townslug] %}
+{% if town %}
+  <h3>{{ townslug | townName: town }}</h3>
+{% for contact in town.contacts %}
+  <ul>
+    <li><strong>{{ contact.name }}</strong>: {{ contact.number }}
+  </ul>
+{% endfor %}
+{% endif %}
+{% endfor %}
+
 <h2>Staffing</h2>
 
 {% if race.want %}
