@@ -1,0 +1,39 @@
+$schema: http://json-schema.org/draft-04/schema#
+type: object
+properties:
+  title:
+    type: string
+  date:
+    type: string
+    pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}$
+  race:
+    type: object
+    additionalProperties: false
+    properties:
+      slug:
+        type: string
+        pattern: ^[a-z][a-z0-9-]*$
+      sheet:
+        type: string
+      location:
+        type: string
+      url:
+        type: string
+        pattern: ^https?://
+      want:
+        type: integer
+      frequency:
+        type: object
+        additionalProperties: false
+        properties:
+          primary:
+            type: string
+          backup:
+            type: string
+    required:
+      - slug
+      - location
+required:
+  - date
+  - race
+  - title

@@ -1,14 +1,19 @@
 ---
-layout: race
 tags: race
 title: Fool's Dual Half Marathon
-slug: foolsdual
-sheet: https://docs.google.com/spreadsheets/d/1R1KS2LwOrlsyDlQ03bne81hdAZNHMgpIbHciwGzbT28
 date: 2026-03-28T09:00:00-04:00
-location: Gloucester, MA
-url: https://www.yukanrun.com/fools-dual-half-marathon-5k
-want: 1
-permalink: /race/foolsdual/
+race:
+  slug: foolsdual
+  sheet: https://docs.google.com/spreadsheets/d/1R1KS2LwOrlsyDlQ03bne81hdAZNHMgpIbHciwGzbT28
+  location: |
+    O'Maley Middle School
+    32 Cherry Street
+    Gloucester, MA 01930
+  url: https://www.yukanrun.com/fools-dual-half-marathon-5k
+  want: 1
+  frequency:
+    primary: W1GLO 2m 145.13  (Dup-)  PL Tone 107.2
+    backup: W1GLO 70cm 440 443.7 (Dup+)  PL Tone:107.2
 ---
 
 ## Course Info
