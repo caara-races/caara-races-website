@@ -15,5 +15,21 @@ race:
   towns:
     - marblehead
     - salem
+  checkpoints:
+    cp1: |
+      Harbor Ave and Ocean Ave.
+      In Marblehead Mile 1 and 4
+    cp2: |
+      Harbor Ave and Harvard St.
+      In Marblehead Mile 3
+    cp3: |
+      Lafayette St. and Doane St.
+      in Marblehead Mile 5 and 13
+    cp4: |
+      Lafayette St. and Derby St.
+      In Salem Mile 7 and 11
+    cp5: |
+      Memorial Drive and Fort Ave.
+      In Salem Mile 9 and 10
 ---
 
