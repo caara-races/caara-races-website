@@ -8,7 +8,6 @@ race:
     32 Cherry Street
     Gloucester, MA 01930
   url: https://www.yukanrun.com/fools-dual-half-marathon-5k
-  want: 1
   frequency:
     primary: W1GLO 2m 145.13  (Dup-)  PL Tone 107.2
     backup: W1GLO 70cm 440 443.7 (Dup+)  PL Tone:107.2

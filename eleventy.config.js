@@ -155,6 +155,8 @@ export default function (eleventyConfig) {
   setupFilters(eleventyConfig);
   setupCollections(eleventyConfig);
 
+  eleventyConfig.setDataFileBaseName("_data");
+
   // Setting a watch target on a file means that changes to that file will
   // trigger a site rebuild. This happens by default for files that
   // eleventy normally processes (.md, .liquid, etc), but needs explicit
