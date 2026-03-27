@@ -13,5 +13,8 @@ race:
   frequency:
     primary: W1GLO 2m 145.13 (Dup-) PL Tone 107.2
     backup: Danvers NS1RA 2m 145.47 (Dup-) PL Tone 136.5
+  towns:
+    - hamilton
+    - manchester-by-the-sea
 ---
 

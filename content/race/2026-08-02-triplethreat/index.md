@@ -13,5 +13,8 @@ race:
   frequency:
     primary: W1GLO 2m 145.13 (Dup-) PL Tone 107.2
     backup: W1GLO 70cm 440 443.7 (Dup+) PL Tone:107.2
+  towns:
+    - rockport
+    - gloucester
 ---
 

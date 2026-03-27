@@ -10,5 +10,8 @@ race:
   frequency:
     primary: Topsfield 2m N1HSY 147.285 (Dup+) PL Tone:100.00
     backup: Ipswich 2m W1EM 145.490 (Dup-) PL Tone:131.8
+  towns:
+    - rockport
+    - gloucester
 ---
 

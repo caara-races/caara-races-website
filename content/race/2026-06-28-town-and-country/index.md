@@ -13,5 +13,9 @@ race:
   frequency:
     primary: West Newbury K1KKM 2m 146.625 (Dup-) PL131.8
     backup: Topsfield N1HSY 2m 147.285 (Dup+) PL Tone:100.00
+  towns:
+    - newburyport
+    - newbury
+    - west newbury
 ---
 
