@@ -76,13 +76,16 @@ K1KML</a> if you can help.</p>
   <table>
     <tr>
       <th>Role</th>
+      <th>Location</th>
       <th>Callsign</th>
       <th>Name</th>
       <th>On station</th>
     </tr>
 {% for aro in volunteers %}
+{% assign role_key = aro.Role | downcase %}
   <tr>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
+    <td>{{ race.checkpoints[role_key] | default: "" | replaceNewlines }}</td>
     <td>{{ aro.Callsign }}</td>
     <td>{{ aro.Name }}</td>
     <td>{{ aro["On station"] }}</td>
@@ -90,6 +93,7 @@ K1KML</a> if you can help.</p>
 {% endfor %}
   </table>
 
+  <p><strong>Checkpoint Miles are Approximate</strong>. Use Cross-Streets to identify your location for emergency assistance.</p>
 {% else %}
   <p>Race details are not available at this time.</p>
 {% endif %}

@@ -13,5 +13,24 @@ race:
     - hamilton
     - essex
     - ipswich
+  checkpoints:
+    cp1: |
+      MA 1A and Lakemans Ln. 
+      Mile 2+ (Ipswich)
+    cp2: |
+      Essex Rd. and Northgate Rd.
+      Mile 4 (Ipswich)
+    cp3: |
+      John Wise Ln. and Western Ave.
+      Mile 6+ (Essex)
+    cp4: |
+      Western Ave. and Lakeview Rd.
+      Mile 8+ (Essex)
+    cp5: |
+      School St. and Prospect St.
+      Mile 10  (Hamilton)
+    cp6: |
+      Bridge St. and Miles River Rd.
+      Mile 12  (Hamilton)
 ---
 

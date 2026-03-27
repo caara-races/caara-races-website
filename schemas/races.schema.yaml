@@ -14,6 +14,10 @@ properties:
         type: array
         items:
           type: string
+      checkpoints:
+        type: object
+        additionalProperties:
+          type: string
       sheet:
         type: string
       location:
