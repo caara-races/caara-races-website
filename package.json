@@ -12,6 +12,7 @@
 		"build": "eleventy",
 		"serve": "eleventy --watch --serve",
 		"validate-races": "node scripts/validate-races.js",
+		"validate-towns": "node scripts/validate-data.js schemas/towns.yaml content/_data/towns.yaml",
 		"validate-markdown": "node scripts/validate-markdown.js",
 		"validate": "bash scripts/validate-all.sh"
 	},
