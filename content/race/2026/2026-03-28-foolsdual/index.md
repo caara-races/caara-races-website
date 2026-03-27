@@ -14,7 +14,6 @@ race:
   towns:
     - rockport
     - gloucester
-  sheet: https://docs.google.com/spreadsheets/d/1XzPijv-n7dFzoGK9roMNr12XNxfJET4HIs2mqLIQvOM/
 ---
 
 ## Course Info

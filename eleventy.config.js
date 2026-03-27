@@ -162,6 +162,7 @@ export default function (eleventyConfig) {
   // eleventy normally processes (.md, .liquid, etc), but needs explicit
   // configuration for other file types.
   eleventyConfig.addWatchTarget("content/css/normalize.css");
+  eleventyConfig.addWatchTarget("content/race/**/_data.11tydata.json");
 
   // Permit setting base url from the environment.
   eleventyConfig.addPlugin(HtmlBasePlugin, {
