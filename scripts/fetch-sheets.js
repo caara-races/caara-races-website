@@ -38,7 +38,11 @@ async function main() {
     const id = extractSpreadsheetId(data.race.sheet);
     const doc = new GoogleSpreadsheet(id, auth);
     await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
+    const slug = path
+      .basename(path.dirname(filePath))
+      .replace(/^\d{4}-\d{2}-\d{2}-/, "");
+    const sheet = doc.sheetsByTitle[slug];
+    if (!sheet) throw new Error(`No sheet tab named "${slug}" in spreadsheet`);
     const rows = await sheet.getRows();
     const volunteers = rows.map((row) => row.toObject());
 
