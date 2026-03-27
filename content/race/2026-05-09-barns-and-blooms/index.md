@@ -3,7 +3,6 @@ tags: race
 title: Barns and Blooms Half Marathon
 date: 2026-05-09T08:00:00-04:00
 race:
-  sheet: https://docs.google.com/spreadsheets/d/171ixX8Z2OVt3-4qG0N0rYUZYHwYgExsbPIBLvz-i9NU
   location: Hamilton-Wenham High School 775 Bay Road South Hamilton, MA
   url: https://www.yukanrun.com/barns-blooms-half-marathon
   want: 4
