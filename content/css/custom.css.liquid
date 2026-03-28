@@ -87,6 +87,15 @@ table.raceinfo {
   background-color: #fcfcfc; /* A white color */
 }
 
+.contacts li:not(:last-child) {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.contacts ul {
+  padding: 0 1rem;
+  margin-block: 0 1rem;
+}
 
 .race-schedule {
   border-collapse: collapse;
@@ -119,12 +128,14 @@ table.raceinfo {
 	background-position: center;
 	background-size: cover;
 
+  padding: var(--space-sm);
+}
+
+.site-header h1 {
   font-family: var(--font-header);
   font-size: var(--font-size-header);
   font-weight: bold;
   color: var(--color-bg);
-
-  padding: var(--space-sm);
 }
 
 footer {
@@ -197,6 +208,11 @@ footer {
 
   .site-header {
     padding: 0;
+    height: auto;
+  }
+
+  .site-header h1 {
+    color: inherit;
   }
 
   /* Remove all link underlines in print */
