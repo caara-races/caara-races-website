@@ -7,12 +7,6 @@ layout: base
 {% assign map_path = asset_base | append: page.fileSlug | append: ".pdf" %}
 {% assign course_path = asset_base | append: page.fileSlug | append: ".gpx" %}
 
-{% if cover_image_path | fileExists %}
-<div class="race-cover noprint">
-  <img src="{{ cover_image_path }}">
-</div>
-{% endif %}
-
 <table class="raceinfo">
   <tr>
     <th>When</th><td>{{ date | date: "%b %d, %Y (%a)"}}</td>
@@ -49,21 +43,23 @@ layout: base
 
 {{ content }}
 
+<section class="contacts">
 <h2>Emergency contacts</h2>
 
 {% for townslug in race.towns %}
 {% assign town = towns[townslug] %}
 {% if town %}
   <h3>{{ townslug | townName: town }}</h3>
+<ul>
 {% for contact in town.contacts %}
-  <ul>
     <li><strong>{{ contact.name }}</strong>: {{ contact.number }}
-  </ul>
 {% endfor %}
+</ul>
 {% endif %}
 {% endfor %}
+</section>
 
-<div class="staffing">
+<section class="staffing">
 <h2>Staffing</h2>
 
 {% if race.want %}
@@ -97,4 +93,4 @@ K1KML</a> if you can help.</p>
 {% else %}
   <p>Race details are not available at this time.</p>
 {% endif %}
-</div>
+</section>
