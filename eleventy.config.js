@@ -7,6 +7,8 @@ import markdownItAnchor from "markdown-it-anchor";
 import { v5 as uuidv5 } from "uuid";
 import YAML from "yaml";
 
+import { hamDbTooltip } from "./scripts/hamdb.js";
+
 // This is used as the uuid v5 namespace by the uuid filter
 const CAARA_RACES_NS = "7bdc4d20-17a0-466f-996a-4dea5666969b";
 
@@ -158,6 +160,8 @@ function setupFilters(eleventyConfig) {
   eleventyConfig.addFilter("qrz", (callsign) => {
     return `<a href="https://www.qrz.com/db/${callsign}">${callsign}</a>`;
   });
+
+  eleventyConfig.addAsyncFilter("hamDbTooltip", hamDbTooltip);
 }
 
 export default function (eleventyConfig) {

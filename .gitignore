@@ -3,4 +3,5 @@
 /.firebase/
 /.firebaserc
 /.creds/
+/.hamdb-cache/
 content/race/**/_data.11tydata.json
