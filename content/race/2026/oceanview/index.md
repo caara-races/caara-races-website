@@ -1,7 +1,7 @@
 ---
 tags: race
 title: Oean View Half Marathon
-date: 2026-11-01T09:00:00-04:00
+date: 2026-11-01T09:00:00-05:00
 race:
   location: |
     Ipswich High School
