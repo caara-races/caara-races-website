@@ -6,15 +6,10 @@ export default {
     // Calculate the number of unfilled checkpoint volunteer slots by comparing
     // the checkpoints defined in frontmatter with assigned CP* roles in the data file.
     race: (data) => {
-      if (!data.race?.checkpoints) return data.race;
-      const totalCheckpoints = Object.keys(data.race.checkpoints).length;
-      const assignedCheckpoints = (data.volunteers || []).filter(
-        (v) => v.Role && /^CP/i.test(v.Role) && v.Callsign?.trim(),
+      const want = (data.volunteers || []).filter(
+        (v) => !v.Callsign?.trim(),
       ).length;
-      return {
-        ...data.race,
-        want: Math.max(0, totalCheckpoints - assignedCheckpoints),
-      };
+      return { ...data.race, want };
     },
     // Generate /race/YYYY/MM/DD/{slug}/ for individual race pages. For other
     // templates in this directory, preserve the permalink from their frontmatter.
