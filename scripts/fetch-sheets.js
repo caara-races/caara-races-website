@@ -6,8 +6,6 @@ import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import yaml from "yaml";
 
-const CREDS_PATH = ".creds/caara-races-fe63879fe58a.json";
-
 export function extractFrontmatter(filePath, content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
   if (!match) throw new Error(`${filePath}: No frontmatter found`);
@@ -38,7 +36,9 @@ export async function resolveSheetUrl(filePath, frontmatter) {
 }
 
 async function main() {
-  const creds = JSON.parse(await readFile(CREDS_PATH, "utf8"));
+  const credsPath = process.env.GOOGLE_SHEETS_CREDENTIALS_PATH;
+  if (!credsPath) throw new Error("GOOGLE_SHEETS_CREDENTIALS_PATH is not set");
+  const creds = JSON.parse(await readFile(credsPath, "utf8"));
   const auth = new JWT({
     email: creds.client_email,
     key: creds.private_key,

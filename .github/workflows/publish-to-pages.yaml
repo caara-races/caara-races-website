@@ -34,6 +34,9 @@ jobs:
       - name: Install packages
         run: |
           npm install
+      - name: Fetch data
+        run: |
+          npm run fetch
       - name: Build pages
         run: |
           npm run build
