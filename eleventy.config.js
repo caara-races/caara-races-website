@@ -132,6 +132,11 @@ function setupFilters(eleventyConfig) {
     }
   });
 
+  eleventyConfig.addFilter("formatRepeater", (repeater) => {
+    const display = repeater.display ?? repeater.callsign.toUpperCase();
+    return `${display} ${repeater.frequency} (${repeater.offset}) Tone ${repeater.tone} (${repeater.location})`;
+  });
+
   eleventyConfig.addFilter("townName", (slug, town) => {
     return town?.display ?? slug.charAt(0).toUpperCase() + slug.slice(1);
   });

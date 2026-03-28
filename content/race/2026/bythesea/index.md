@@ -9,8 +9,8 @@ race:
     Manchester-by-the-Sea, MA
   url: https://www.yukanrun.com/half-marathon-by-the-sea
   frequency:
-    primary: W1GLO 2m 145.13 (Dup-) PL Tone 107.2
-    backup: Danvers NS1RA 2m 145.47 (Dup-) PL Tone 136.5
+    primary: w1glo-vhf
+    backup: ns1ra-danvers
   towns:
     - hamilton
     - manchester-by-the-sea

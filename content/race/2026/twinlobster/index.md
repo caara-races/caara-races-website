@@ -9,8 +9,8 @@ race:
     Gloucester, MA
   url: https://www.yukanrun.com/twin-lobster-half-marathon
   frequency:
-    primary: W1GLO 2m 145.13 (Dup-) PL Tone 107.2
-    backup: W1GLO 70cm 440 443.7 (Dup+) PL Tone:107.2
+    primary: w1glo-vhf
+    backup: w1glo-uhf
   towns:
     - gloucester
   checkpoints:
