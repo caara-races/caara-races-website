@@ -8,7 +8,6 @@ race:
     134 High Street
     Ipswich, MA
   url: https://www.yukanrun.com/oceanview-half-marathon-5k
-  want: 5
   frequency:
     primary: Topsfield 2m N1HSY 147.285 (Dup-) PL Tone:100.00
     backup: W1GLO 2m 145.13 (Dup-) PL Tone 107.2

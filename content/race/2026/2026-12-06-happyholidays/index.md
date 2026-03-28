@@ -8,7 +8,6 @@ race:
     100 Thatcher Road
     Gloucester, MA
   url: https://www.yukanrun.com/happy-holidays-half-merrython-5k
-  want: 3
   frequency:
     primary: W1GLO 2m 145.13 (Dup-) PL Tone 107.2
     backup: W1GLO 70cm 440 443.7 (Dup+) PL Tone:107.2
