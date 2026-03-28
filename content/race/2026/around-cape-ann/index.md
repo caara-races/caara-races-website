@@ -11,5 +11,23 @@ race:
   towns:
     - rockport
     - gloucester
+  checkpoints:
+    cp1: |
+      Thatcher Rd. and South St.
+      Mile 2 (Rockport)
+    cp2: |
+      South St. and Lanes Farm Way
+      Mile 4 (Rockport)
+    cp3: |
+      Granite St. and Curtis St.
+      Mile 6 (Rockport)
+    cp4: |
+      Langsford St.& Washington St.
+      Mile 8 (Gloucester)
+    cp5: |
+      Washington St. and Revere St.
+      Mile 10 (Gloucester)
+    cp6: |
+      Washington St. & Deacon Farm Ln.
+      Mile 12 (Gloucester)
 ---
-
