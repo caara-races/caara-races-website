@@ -1,7 +1,7 @@
 ---
 tags: race
 title: Happy Holidays Half Marathon
-date: 2026-12-06T09:00:00-04:00
+date: 2026-12-06T09:00:00-05:00
 race:
   location: |
     Good Harbor Beach
