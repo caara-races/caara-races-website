@@ -16,25 +16,25 @@ race:
     - newbury
     - west newbury
   checkpoints:
-    cp1: |
-      Parker St. and Malcom Hoyt Dr. 
-      Mile 1 & 12+ (Newburyport)
-    cp2: |
-      Scotland Rd. and Scotland Hgts. 
-      Mile 2+ & 11+ (Newbury)
-    cp3: |
-      South St. and Turkey Hill Rd.    
-      Mile 3+ & 10 (W. Newbury)
-    cp4: |
-      Moulton St. and Illsley Hill Rd.
-      Mile 6 (W. Newbury)
-    cp5: |
-      Garden St. and Indian Hill Rd
-      Mile 7 (W. Newbury)
-    cp6: |
-      Garden St. and Rogers St.   
-      Mile 7+ (W. Newbury)
-    cp7: |
-      Rogers St. & Turkey Hill Rd   
-      Mile 8+ ( W. Newbury)
+    cp1:
+      address: Parker St. and Malcom Hoyt Dr., Newburyport, MA
+      position: Mile 1 & 12+
+    cp2:
+      address: Scotland Rd. and Scotland Hgts., Newbury, MA
+      position: Mile 2+ & 11+
+    cp3:
+      address: South St. and Turkey Hill Rd., West Newbury, MA
+      position: Mile 3+ & 10
+    cp4:
+      address: Moulton St. and Illsley Hill Rd., West Newbury, MA
+      position: Mile 6
+    cp5:
+      address: Garden St. and Indian Hill Rd, West Newbury, MA
+      position: Mile 7
+    cp6:
+      address: Garden St. and Rogers St., West Newbury, MA
+      position: Mile 7+
+    cp7:
+      address: Rogers St. & Turkey Hill Rd, West Newbury, MA
+      position: Mile 8+
 ---
