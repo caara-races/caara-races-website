@@ -154,6 +154,10 @@ function setupFilters(eleventyConfig) {
       return false; // If an error occurs (e.g., directory doesn't exist), return false
     }
   });
+
+  eleventyConfig.addFilter("qrz", (callsign) => {
+    return `<a href="https://www.qrz.com/db/${callsign}">${callsign}</a>`;
+  });
 }
 
 export default function (eleventyConfig) {
@@ -181,12 +185,6 @@ export default function (eleventyConfig) {
   // This shortcode is used in the copyright notice to ensure it always shows
   // the current year.
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
-
-  // Create callsign links to qrz
-  eleventyConfig.addShortcode(
-    "qrz",
-    (callsign) => `[${callsign}](https://www.qrz.com/db/${callsign})`,
-  );
 
   // Allow the use of YAML for data files
   eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));

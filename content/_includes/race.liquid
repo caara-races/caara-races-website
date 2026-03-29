@@ -82,7 +82,7 @@ K1KML</a> if you can help.</p>
   <tr>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
     <td>{{ race.checkpoints[role_key] | default: "" | replaceNewlines }}</td>
-    <td>{{ aro.Callsign }}</td>
+    <td>{{ aro.Callsign | qrz }}</td>
     <td>{{ aro.Name }}</td>
     <td>{{ aro["On station"] }}</td>
   </tr>
