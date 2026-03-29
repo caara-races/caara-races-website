@@ -95,9 +95,12 @@ function setupFilters(eleventyConfig) {
     return `/${relDir}/`;
   });
 
-  eleventyConfig.addFilter("replaceNewlines", (value) => {
-    return value.replace(/(\r\n|\n|\r)/g, "<br>");
-  });
+  eleventyConfig.addFilter(
+    "replaceNewlines",
+    (value, replacement = "<br/>") => {
+      return value.replace(/(\r\n|\n|\r)/g, replacement);
+    },
+  );
 
   eleventyConfig.addFilter("lastModified", (filePath) => {
     const stats = fs.statSync(filePath);

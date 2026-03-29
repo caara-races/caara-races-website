@@ -3,7 +3,7 @@ tags: race
 title: Happy Holidays Half Marathon
 date: 2026-12-06T09:00:00-05:00
 race:
-  location: |
+  location: |-
     Good Harbor Beach
     100 Thatcher Road
     Gloucester, MA
