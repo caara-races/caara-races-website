@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const CACHE_DIR = ".hamdb-cache";
+const CACHE_DIR = ".cache/hamdb";
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 const LICENSE_CLASSES = {
