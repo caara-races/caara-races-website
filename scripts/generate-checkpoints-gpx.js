@@ -153,12 +153,12 @@ async function main() {
           .split(",")
           .map((s) => parseFloat(s.trim()));
         startCoords = { lat, lon };
-        console.log(`  START/FINISH: ${lat}, ${lon} (from coordinates field)`);
+        console.log(`  START: ${lat}, ${lon} (from coordinates field)`);
       } else {
         const geocodeAddress = `${location.name}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
         startCoords = await geocode(geocodeAddress, apiKey);
         if (startCoords) {
-          console.log(`  START/FINISH: ${startCoords.lat}, ${startCoords.lon}`);
+          console.log(`  START: ${startCoords.lat}, ${startCoords.lon}`);
         } else {
           console.warn(
             `  WARN: failed to geocode start/finish location, skipping`,
@@ -167,7 +167,7 @@ async function main() {
       }
       if (startCoords) {
         waypoints.push({
-          name: "START/FINISH",
+          name: "START",
           desc: `${location.name}\n${location.address}`,
           lat: startCoords.lat,
           lon: startCoords.lon,
