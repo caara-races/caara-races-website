@@ -37,7 +37,10 @@ layout: base
     <li><a href="{{ map_path }}">Map</a></li>
   {% endif %}
   {% if course_path | fileExists %}
-    <li><a href="{{ course_path }}">GPX Course</a></li>
+    <li><a href="{{ course_path }}">Course GPX</a></li>
+  {% endif %}
+  {% if checkpoints_path | fileExists %}
+    <li><a href="{{ checkpoints_path }}">Checkpoints GPX</a></li>
   {% endif %}
 </ul>
 </div>
