@@ -5,7 +5,7 @@ import { pathToFileURL } from "node:url";
 import { glob } from "glob";
 import yaml from "yaml";
 
-const CACHE_DIR = ".geocoding-cache";
+const CACHE_DIR = ".cache/geocoding";
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 function escapeXml(str) {

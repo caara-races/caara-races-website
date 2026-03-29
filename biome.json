@@ -1,4 +1,9 @@
 {
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "includes": [
       "**",
@@ -7,9 +12,6 @@
       "!!package.json",
       "!!firebase.json",
       "!!content/css/normalize.css",
-      "!!content/race/**/_data.11tydata.json",
-      "!!.hamdb-cache",
-      "!!.geocoding-cache",
       "!!**/*.html"
     ]
   },
