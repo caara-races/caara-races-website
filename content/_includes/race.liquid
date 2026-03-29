@@ -6,6 +6,7 @@ layout: base
 {% assign cover_image_path = asset_base | append: "cover.jpg" %}
 {% assign map_path = asset_base | append: page.fileSlug | append: ".pdf" %}
 {% assign course_path = asset_base | append: page.fileSlug | append: ".gpx" %}
+{% assign checkpoints_path = asset_base | append: page.fileSlug | append: "-checkpoints.gpx" %}
 
 <table class="raceinfo">
   <tr>
@@ -42,6 +43,14 @@ layout: base
 </div>
 
 {{ content }}
+
+{% assign course_url = "" %}
+{% if course_path | fileExists %}{% assign course_url = course_path %}{% endif %}
+{% assign checkpoints_url = "" %}
+{% if checkpoints_path | fileExists %}{% assign checkpoints_url = checkpoints_path %}{% endif %}
+{% if course_url != "" or checkpoints_url != "" %}
+{% include "map.liquid" %}
+{% endif %}
 
 <section class="contacts">
 <h2>Emergency contacts</h2>

@@ -68,10 +68,10 @@ async function geocode(address, apiKey) {
 function buildGpx(title, waypoints) {
   const time = new Date().toISOString();
   const wptElements = waypoints
-    .map(
-      ({ name, desc, lat, lon }) =>
-        `  <wpt lat="${lat}" lon="${lon}">\n    <name>${escapeXml(name)}</name>\n    <desc>${escapeXml(desc)}</desc>\n  </wpt>`,
-    )
+    .map(({ name, desc, lat, lon, sym }) => {
+      const symEl = sym ? `\n    <sym>${escapeXml(sym)}</sym>` : "";
+      return `  <wpt lat="${lat}" lon="${lon}">\n    <name>${escapeXml(name)}</name>\n    <desc>${escapeXml(desc)}</desc>${symEl}\n  </wpt>`;
+    })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="caara-races/generate-checkpoints-gpx" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
@@ -116,6 +116,7 @@ async function main() {
       continue;
     }
 
+    const location = frontmatter.race?.location;
     const checkpoints = frontmatter.race?.checkpoints;
     if (!checkpoints || Object.keys(checkpoints).length === 0) {
       console.log(`${filePath}: no checkpoints, skipping`);
@@ -144,6 +145,36 @@ async function main() {
     );
 
     const waypoints = [];
+
+    if (location) {
+      let startCoords = null;
+      if (location.coordinates) {
+        const [lat, lon] = location.coordinates
+          .split(",")
+          .map((s) => parseFloat(s.trim()));
+        startCoords = { lat, lon };
+        console.log(`  START/FINISH: ${lat}, ${lon} (from coordinates field)`);
+      } else {
+        const geocodeAddress = `${location.name}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
+        startCoords = await geocode(geocodeAddress, apiKey);
+        if (startCoords) {
+          console.log(`  START/FINISH: ${startCoords.lat}, ${startCoords.lon}`);
+        } else {
+          console.warn(
+            `  WARN: failed to geocode start/finish location, skipping`,
+          );
+        }
+      }
+      if (startCoords) {
+        waypoints.push({
+          name: "START/FINISH",
+          desc: `${location.name}\n${location.address}`,
+          lat: startCoords.lat,
+          lon: startCoords.lon,
+          sym: "Flag, Green",
+        });
+      }
+    }
 
     for (const [key, cp] of Object.entries(checkpoints)) {
       const name = key.toUpperCase();
