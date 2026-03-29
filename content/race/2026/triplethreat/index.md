@@ -17,21 +17,21 @@ race:
     - gloucester
   checkpoints:
     cp1:
-      address: Marmion Way (S) & South St. @ 60 South St., Rockport, MA
+      address: Marmion Way (S) & South St @ 60 South St, Rockport, MA
       position: Mile 1.5 & 10.5
     cp2:
-      address: South St. and Eden Rd., Rockport, MA
+      address: South St & Eden Rd, Rockport, MA
       position: Mile 2 & 10
     cp3:
-      address: Penzance Rd. and Eden Rd, Rockport, MA
+      address: Penzance Rd & Eden Rd, Rockport, MA
       position: Mile 3 & 9
     cp4:
-      address: South St. and Penzance Rd., Rockport, MA
+      address: South St & Penzance Rd, Rockport, MA
       position: Mile 4 & 8
     cp5:
-      address: Thatcher Rd. and Red Fox Ln., Rockport, MA
+      address: Thatcher Rd & Red Fox Ln, Rockport, MA
       position: Mile 5 & 7
     cp6:
-      address: Salt Is. Rd. & Barberry Way, Gloucester, MA
+      address: Salt Is. Rd & Barberry Way, Gloucester, MA
       position: Mile 6
 ---

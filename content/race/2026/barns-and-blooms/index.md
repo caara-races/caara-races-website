@@ -18,22 +18,22 @@ race:
     - ipswich
   checkpoints:
     cp1:
-      address: MA 1A and Lakemans Ln., Ipswich, MA
+      address: MA 1A & Lakemans Ln, Ipswich, MA
       position: Mile 2+
     cp2:
-      address: Essex Rd. and Northgate Rd., Ipswich, MA
+      address: Essex Rd & Northgate Rd, Ipswich, MA
       position: Mile 4
     cp3:
-      address: John Wise Ln. and Western Ave., Essex, MA
+      address: John Wise Ln & Western Ave, Essex, MA
       position: Mile 6+
     cp4:
-      address: Western Ave. and Lakeview Rd., Essex, MA
+      address: Western Ave. & Lakeview Rd, Essex, MA
       position: Mile 8+
     cp5:
-      address: School St. and Prospect St., Hamilton, MA
+      address: School St & Prospect St, Hamilton, MA
       position: Mile 10
     cp6:
-      address: Bridge St. and Miles River Rd., Hamilton, MA
+      address: Bridge St & Miles River Rd, Hamilton, MA
       position: Mile 12
 ---
 

@@ -17,20 +17,20 @@ race:
     - salem
   checkpoints:
     cp1:
-      address: Harbor Ave and Ocean Ave, Marblehead, MA
+      address: Harbor Ave & Ocean Ave, Marblehead, MA
       position: Mile 1 and 4
       coordinates: 42.491789, -70.847104
     cp2:
-      address: Harbor Ave and Ballast Ln, Marblehead, MA
+      address: Harbor Ave & Ballast Ln, Marblehead, MA
       position: Mile 3
     cp3:
-      address: Lafayette St. and Doane St, Marblehead, MA
+      address: Lafayette St & Doane St, Marblehead, MA
       position: Mile 5 and 13
     cp4:
-      address: Lafayette St. and Derby St, Salem, MA
+      address: Lafayette St & Derby St, Salem, MA
       position: Mile 7 and 11
     cp5:
-      address: Memorial Drive and Fort Ave, Salem, MA
+      address: Memorial Drive & Fort Ave, Salem, MA
       position: Mile 9 and 10
 ---
 

@@ -16,21 +16,21 @@ race:
     - ipswich
   checkpoints:
     cp1:
-      address: High St. and Mile Ln., Ipswich, MA
+      address: High St & Mile Ln, Ipswich, MA
       position: Mile 2
     cp2:
-      address: High St. and Mineral St., Ipswich, MA
+      address: High St & Mineral St, Ipswich, MA
       position: Mile 4 & 12
     cp3:
-      address: East St. and Jeffrey's Neck Rd., Ipswich, MA
+      address: East St & Jeffrey's Neck Rd, Ipswich, MA
       position: Mile 5 & 11
     cp4:
-      address: Jeffrey's Neck Rd. & Island Park Rd., Ipswich, MA
+      address: Jeffrey's Neck Rd & Island Park Rd, Ipswich, MA
       position: Mile 6 & 10
     cp5:
-      address: Clark Rd.& North Ridge Rd., Ipswich, MA
+      address: Clark Rd& North Ridge Rd, Ipswich, MA
       position: Mile 8
     cp6:
-      address: Jeffrey's Neck Rd. & N. Ridge Rd., Ipswich, MA
+      address: Jeffrey's Neck Rd & N. Ridge Rd, Ipswich, MA
       position: Mile 9 &10
 ---
