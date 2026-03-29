@@ -146,21 +146,28 @@ async function main() {
     const waypoints = [];
 
     for (const [key, cp] of Object.entries(checkpoints)) {
-      if (!cp.address) {
-        console.warn(`  WARN: ${key} has no address, skipping`);
-        continue;
-      }
-
-      const coords = await geocode(cp.address, apiKey);
-      if (!coords) {
-        console.warn(
-          `  WARN: failed to geocode "${cp.address}" (${key}), skipping`,
-        );
-        continue;
-      }
-
       const name = key.toUpperCase();
-      console.log(`  ${name}: ${coords.lat}, ${coords.lon}`);
+      let coords;
+
+      if (cp.coordinates) {
+        const [lat, lon] = cp.coordinates
+          .split(",")
+          .map((s) => parseFloat(s.trim()));
+        coords = { lat, lon };
+        console.log(`  ${name}: ${lat}, ${lon} (from coordinates field)`);
+      } else if (cp.address) {
+        coords = await geocode(cp.address, apiKey);
+        if (!coords) {
+          console.warn(
+            `  WARN: failed to geocode "${cp.address}" (${key}), skipping`,
+          );
+          continue;
+        }
+        console.log(`  ${name}: ${coords.lat}, ${coords.lon}`);
+      } else {
+        console.warn(`  WARN: ${key} has no coordinates or address, skipping`);
+        continue;
+      }
       waypoints.push({
         name,
         desc: cp.address,
