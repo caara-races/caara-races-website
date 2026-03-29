@@ -18,10 +18,10 @@ layout: base
     <th>Where</th><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
   </tr>
   <tr>
-    <th>Frequencies</th><td>Primary: {{ race.frequency.primary }}</td>
+    <th>Frequencies</th><td>Primary: {{ repeaters[race.frequency.primary] | formatRepeater }}</td>
   </tr>
   <tr>
-    <th></th><td>Backup: {{ race.frequency.backup }}</td>
+    <th></th><td>Backup: {{ repeaters[race.frequency.backup] | formatRepeater }}</td>
   </tr>
 </table>
 
