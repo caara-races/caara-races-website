@@ -18,22 +18,22 @@ race:
     - gloucester
   checkpoints:
     cp1:
-      address: Thatcher Rd. & Farm Ln., Rockport, MA  
+      address: Thatcher Rd & Farm Ln, Rockport, MA  
       position: Mile 1
     cp2:
-      address: Thatcher Rd. and South St., Rockport, MA  
+      address: Thatcher Rd & South St, Rockport, MA  
       position: Mile 2 & 11
     cp3:
-      address: South St. and Marmion Way, Rockport, MA  
+      address: South St & Marmion Way, Rockport, MA  
       position: Mile 3 & 10
     cp4:
-      address: Mt. Pleasant St. & Broadway Ave., Rockport, MA 
+      address: Mt. Pleasant St & Broadway Ave, Rockport, MA 
       position: Mile 4 & 9
     cp5:
-      address: Granite St. and Wharf Rd., Rockport, MA  
+      address: Granite St & Wharf Rd, Rockport, MA  
       position: Mile 5 & 8
     cp6:
-      address: Granite St. and Story St., Rockport, MA 
+      address: Granite St & Story St, Rockport, MA 
       position: Mile 6 & 7
 ---
 

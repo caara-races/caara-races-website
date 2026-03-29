@@ -17,21 +17,21 @@ race:
     - gloucester
   checkpoints:
     cp1:
-      address: Thatcher Rd. and South St., Rockport, MA
+      address: Thatcher Rd & South St, Rockport, MA
       position: Mile 2
     cp2:
-      address: South St. and Lanes Farm Way, Rockport, MA
+      address: South St & Lanes Farm Way, Rockport, MA
       position: Mile 4
     cp3:
-      address: Granite St. and Curtis St., Rockport, MA
+      address: Granite St & Curtis St, Rockport, MA
       position: Mile 6
     cp4:
-      address: Langsford St.& Washington St., Gloucester, MA
+      address: Langsford St & Washington St, Gloucester, MA
       position: Mile 8
     cp5:
-      address: Washington St. and Revere St., Gloucester, MA
+      address: Washington St & Revere St, Gloucester, MA
       position: Mile 10
     cp6:
-      address: Washington St. & Deacon Farm Ln., Gloucester, MA
+      address: Washington St & Deacon Farm Ln, Gloucester, MA
       position: Mile 12
 ---
