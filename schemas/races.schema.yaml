@@ -16,11 +16,18 @@ properties:
           type: string
       checkpoints:
         type: object
-        properties:
-          address:
-            type: string
-          position:
-            type: string
+        additionalProperties:
+          type: object
+          properties:
+            address:
+              type: string
+            position:
+              type: string
+            coordinates:
+              type: string
+          required:
+            - address
+            - position
       sheet:
         type: string
       location:

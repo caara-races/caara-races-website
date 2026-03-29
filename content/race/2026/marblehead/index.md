@@ -18,6 +18,7 @@ race:
     cp1:
       address: Harbor Ave and Ocean Ave., Marblehead, MA
       position: Mile 1 and 4
+      coordinates: 42.491789, -70.847104
     cp2:
       address: Harbor Ave and Harvard St., Marblehead, MA
       position: Mile 3
