@@ -217,13 +217,15 @@ footer {
 
   /* Remove all link underlines in print */
   a {
+    color: inherit; /* Inherits the color from the parent element */
     text-decoration: none;
   }
 
-  a, a:link, a:visited, a:hover, a:active {
-    color: inherit; /* Inherits the color from the parent element */
-    text-decoration: none; /* Removes the default underline */
+  abbr {
+    text-decoration: none;
+    border-bottom: none;
   }
+
   .site-header {
     font-size: 24pt;
     page-break-after: avoid;
