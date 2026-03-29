@@ -3,10 +3,11 @@ tags: race
 title: Marblehead Half Marathon
 date: 2026-04-12T09:00:00-04:00
 race:
-  location: |-
-    Marblehead High School
-    2 Humphrey Street
-    Marblehead, MA
+  location:
+    name: Marblehead High School
+    address: |-
+      2 Humphrey Street
+      Marblehead, MA
   url: https://www.yukanrun.com/marblehead-half-marathon
   frequency:
     primary: ns1ra-salem

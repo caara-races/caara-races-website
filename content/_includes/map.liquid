@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="/css/map.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.css">
+
+<section class="noprint">
+<h2>Course Map</h2>
+<div id="race-map"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-gpx@1.7.0/gpx.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
+<script>
+(function () {
+  var map = L.map('race-map', { fullscreenControl: true });
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  {% if course_url != "" %}
+  new L.GPX('{{ course_url }}', {
+    async: true,
+    gpx_options: { parseElements: ['track', 'route'] },
+    marker_options: {
+      startIconUrl: null,
+      endIconUrl: null,
+      shadowUrl: null
+    },
+    polyline_options: {
+      color: '#4078c0',
+      weight: 3
+    }
+  }).on('loaded', function (e) {
+    map.fitBounds(e.target.getBounds());
+  }).addTo(map);
+  {% endif %}
+
+  {% if checkpoints_url != "" %}
+  fetch('{{ checkpoints_url }}')
+    .then(function (r) { return r.text(); })
+    .then(function (xml) {
+      var doc = new DOMParser().parseFromString(xml, 'application/xml');
+      var wpts = doc.getElementsByTagName('wpt');
+      var markers = [];
+      Array.from(wpts).forEach(function (wpt) {
+        var lat = parseFloat(wpt.getAttribute('lat'));
+        var lon = parseFloat(wpt.getAttribute('lon'));
+        var nameEl = wpt.getElementsByTagName('name')[0];
+        var descEl = wpt.getElementsByTagName('desc')[0];
+        var name = nameEl ? nameEl.textContent.trim() : '';
+        var desc = descEl ? descEl.textContent.trim() : '';
+        var marker;
+        if (name === 'START/FINISH') {
+          marker = L.circleMarker([lat, lon], {
+            radius: 8,
+            color: '#e63946',
+            fillColor: '#e63946',
+            fillOpacity: 0.9
+          }).addTo(map);
+        } else {
+          marker = L.marker([lat, lon]).addTo(map);
+        }
+        markers.push(marker);
+        if (name) {
+          marker.bindTooltip(name, { permanent: true, direction: 'top' });
+        }
+        if (desc) {
+          marker.bindPopup(desc);
+        }
+      });
+      {% if course_url == "" %}
+      if (markers.length > 0) {
+        map.fitBounds(L.featureGroup(markers).getBounds());
+      }
+      {% endif %}
+    });
+  {% endif %}
+}());
+</script>

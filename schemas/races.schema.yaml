@@ -31,7 +31,17 @@ properties:
       sheet:
         type: string
       location:
-        type: string
+        type: object
+        properties:
+          name:
+            type: string
+          address:
+            type: string
+          coordinates:
+            type: string
+        required:
+          - name
+          - address
       url:
         type: string
         pattern: ^https?://
