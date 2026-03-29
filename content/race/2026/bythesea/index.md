@@ -15,22 +15,22 @@ race:
     - hamilton
     - manchester-by-the-sea
   checkpoints:
-    cp1: |
-      Central St. and Pine St.
-      Mile 1 & 12 (Manchester B-T-S)
-    cp2: |
-      Pine St. and Crooked Ln.
-      Mile 2 & 11 (Manchester B-T-S)
-    cp3: |
-      Pine St. and Pond St. and Chebacco Rd
-      Mile 3 & 9 (Hamilton)
-    cp4: |
-      340 Chebacco Rd. Near Boat Access
-      Mile 4 & 9 (S. Hamilton)
-    cp5: |
-      Chebacco Rd. and Essex St.
-      Mile 5+ & 8 (Hamilton)
-    cp6: |
-      Forest St. and Essex St.
-      Mile 7 (Hamilton)
+    cp1:
+      address: Central St. and Pine St., Manchester-by-the-Sea, MA
+      position: Mile 1 & 12
+    cp2:
+      address: Pine St. and Crooked Ln., Manchester-by-the-Sea, MA
+      position: Mile 2 & 11
+    cp3:
+      address: Pine St. and Pond St. and Chebacco Rd, Hamilton, MA
+      position: Mile 3 & 9
+    cp4:
+      address: 340 Chebacco Rd. Near Boat Access, South Hamilton, MA
+      position: Mile 4 & 9
+    cp5:
+      address: Chebacco Rd. and Essex St., Hamilton, MA
+      position: Mile 5+ & 8
+    cp6:
+      address: Forest St. and Essex St., Hamilton, MA
+      position: Mile 7
 ---

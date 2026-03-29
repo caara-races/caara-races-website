@@ -81,7 +81,7 @@ K1KML</a> if you can help.</p>
 {% assign role_key = aro.Role | downcase %}
   <tr>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
-    <td>{{ race.checkpoints[role_key] | default: "" | replaceNewlines }}</td>
+    <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key].address | googleMapSearch }}">{{ race.checkpoints[role_key].address }}</a><br/>{{ race.checkpoints[role_key].position }}{% endif %}</td>
     <td>{{ aro.Callsign | hamDbTooltip }}</td>
     <td>{{ aro.Name }}</td>
     <td>{{ aro["On station"] }}</td>

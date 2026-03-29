@@ -15,20 +15,20 @@ race:
     - marblehead
     - salem
   checkpoints:
-    cp1: |
-      Harbor Ave and Ocean Ave.
-      In Marblehead Mile 1 and 4
-    cp2: |
-      Harbor Ave and Harvard St.
-      In Marblehead Mile 3
-    cp3: |
-      Lafayette St. and Doane St.
-      in Marblehead Mile 5 and 13
-    cp4: |
-      Lafayette St. and Derby St.
-      In Salem Mile 7 and 11
-    cp5: |
-      Memorial Drive and Fort Ave.
-      In Salem Mile 9 and 10
+    cp1:
+      address: Harbor Ave and Ocean Ave., Marblehead, MA
+      position: Mile 1 and 4
+    cp2:
+      address: Harbor Ave and Harvard St., Marblehead, MA
+      position: Mile 3
+    cp3:
+      address: Lafayette St. and Doane St., Marblehead, MA
+      position: Mile 5 and 13
+    cp4:
+      address: Lafayette St. and Derby St., Salem, MA
+      position: Mile 7 and 11
+    cp5:
+      address: Memorial Drive and Fort Ave., Salem, MA
+      position: Mile 9 and 10
 ---
 

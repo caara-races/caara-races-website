@@ -15,22 +15,22 @@ race:
     - rockport
     - gloucester
   checkpoints:
-    cp1: |
-      Thatcher Rd & Farm Ln.
-      Mile 1 & 12 (Rockport)
-    cp2: |
-      Thatcher Rd.&Tregony Bow
-      Mile 2 & 11 (Rockport)
-    cp3: |
-      Penzance Rd.& Eden Rd
-      Mile 3 & 10 (Rockport)
-    cp4: |
-      Eden Rd. and South St.
-      Mile 4 & 9 (Rockport)
-    cp5: |
-      Marmion Way & Shetland Rd.
-      Mile 5 & 8 (Rockport)
-    cp6: |
-      Old Garden Rd.& Babcock Rd.
-      Mile 6 & 7 (Rockport)
+    cp1:
+      address: Thatcher Rd & Farm Ln., Rockport, MA
+      position: Mile 1 & 12
+    cp2:
+      address: Thatcher Rd. & Tregony Bow, Rockport, MA
+      position: Mile 2 & 11
+    cp3:
+      address: Penzance Rd.& Eden Rd, Rockport, MA
+      position: Mile 3 & 10
+    cp4:
+      address: Eden Rd. and South St., Rockport, MA
+      position: Mile 4 & 9
+    cp5:
+      address: Marmion Way & Shetland Rd., Rockport, MA
+      position: Mile 5 & 8
+    cp6:
+      address: Old Garden Rd.& Babcock Rd., Rockport, MA
+      position: Mile 6 & 7
 ---
