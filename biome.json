@@ -9,6 +9,7 @@
       "!!content/css/normalize.css",
       "!!content/race/**/_data.11tydata.json",
       "!!.hamdb-cache",
+      "!!.geocoding-cache",
       "!!**/*.html"
     ]
   },

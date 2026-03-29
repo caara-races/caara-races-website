@@ -19,7 +19,8 @@
 		"validate-towns": "node scripts/validate-data.js schemas/towns.yaml content/_data/towns.yaml",
 		"validate-repeaters": "node scripts/validate-data.js schemas/repeaters.yaml content/_data/repeaters.yaml",
 		"validate-markdown": "node scripts/validate-markdown.js",
-		"validate": "bash scripts/validate-all.sh"
+		"validate": "bash scripts/validate-all.sh",
+		"generate-checkpoints-gpx": "node scripts/generate-checkpoints-gpx.js"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.9",
