@@ -3,7 +3,7 @@ tags: race
 title: Twin Lobster Half Marathon
 date: 2026-06-07T08:00:00-04:00
 race:
-  location: |
+  location: |-
     Gloucester High School
     32 Leslie O Johnson Road
     Gloucester, MA

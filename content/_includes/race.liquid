@@ -15,7 +15,7 @@ layout: base
     <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
   </tr>
   <tr>
-    <th>Where</th><td><a href="{{ race.location | googleMapSearch }}">{{ race.location }}</a></td>
+    <th>Where</th><td><a href="{{ race.location | replaceNewlines: ", " | googleMapSearch }}">{{ race.location | replaceNewlines }}</a></td>
   </tr>
   <tr>
     <th>Frequencies</th><td>Primary: {{ repeaters[race.frequency.primary] | formatRepeater }}</td>

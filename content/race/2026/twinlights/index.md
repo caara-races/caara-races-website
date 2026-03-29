@@ -3,7 +3,7 @@ tags: race
 title: Twin Lights Half Marathon
 date: 2026-05-03T08:00:00-04:00
 race:
-  location: |
+  location: |-
     Good Harbor Beach
     100 Thatcher Road
     Gloucester, MA

@@ -3,7 +3,7 @@ tags: race
 title: Triple Threat Half Marathon
 date: 2026-08-02T08:00:00-04:00
 race:
-  location: |
+  location: |-
     Rockport High School
     24 Jerdens Lane
     Rockport, MA

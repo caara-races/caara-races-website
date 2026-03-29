@@ -3,7 +3,7 @@ tags: race
 title: Town and Country Half Marathon
 date: 2026-06-28T08:00:00-04:00
 race:
-  location: |
+  location: |-
     RiverWalk Brewing Co.
     40 Parker St
     Newburyport, MA
