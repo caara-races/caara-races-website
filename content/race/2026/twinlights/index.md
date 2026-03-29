@@ -3,10 +3,12 @@ tags: race
 title: Twin Lights Half Marathon
 date: 2026-05-03T08:00:00-04:00
 race:
-  location: |-
-    Good Harbor Beach
-    100 Thatcher Road
-    Gloucester, MA
+  location:
+    name: Good Harbor Beach
+    address: |-
+      100 Thatcher Road
+      Gloucester, MA
+    coordinates: 42.620615, -70.632187
   url: https://www.yukanrun.com/twin-lights-half-marathon
   frequency:
     primary: w1glo-uhf

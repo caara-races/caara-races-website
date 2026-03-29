@@ -3,10 +3,11 @@ tags: race
 title: IPA Half Marathon
 date: 2026-07-19T08:00:00-04:00
 race:
-  location: |-
-    RiverWalk Brewing Co.
-    40 Parker St
-    Newburyport, MA
+  location:
+    name: RiverWalk Brewing Co.
+    address: |-
+      40 Parker St
+      Newburyport, MA
   url: https://www.yukanrun.com/ipa5kandhalf
   frequency:
     primary: k1kkm

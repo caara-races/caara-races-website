@@ -3,10 +3,11 @@ tags: race
 title: Fool's Dual Half Marathon
 date: 2026-03-28T09:00:00-04:00
 race:
-  location: |-
-    O'Maley Middle School
-    32 Cherry Street
-    Gloucester, MA
+  location:
+    name: O'Maley Middle School
+    address: |-
+      32 Cherry Street
+      Gloucester, MA
   url: https://www.yukanrun.com/fools-dual-half-marathon-5k
   frequency:
     primary: w1glo-vhf

@@ -9,6 +9,17 @@ import YAML from "yaml";
 
 import { hamDbTooltip } from "./scripts/hamdb.js";
 
+// Format a structured location object as a string.
+// location must have `name` and `address` fields.
+// separator is placed between the name and each line of the address.
+export function formatAddress(location, separator = "<br/>") {
+  return (
+    location.name +
+    separator +
+    location.address.replace(/(\r\n|\n|\r)/g, separator)
+  );
+}
+
 // This is used as the uuid v5 namespace by the uuid filter
 const CAARA_RACES_NS = "7bdc4d20-17a0-466f-996a-4dea5666969b";
 
@@ -136,6 +147,8 @@ function setupFilters(eleventyConfig) {
       return false; // If an error occurs (e.g., directory doesn't exist), return false
     }
   });
+
+  eleventyConfig.addFilter("formatAddress", formatAddress);
 
   eleventyConfig.addFilter("formatRepeater", (repeater) => {
     const display = repeater.display ?? repeater.callsign.toUpperCase();

@@ -21,9 +21,9 @@ DTEND:{{ race.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC
 DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
  UID:{{ race.data.date | date: "%Y-%m-%d" | append: race.data.title | uuid }}@caara-schedule
 DESCRIPTION:{{ race.data.title }}\nWhen: {{ race.data.date | date: "%b %d, %Y" }}\n
- Location: {{ race.data.race.location }}\n
+ Location: {{ race.data.race.location | formatAddress: ", " }}\n
  Start time: {{ race.data.date | date: "%H:%M %p"}}
-LOCATION:{{ race.data.race.location }}
+LOCATION:{{ race.data.race.location.address | replaceNewlines: ", " }}
 END:VEVENT
 {% endfor -%}
 END:VCALENDAR

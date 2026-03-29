@@ -40,7 +40,7 @@ weight: 10
       {% endif %}
     </td>
     <td>{{ race.data.date | date: "%H:%M %p", "America/New_York" }}</td>
-    <td><a href="{{ race.data.race.location | replaceNewlines: ", " | googleMapSearch }}">{{ race.data.race.location | replaceNewlines: ", " }}</a></td>
+    <td><a href="{{ race.data.race.location.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.data.race.location | formatAddress: ", " }}</a></td>
     <td class="icons noprint">
       <ul>
   {% if race.data.race.url %}
