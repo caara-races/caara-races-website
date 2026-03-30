@@ -194,7 +194,7 @@ export default function (eleventyConfig) {
   // trigger a site rebuild. This happens by default for files that
   // eleventy normally processes (.md, .liquid, etc), but needs explicit
   // configuration for other file types.
-  eleventyConfig.addWatchTarget("content/css/normalize.css");
+  eleventyConfig.addWatchTarget("content/css/reset.css");
   eleventyConfig.addWatchTarget("content/race/**/_data.11tydata.json");
 
   // Permit setting base url from the environment.

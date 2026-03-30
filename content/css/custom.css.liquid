@@ -3,13 +3,18 @@ permalink: /css/custom.css
 layout: false
 ---
 
+/* =============================================================================
+   VARIABLES
+   ============================================================================= */
+
 :root {
   /* Colors */
   --color-primary: #4078c0;
-  --color-active: #2f598f;
   --color-text: #000;
   --color-bg: #fff;
   --color-border: #000;
+  --color-row-odd: #f2f2f2;
+  --color-row-even: #fcfcfc;
 
   /* Spacing */
   --space-xs: 0.5rem;
@@ -27,6 +32,10 @@ layout: false
   --header-height: 200px;
   --border-width: 1px;
 }
+
+/* =============================================================================
+   BASE
+   ============================================================================= */
 
 body {
   max-width: var(--max-width);
@@ -51,9 +60,9 @@ ul, ol {
 }
 
 blockquote {
-  border-left: thick solid #4078c0;
-  margin-left: 1ex;
-  padding-left: 1ex;
+  border-left: thick solid var(--color-primary);
+  margin-inline-start: 0.5rem;
+  padding-inline-start: 0.5rem;
 }
 
 /* Remove top margin from first child to prevent extra space */
@@ -61,14 +70,81 @@ blockquote {
   margin-block-start: 0;
 }
 
-td,th {
+td, th {
   text-align: left;
   vertical-align: top;
 }
 
+/* =============================================================================
+   LAYOUT
+   ============================================================================= */
+
+.site-header {
+  height: var(--header-height);
+  border: var(--border-width) solid var(--color-border);
+
+  background-image: url({{ "/image/race-background.png" | htmlBaseUrl }});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  padding: var(--space-sm);
+}
+
+.site-header h1 {
+  font-family: var(--font-header);
+  font-size: var(--font-size-header);
+  font-weight: bold;
+  color: var(--color-bg);
+}
+
+.site-nav {
+  display: flex;
+  background-color: var(--color-primary);
+}
+
+.site-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: var(--space-sm);
+}
+
+.site-nav li {
+  display: inline;
+  border-left: var(--border-width) solid var(--color-bg);
+  padding: var(--space-xs);
+}
+
+.site-nav li:first-child {
+  border: none;
+}
+
+.site-nav a {
+  color: var(--color-bg);
+  text-decoration: none;
+}
+
+.site-nav li.active {
+  font-weight: bold;
+}
+
+.nav-main {
+  flex-grow: 1;
+}
+
+footer {
+  font-size: smaller;
+  margin-top: 2lh;
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+/* =============================================================================
+   COMPONENTS
+   ============================================================================= */
+
 table.raceinfo {
-  border: thin solid black;
-  padding: 1rem;
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-sm);
 }
 
 .staffing {
@@ -76,16 +152,35 @@ table.raceinfo {
   break-before: always;
 }
 
-.staffing th,.staffing td {
+.staffing th, .staffing td {
   padding: 0.5rem;
 }
 
-.staffing tbody tr:nth-child(odd) {
-  background-color: #f2f2f2; /* A light gray color */
+.race-schedule {
+  border-collapse: collapse;
 }
 
-.staffing tbody tr:nth-child(even) {
-  background-color: #fcfcfc; /* A white color */
+.race-schedule th, .race-schedule td {
+  padding: var(--space-xs);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.race-schedule tr.past-race {
+  opacity: 0.4;
+}
+
+.striped tbody tr:nth-child(odd) {
+  background-color: var(--color-row-odd);
+}
+
+.striped tbody tr:nth-child(even) {
+  background-color: var(--color-row-even);
+}
+
+.race-cover {
+  float: right;
+  margin: 1rem;
+  max-width: 40%;
 }
 
 .contacts li:not(:last-child) {
@@ -98,104 +193,26 @@ table.raceinfo {
   margin-block: 0 1rem;
 }
 
-.race-schedule {
-  border-collapse: collapse;
-}
-.race-schedule th, .race-schedule td {
-  padding: 10px;
-  border: thin solid black;
-}
-
-.race-schedule tbody tr:nth-child(odd) {
-  background-color: #f2f2f2; /* A light gray color */
-}
-
-.race-schedule tbody tr:nth-child(even) {
-  background-color: #fcfcfc; /* A white color */
-}
-
-@media screen {
-  .race-schedule tr.past-race {
-    opacity: 0.4;
-  }
-}
-
-.race-cover {
-  float: right;
-  margin: 1rem;
-  max-width: 40%;
-}
-
-.site-header {
-	height: var(--header-height);
-	border: var(--border-width) solid var(--color-border);
-
-  background-image: url({{ "/image/race-background.png" | htmlBaseUrl }});
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-
+.icons ul {
+  list-style-type: none;
+  margin: 0;
   padding: var(--space-sm);
 }
 
-.site-header h1 {
-  font-family: var(--font-header);
-  font-size: var(--font-size-header);
-  font-weight: bold;
-  color: var(--color-bg);
-}
-
-footer {
-  font-size: smaller;
-  margin-top: 2lh;
-	border-top: var(--border-width) solid var(--color-border);
-}
-
-.icons ul {
-	list-style-type: none;
-	margin: 0;
-	padding: var(--space-sm);
-}
-
 .icons li {
-	display: inline-block;
-  padding: 0 4px;
+  display: inline-block;
+  padding: 0 var(--space-xs);
 }
 
-.site-nav {
-  display: flex;
-  background-color: var(--color-primary);
-}
+/* =============================================================================
+   UTILITIES
+   ============================================================================= */
 
-.site-nav ul {
-	list-style-type: none;
-	margin: 0;
-	background-color: var(--color-primary);
-	padding: var(--space-sm);
-}
+/* .noprint — hides elements when printing; defined in the @media print block below */
 
-.site-nav li {
-	display: inline;
-	border-left: var(--border-width) solid var(--color-bg);
-	padding: 5px;
-}
-
-.site-nav li:first-child {
-	border: none;
-}
-
-.site-nav a {
-	color: var(--color-bg);
-	text-decoration: none;
-}
-
-.site-nav li.active {
-  font-weight: bold;
-}
-
-.nav-main {
-  flex-grow: 1;
-}
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
 
 /* Modern focus indicators for accessibility */
 :focus-visible {
@@ -208,6 +225,10 @@ footer {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* =============================================================================
+   PRINT
+   ============================================================================= */
+
 @media print {
   .noprint {
     display: none;
@@ -216,6 +237,11 @@ footer {
   .site-header {
     padding: 0;
     height: auto;
+    font-size: 24pt;
+    page-break-after: avoid;
+    background-image: none;
+    border: none;
+    color: var(--color-text);
   }
 
   .site-header h1 {
@@ -224,21 +250,13 @@ footer {
 
   /* Remove all link underlines in print */
   a {
-    color: inherit; /* Inherits the color from the parent element */
+    color: inherit;
     text-decoration: none;
   }
 
   abbr {
     text-decoration: none;
     border-bottom: none;
-  }
-
-  .site-header {
-    font-size: 24pt;
-    page-break-after: avoid;
-    background-image: none;
-    border: none;
-    color: var(--color-text);
   }
 
   /* Better table printing */
@@ -261,15 +279,6 @@ footer {
     page-break-after: avoid;
   }
 
-  /* Show URLs for external links */
-  /*
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    color: #666;
-  }
-  */
-
   /* Don't show URLs for internal navigation */
   .site-nav a[href^="http"]::after {
     content: "";
@@ -288,7 +297,7 @@ footer {
     border: none;
   }
 
-  .race-schedule td,.race-schedule th {
+  .race-schedule td, .race-schedule th {
     border: none;
     padding: 8px;
   }
