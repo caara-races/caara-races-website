@@ -3,7 +3,7 @@ tags: race
 title: Port Run Half Marathon
 date: 2026-09-27T08:00:00-04:00
 race:
-  location:
+  start:
     name: RiverWalk Brewing Co.
     address: |-
       40 Parker St

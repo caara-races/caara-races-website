@@ -69,6 +69,13 @@
             fillColor: '#67e639',
             fillOpacity: 1.0
           }).addTo(map);
+        } else if (name === 'FINISH') {
+          marker = L.circleMarker([lat, lon], {
+            radius: 8,
+            color: 'black',
+            fillColor: '#e63946',
+            fillOpacity: 1.0
+          }).addTo(map);
         } else {
           marker = L.marker([lat, lon]).addTo(map);
         }

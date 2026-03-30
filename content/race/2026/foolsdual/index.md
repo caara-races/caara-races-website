@@ -3,7 +3,7 @@ tags: race
 title: Fool's Dual Half Marathon
 date: 2026-03-28T09:00:00-04:00
 race:
-  location:
+  start:
     name: O'Maley Middle School
     address: |-
       32 Cherry Street

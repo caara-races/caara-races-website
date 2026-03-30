@@ -91,7 +91,7 @@ async function main() {
       continue;
     }
 
-    const location = frontmatter.race?.location;
+    const location = frontmatter.race?.start;
     const checkpoints = frontmatter.race?.checkpoints;
     if (!checkpoints || Object.keys(checkpoints).length === 0) {
       console.log(`${filePath}: no checkpoints, skipping`);
@@ -144,6 +144,35 @@ async function main() {
           lat: startCoords.lat,
           lon: startCoords.lon,
           sym: "Flag, Green",
+        });
+      }
+    }
+
+    const finish = frontmatter.race?.finish;
+    if (finish) {
+      let finishCoords = null;
+      if (finish.coordinates) {
+        const [lat, lon] = finish.coordinates
+          .split(",")
+          .map((s) => parseFloat(s.trim()));
+        finishCoords = { lat, lon };
+        console.log(`  FINISH: ${lat}, ${lon} (from coordinates field)`);
+      } else {
+        const geocodeAddress = `${finish.name}, ${finish.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
+        finishCoords = await geocode(geocodeAddress, apiKey);
+        if (finishCoords) {
+          console.log(`  FINISH: ${finishCoords.lat}, ${finishCoords.lon}`);
+        } else {
+          console.warn(`  WARN: failed to geocode finish location, skipping`);
+        }
+      }
+      if (finishCoords) {
+        waypoints.push({
+          name: "FINISH",
+          desc: `${finish.name}\n${finish.address}`,
+          lat: finishCoords.lat,
+          lon: finishCoords.lon,
+          sym: "Flag, Red",
         });
       }
     }
