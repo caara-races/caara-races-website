@@ -2,5 +2,5 @@
   height: 400px;
   width: 100%;
   margin-block: 1rem;
-  border: thin solid black;
+  border: var(--border-width) solid var(--color-border);
 }

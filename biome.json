@@ -11,7 +11,7 @@
       "!!_site",
       "!!package.json",
       "!!firebase.json",
-      "!!content/css/normalize.css",
+      "!!content/css/reset.css",
       "!!**/*.html"
     ]
   },
