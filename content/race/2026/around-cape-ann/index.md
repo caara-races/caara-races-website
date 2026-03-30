@@ -4,10 +4,10 @@ title: Around Cape Ann Half Marathon
 date: 2026-10-18T08:00:00-04:00
 race:
   location:
-    name: Hamilton-Wenham High School
+    name: O'Maley Middle School
     address: |-
-      775 Bay Road South
-      Hamilton, MA
+      32 Cherry Street
+      Gloucester, MA 01930 US
   url: https://www.yukanrun.com/around-cape-ann-half-marathon
   frequency:
     primary: n1hsy
