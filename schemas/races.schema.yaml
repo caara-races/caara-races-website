@@ -1,4 +1,38 @@
 $schema: http://json-schema.org/draft-07/schema#
+definitions:
+  location:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+        description: >-
+          A human-readable name for the location (e.g., "Marblehead High School").
+          If omitted, a default is used: "Start" for the start location, "Finish"
+          for the finish location, or the checkpoint key (e.g., "cp1") for checkpoints.
+      address:
+        type: string
+        description: >-
+          The intersection or street address of the location, including town and state.
+          We feed this to Google's geocoding API to discover the geographic coordinates
+          of the location.
+        examples:
+          - Washington St & Reynard St, Gloucester, MA
+      position:
+        type: string
+        description: >-
+          Mile position along the course.
+        examples:
+          - Mile 1 and 13
+      coordinates:
+        type: string
+        description: >-
+          Explicit geographic coordinates for the location. This allows us to set an explicit
+          location if Google's geocoding API fails to find the correct location.
+        examples:
+          - 42.491789, -70.847104
+    required:
+      - address
 type: object
 properties:
   title:
@@ -30,65 +64,19 @@ properties:
         description: >-
           Contains location information for each checkpoint in the race.
         additionalProperties:
-          type: object
-          properties:
-            address:
-              type: string
-              description: >-
-                The intersection or street address of the checkpoint, including town and state.
-                We feed this to Google's geocoding API to discover the geographic coordinates
-                of the checkpoint.
-              examples:
-                - Washington St & Reynard St, Gloucester, MA
-            position:
-              type: string
-              description: >-
-                Mile position along the course.
-              examples:
-                - Mile 1 and 13
-            coordinates:
-              type: string
-              description: >-
-                Explicit geographic coordinates for the checkpoint. This allows us to set an explicit
-                location if Google's geocoding API fails to find the correct location.
-              examples:
-                - 42.491789, -70.847104
-          required:
-            - address
-            - position
+          $ref: '#/definitions/location'
       sheet:
         type: string
         description: >-
           URL to the google sheet with staffing information.
       start:
-        type: object
         description: >-
-          Location of the race starting point. See the checkpoints field for a
-          detailed description.
-        properties:
-          name:
-            type: string
-          address:
-            type: string
-          coordinates:
-            type: string
-        required:
-          - name
-          - address
+          Location of the race starting point.
+        $ref: '#/definitions/location'
       finish:
-        type: object
         description: >-
           Location of the race finish.
-        properties:
-          name:
-            type: string
-          address:
-            type: string
-          coordinates:
-            type: string
-        required:
-          - name
-          - address
+        $ref: '#/definitions/location'
       url:
         type: string
         pattern: ^https?://

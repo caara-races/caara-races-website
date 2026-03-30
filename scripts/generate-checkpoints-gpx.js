@@ -127,7 +127,8 @@ async function main() {
         startCoords = { lat, lon };
         console.log(`  START: ${lat}, ${lon} (from coordinates field)`);
       } else {
-        const geocodeAddress = `${location.name}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
+        const startName = location.name ?? "Start";
+        const geocodeAddress = `${startName}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
         startCoords = await geocode(geocodeAddress, apiKey);
         if (startCoords) {
           console.log(`  START: ${startCoords.lat}, ${startCoords.lon}`);
@@ -138,9 +139,10 @@ async function main() {
         }
       }
       if (startCoords) {
+        const startName = location.name ?? "Start";
         waypoints.push({
           name: "START",
-          desc: `${location.name}\n${location.address}`,
+          desc: `${startName}\n${location.address}`,
           lat: startCoords.lat,
           lon: startCoords.lon,
           sym: "Flag, Green",
@@ -158,7 +160,8 @@ async function main() {
         finishCoords = { lat, lon };
         console.log(`  FINISH: ${lat}, ${lon} (from coordinates field)`);
       } else {
-        const geocodeAddress = `${finish.name}, ${finish.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
+        const finishName = finish.name ?? "Finish";
+        const geocodeAddress = `${finishName}, ${finish.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
         finishCoords = await geocode(geocodeAddress, apiKey);
         if (finishCoords) {
           console.log(`  FINISH: ${finishCoords.lat}, ${finishCoords.lon}`);
@@ -167,9 +170,10 @@ async function main() {
         }
       }
       if (finishCoords) {
+        const finishName = finish.name ?? "Finish";
         waypoints.push({
           name: "FINISH",
-          desc: `${finish.name}\n${finish.address}`,
+          desc: `${finishName}\n${finish.address}`,
           lat: finishCoords.lat,
           lon: finishCoords.lon,
           sym: "Flag, Red",
@@ -178,7 +182,7 @@ async function main() {
     }
 
     for (const [key, cp] of Object.entries(checkpoints)) {
-      const name = key.toUpperCase();
+      const name = cp.name ?? key.toUpperCase();
       let coords;
 
       if (cp.coordinates) {
