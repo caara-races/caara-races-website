@@ -8,6 +8,7 @@ layout: base
 {% assign course_path = asset_base | append: page.fileSlug | append: ".gpx" %}
 {% assign checkpoints_path = asset_base | append: page.fileSlug | append: "-checkpoints.gpx" %}
 
+<section class="raceinfo">
 <table class="raceinfo">
   <tr>
     <th>When</th><td>{{ date | date: "%b %d, %Y (%a)"}}</td>
@@ -25,9 +26,10 @@ layout: base
     <th></th><td>Backup: {{ repeaters[race.frequency.backup] | formatRepeater }}</td>
   </tr>
 </table>
+</section>
 
-<div class="noprint">
-<p class="noprint"><a href="race.ics">Add to calendar</a></p>
+<section class="racelinks noprint">
+<p><a href="race.ics">Add to calendar</a></p>
 
 <ul>
   {% if race.url %}
@@ -43,8 +45,9 @@ layout: base
     <li><a href="{{ checkpoints_path }}">Checkpoints GPX</a></li>
   {% endif %}
 </ul>
-</div>
+</section>
 
+<section class="racemain">
 {{ content }}
 
 {% assign course_url = "" %}
@@ -54,6 +57,7 @@ layout: base
 {% if course_url != "" or checkpoints_url != "" %}
 {% include "map.liquid" %}
 {% endif %}
+</section>
 
 <section class="contacts">
 <h2>Emergency contacts</h2>
