@@ -4,13 +4,9 @@ import { pathToFileURL } from "node:url";
 import { glob } from "glob";
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import yaml from "yaml";
+import { extractFrontmatter } from "./lib/frontmatter.js";
 
-export function extractFrontmatter(filePath, content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) throw new Error(`${filePath}: No frontmatter found`);
-  return yaml.parse(match[1]);
-}
+export { extractFrontmatter };
 
 export function extractSpreadsheetId(url) {
   const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);

@@ -14,7 +14,7 @@
 		"build": "eleventy",
 		"serve": "eleventy --watch --serve",
 		"fetch": "node scripts/fetch-sheets.js",
-		"test": "node --test scripts/*.test.js",
+		"test": "node --test scripts/*.test.js scripts/lib/*.test.js",
 		"validate-races": "node scripts/validate-races.js",
 		"validate-towns": "node scripts/validate-data.js schemas/towns.yaml content/_data/towns.yaml",
 		"validate-repeaters": "node scripts/validate-data.js schemas/repeaters.yaml content/_data/repeaters.yaml",

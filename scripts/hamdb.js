@@ -1,5 +1,8 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import {
+  readCache as libReadCache,
+  writeCache as libWriteCache,
+} from "./lib/cache.js";
+import { escapeHtml } from "./lib/escape.js";
 
 const CACHE_DIR = ".cache/hamdb";
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -11,36 +14,12 @@ const LICENSE_CLASSES = {
   A: "Advanced",
 };
 
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
 export async function readCache(callsign) {
-  const filePath = path.join(CACHE_DIR, `${callsign.toUpperCase()}.json`);
-  try {
-    const content = await fs.readFile(filePath, "utf8");
-    const cached = JSON.parse(content);
-    if (Date.now() - cached.timestamp < CACHE_TTL_MS) {
-      return cached.data;
-    }
-  } catch {
-    // Cache miss, expired, or invalid JSON
-  }
-  return null;
+  return libReadCache(CACHE_DIR, callsign.toUpperCase(), CACHE_TTL_MS);
 }
 
 export async function writeCache(callsign, data) {
-  await fs.mkdir(CACHE_DIR, { recursive: true });
-  const filePath = path.join(CACHE_DIR, `${callsign.toUpperCase()}.json`);
-  await fs.writeFile(
-    filePath,
-    JSON.stringify({ timestamp: Date.now(), data }),
-    "utf8",
-  );
+  return libWriteCache(CACHE_DIR, callsign.toUpperCase(), data);
 }
 
 export async function lookupHamDb(callsign) {

@@ -60,7 +60,7 @@ describe("buildTooltip", () => {
     assert.ok(result.includes("General"));
   });
 
-  it("expands A to Amateur Extra", () => {
+  it("expands A to Advanced", () => {
     const result = buildTooltip("W1AW", {
       class: "A",
       fname: "JOHN",
@@ -68,7 +68,7 @@ describe("buildTooltip", () => {
       addr2: "BOSTON",
       state: "MA",
     });
-    assert.ok(result.includes("Amateur Extra"));
+    assert.ok(result.includes("Advanced"));
   });
 
   it("displays unknown class verbatim", () => {
