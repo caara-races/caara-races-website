@@ -39,3 +39,11 @@ race:
       address: Rogers St & Turkey Hill Rd, West Newbury, MA
       position: Mile 8+
 ---
+
+There will be nine aid stations with water near miles 2, 3, 4, 6, 8, 9, 10, 11 & 12. Zym Hydration will also be available near miles 2, 4, 6, 9, 11 & 12. Energy gels will be available near mile 6.
+
+With warmer summer temperatures, runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+Portable restrooms will be available at the start/finish and along the course near mile 3 & 10 as well.
+
+The roads are open to traffic. The local Police Department will help monitor traffic.

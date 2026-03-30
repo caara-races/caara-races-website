@@ -35,3 +35,13 @@ race:
       address: Salt Is. Rd & Barberry Way, Gloucester, MA
       position: Mile 6
 ---
+
+There will be six aid stations with water approximately every two miles.
+
+With warmer summer temperatures, runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+A portable restroom will be available along the course near miles 4.5 & 8.
+
+There is a short section (@1/4 mile) of unpaved road near mile 3.5 & 9.5 on the half marathon course.
+
+The roads are open to traffic. The local Police Department will help monitor traffic.

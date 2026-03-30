@@ -34,3 +34,6 @@ race:
       position: Mile 9 and 10
 ---
 
+There will be aid stations with water and sports drink near miles 1, 4, 5.5, 8, 9, 10 and 12.5. A portable restroom will also be available near mile 1 and 4 on the course. Portable restrooms will be available at the start/finish area as well.
+
+The roads are open to traffic. The local Police Departments will help monitor traffic.
