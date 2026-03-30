@@ -4,10 +4,10 @@ title: Around Cape Ann Half Marathon
 date: 2026-10-18T08:00:00-04:00
 race:
   location:
-    name: O'Maley Middle School
+    name: Good Harbor Beach
     address: |-
-      32 Cherry Street
-      Gloucester, MA 01930 US
+      100 Thatcher Road
+      Gloucester, MA
   url: https://www.yukanrun.com/around-cape-ann-half-marathon
   frequency:
     primary: n1hsy
