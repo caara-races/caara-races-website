@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { extname } from "node:path";
 import { pathToFileURL } from "node:url";
-import Ajv from "ajv-draft-04";
+import Ajv from "ajv";
 import yaml from "yaml";
 import { extractFrontmatter } from "./lib/frontmatter.js";
 
