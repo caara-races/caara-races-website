@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="DownloadGPX" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
   <metadata>
-    <name>Barns & Blooms Half Marathon</name>
+    <name>Barns &amp; Blooms Half Marathon</name>
     <time>2026-03-29T12:53:42.193Z</time>
   </metadata>
   <trk>
-    <name>Barns & Blooms Half Marathon</name>
+    <name>Barns &amp; Blooms Half Marathon</name>
     <trkseg>
       <trkpt lat="42.62982" lon="-70.84854">
         <ele>0</ele>
