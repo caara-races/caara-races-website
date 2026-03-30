@@ -179,7 +179,7 @@ def render_pdf(
     # Letter size in mm: 215.9 x 279.4
     page_width = 215.9
     page_height = 279.4
-    margin = 5.0
+    margin = 12.7
     header_height = 15.0
 
     layout = QgsLayout(project)
