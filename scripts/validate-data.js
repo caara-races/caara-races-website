@@ -3,6 +3,7 @@ import { extname } from "node:path";
 import { pathToFileURL } from "node:url";
 import Ajv from "ajv-draft-04";
 import yaml from "yaml";
+import { extractFrontmatter } from "./lib/frontmatter.js";
 
 async function parseFile(filePath) {
   const content = await readFile(filePath, "utf8");
@@ -11,14 +12,6 @@ async function parseFile(filePath) {
     return yaml.parse(content);
   }
   return JSON.parse(content);
-}
-
-function extractFrontmatter(filePath, content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) {
-    throw new Error(`${filePath}: No frontmatter found`);
-  }
-  return yaml.parse(match[1]);
 }
 
 export async function validateFiles(

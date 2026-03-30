@@ -1,47 +1,28 @@
 import { createHash } from "node:crypto";
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "glob";
-import yaml from "yaml";
+import {
+  readCache as libReadCache,
+  writeCache as libWriteCache,
+} from "./lib/cache.js";
+import { escapeHtml } from "./lib/escape.js";
+import { extractFrontmatter } from "./lib/frontmatter.js";
 
 const CACHE_DIR = ".cache/geocoding";
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-
-function escapeXml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
 
 function cacheKey(address) {
   return createHash("sha256").update(address).digest("hex");
 }
 
 async function readCache(address) {
-  const filePath = path.join(CACHE_DIR, `${cacheKey(address)}.json`);
-  try {
-    const content = await readFile(filePath, "utf8");
-    const cached = JSON.parse(content);
-    if (Date.now() - cached.timestamp < CACHE_TTL_MS) {
-      return { lat: cached.lat, lon: cached.lon };
-    }
-  } catch {
-    // Cache miss, expired, or invalid JSON
-  }
-  return null;
+  return libReadCache(CACHE_DIR, cacheKey(address), CACHE_TTL_MS);
 }
 
 async function writeCache(address, lat, lon) {
-  await mkdir(CACHE_DIR, { recursive: true });
-  const filePath = path.join(CACHE_DIR, `${cacheKey(address)}.json`);
-  await writeFile(
-    filePath,
-    JSON.stringify({ timestamp: Date.now(), lat, lon }),
-    "utf8",
-  );
+  return libWriteCache(CACHE_DIR, cacheKey(address), { lat, lon });
 }
 
 async function geocode(address, apiKey) {
@@ -69,25 +50,19 @@ function buildGpx(title, waypoints) {
   const time = new Date().toISOString();
   const wptElements = waypoints
     .map(({ name, desc, lat, lon, sym }) => {
-      const symEl = sym ? `\n    <sym>${escapeXml(sym)}</sym>` : "";
-      return `  <wpt lat="${lat}" lon="${lon}">\n    <name>${escapeXml(name)}</name>\n    <desc>${escapeXml(desc)}</desc>${symEl}\n  </wpt>`;
+      const symEl = sym ? `\n    <sym>${escapeHtml(sym)}</sym>` : "";
+      return `  <wpt lat="${lat}" lon="${lon}">\n    <name>${escapeHtml(name)}</name>\n    <desc>${escapeHtml(desc)}</desc>${symEl}\n  </wpt>`;
     })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="caara-races/generate-checkpoints-gpx" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
   <metadata>
-    <name>${escapeXml(title)} Checkpoints</name>
+    <name>${escapeHtml(title)} Checkpoints</name>
     <time>${time}</time>
   </metadata>
 ${wptElements}
 </gpx>
 `;
-}
-
-function extractFrontmatter(filePath, content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) throw new Error(`${filePath}: No frontmatter found`);
-  return yaml.parse(match[1]);
 }
 
 async function main() {
@@ -98,12 +73,12 @@ async function main() {
   const force = args.includes("--force");
   const filter = args.find((a) => !a.startsWith("--"));
 
-  const raceFiles = (await glob("content/race/*/*/index.md")).sort();
+  const raceFiles = (await glob("content/race/**/index.md")).sort();
 
   for (const filePath of raceFiles) {
-    const parts = filePath.split(path.sep);
-    const year = parts[2];
-    const slug = parts[3];
+    const raceDir = path.dirname(filePath);
+    const slug = path.basename(raceDir);
+    const year = path.basename(path.dirname(raceDir));
 
     if (filter && `${year}/${slug}` !== filter) continue;
 
@@ -123,10 +98,7 @@ async function main() {
       continue;
     }
 
-    const outPath = path.join(
-      path.dirname(filePath),
-      `${slug}-checkpoints.gpx`,
-    );
+    const outPath = path.join(raceDir, `${slug}-checkpoints.gpx`);
 
     if (!force) {
       try {
