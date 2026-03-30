@@ -34,3 +34,9 @@ race:
       address: Jeffrey's Neck Rd & N. Ridge Rd, Ipswich, MA
       position: Mile 9 &10
 ---
+
+Portable restrooms are available at the start/finish. A portable restroom will be available along the course near mile 2, 5 & 11. There will be six aid stations with water near miles 2, 4, 6, 8, 10 and 12.
+
+Runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+The roads are open to traffic. The local Police Department will help monitor traffic. PLEASE stay to the side of the road.

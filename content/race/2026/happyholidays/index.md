@@ -35,3 +35,11 @@ race:
       address: Old Garden Rd & Babcock Rd, Rockport, MA
       position: Mile 6 & 7
 ---
+
+There will be six aid stations with water near miles 1, 2.5, 5.5, 7.5, 10.5 and 12. A portable restroom will be available along the course near mile 2.5 & 10.
+
+Runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+The roads are open to traffic. The local Police Department will help monitor traffic. Please stay to the side of the road.
+
+There is a short section (@1/4 mile) of unpaved road near mile 2.5 & 10.5.

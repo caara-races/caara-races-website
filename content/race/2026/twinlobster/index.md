@@ -35,3 +35,8 @@ race:
       position: Mile 6
 ---
 
+There will be six aid stations with water near miles 2, 3.5, 5.5, 6.5, 9.5 and 11. With warmer temperatures, runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+A portable restroom will be available along the course near miles 3 & 10. Portable restrooms also available at the start/finish.
+
+The roads are open to traffic. The local Police Department will help monitor traffic.

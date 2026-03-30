@@ -35,3 +35,11 @@ race:
       address: Forest St & Essex St, Hamilton, MA
       position: Mile 7
 ---
+
+There will be six aid stations with water and Gatorade near miles 1, 3, 5, 7.5, 9.5 & 11.5.
+
+With warmer temperatures, runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.
+
+A portable restroom will be available along the course near mile 3.5 & 9.
+
+The roads are open to traffic. The local Police Department will help monitor traffic. PLEASE stay to the side of the road.
