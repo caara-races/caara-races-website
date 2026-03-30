@@ -3,7 +3,7 @@ tags: race
 title: Ocean View Half Marathon
 date: 2026-11-01T09:00:00-05:00
 race:
-  location:
+  start:
     name: Ipswich High School
     address: |-
       134 High Street

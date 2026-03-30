@@ -92,8 +92,8 @@ def load_line_layer(gpx_path: str, name: str) -> QgsVectorLayer:
     return layer
 
 
-def load_point_layer(gpx_path: str, name: str) -> tuple[QgsVectorLayer, QgsVectorLayer]:
-    """Load a GPX file as point layers (waypoints), split into start and checkpoints."""
+def load_point_layer(gpx_path: str, name: str) -> list[QgsVectorLayer]:
+    """Load a GPX file as point layers (waypoints), split into start, finish, and checkpoints."""
     uri = f"{gpx_path}|layername=waypoints"
 
     start_layer = QgsVectorLayer(uri, f"{name} - Start", "ogr")
@@ -102,8 +102,14 @@ def load_point_layer(gpx_path: str, name: str) -> tuple[QgsVectorLayer, QgsVecto
         print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
         sys.exit(1)
 
+    finish_layer = QgsVectorLayer(uri, f"{name} - Finish", "ogr")
+    finish_layer.setSubsetString("\"name\" = 'FINISH'")
+    if not finish_layer.isValid():
+        print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
+        sys.exit(1)
+
     cp_layer = QgsVectorLayer(uri, f"{name} - Checkpoints", "ogr")
-    cp_layer.setSubsetString("\"name\" != 'START'")
+    cp_layer.setSubsetString("\"name\" NOT IN ('START', 'FINISH')")
     if not cp_layer.isValid():
         print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
         sys.exit(1)
@@ -120,6 +126,18 @@ def load_point_layer(gpx_path: str, name: str) -> tuple[QgsVectorLayer, QgsVecto
     )
     start_layer.setRenderer(QgsSingleSymbolRenderer(start_symbol))
 
+    # Red square for finish
+    finish_symbol = QgsMarkerSymbol.createSimple(
+        {
+            "name": "square",
+            "color": "204,0,0,255",
+            "outline_color": "255,255,255,255",
+            "outline_width": "0.4",
+            "size": "3.5",
+        }
+    )
+    finish_layer.setRenderer(QgsSingleSymbolRenderer(finish_symbol))
+
     # Orange circle for checkpoints
     cp_symbol = QgsMarkerSymbol.createSimple(
         {
@@ -132,8 +150,8 @@ def load_point_layer(gpx_path: str, name: str) -> tuple[QgsVectorLayer, QgsVecto
     )
     cp_layer.setRenderer(QgsSingleSymbolRenderer(cp_symbol))
 
-    # Configure labels for both
-    for layer in (start_layer, cp_layer):
+    # Configure labels for all
+    for layer in (start_layer, finish_layer, cp_layer):
         text_format = QgsTextFormat()
         text_format.setFont(QFont("Arial", 9))
         text_format.setSize(9)
@@ -156,7 +174,7 @@ def load_point_layer(gpx_path: str, name: str) -> tuple[QgsVectorLayer, QgsVecto
         layer.setLabeling(labeling)
         layer.setLabelsEnabled(True)
 
-    return start_layer, cp_layer
+    return [start_layer, finish_layer, cp_layer]
 
 
 def render_pdf(
@@ -311,8 +329,7 @@ def main() -> None:
 
         point_layers = []
         for i, gpx_path in enumerate(args.points):
-            start, cps = load_point_layer(gpx_path, f"Points {i + 1}")
-            point_layers.extend([start, cps])
+            point_layers.extend(load_point_layer(gpx_path, f"Points {i + 1}"))
 
         render_pdf(
             args.output, args.title, args.date, basemap, line_layers, point_layers

@@ -17,8 +17,13 @@ layout: base
     <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
   </tr>
   <tr>
-    <th>Where</th><td><a href="{{ race.location.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.location | formatAddress }}</a></td>
+    <th>Start location</th><td><a href="{{ race.start.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.start | formatAddress }}</a></td>
   </tr>
+  {% if race.finish %}
+  <tr>
+    <th>Finish location</th><td><a href="{{ race.finish.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.finish | formatAddress }}</a></td>
+  </tr>
+  {% endif %}
   <tr>
     <th>Frequencies</th><td>Primary: {{ repeaters[race.frequency.primary] | formatRepeater }}</td>
   </tr>

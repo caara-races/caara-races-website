@@ -3,7 +3,7 @@ tags: race
 title: Marblehead Half Marathon
 date: 2026-04-12T09:00:00-04:00
 race:
-  location:
+  start:
     name: Marblehead High School
     address: |-
       2 Humphrey Street

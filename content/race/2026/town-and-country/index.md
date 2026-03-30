@@ -3,7 +3,7 @@ tags: race
 title: Town and Country Half Marathon
 date: 2026-06-28T08:00:00-04:00
 race:
-  location:
+  start:
     name: RiverWalk Brewing Co.
     address: |-
       40 Parker St

@@ -60,11 +60,25 @@ properties:
         type: string
         description: >-
           URL to the google sheet with staffing information.
-      location:
+      start:
         type: object
         description: >-
           Location of the race starting point. See the checkpoints field for a
           detailed description.
+        properties:
+          name:
+            type: string
+          address:
+            type: string
+          coordinates:
+            type: string
+        required:
+          - name
+          - address
+      finish:
+        type: object
+        description: >-
+          Location of the race finish.
         properties:
           name:
             type: string
@@ -95,7 +109,7 @@ properties:
           backup:
             type: string
     required:
-      - location
+      - start
       - frequency
 required:
   - date
