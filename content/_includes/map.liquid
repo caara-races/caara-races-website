@@ -20,25 +20,31 @@
   }).addTo(map);
 
   {% if course_url != "" %}
-  new L.GPX('{{ course_url }}', {
-    async: true,
-    gpx_options: { parseElements: ['track', 'route'] },
-    marker_options: {
-      startIconUrl: null,
-      endIconUrl: null,
-      shadowUrl: null
-    },
-    polyline_options: {
-      color: '#4078c0',
-      weight: 3
-    }
-  }).on('loaded', function (e) {
-    map.fitBounds(e.target.getBounds());
-  }).addTo(map);
+  var coursePromise = new Promise(function (resolve) {
+    new L.GPX('{{ course_url }}', {
+      async: true,
+      gpx_options: { parseElements: ['track', 'route'] },
+      marker_options: {
+        startIconUrl: null,
+        endIconUrl: null,
+        shadowUrl: null
+      },
+      polyline_options: {
+        color: '#4078c0',
+        weight: 3
+      }
+    }).on('loaded', function (e) {
+      resolve(e.target.getBounds());
+    }).on('error', function () {
+      resolve(null);
+    }).addTo(map);
+  });
+  {% else %}
+  var coursePromise = Promise.resolve(null);
   {% endif %}
 
   {% if checkpoints_url != "" %}
-  fetch('{{ checkpoints_url }}')
+  var checkpointsPromise = fetch('{{ checkpoints_url }}')
     .then(function (r) { return r.text(); })
     .then(function (xml) {
       var doc = new DOMParser().parseFromString(xml, 'application/xml');
@@ -70,12 +76,22 @@
           marker.bindPopup(desc);
         }
       });
-      {% if course_url == "" %}
-      if (markers.length > 0) {
-        map.fitBounds(L.featureGroup(markers).getBounds());
-      }
-      {% endif %}
-    });
+      return markers.length > 0 ? L.featureGroup(markers).getBounds() : null;
+    })
+    .catch(function () { return null; });
+  {% else %}
+  var checkpointsPromise = Promise.resolve(null);
   {% endif %}
+
+  Promise.all([coursePromise, checkpointsPromise]).then(function (results) {
+    var bounds = null;
+    results.forEach(function (b) {
+      if (b) bounds = bounds ? bounds.extend(b) : L.latLngBounds(b);
+    });
+    if (bounds && bounds.isValid()) {
+      map.invalidateSize();
+      map.fitBounds(bounds);
+    }
+  });
 }());
 </script>
