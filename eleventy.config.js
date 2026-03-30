@@ -10,14 +10,18 @@ import YAML from "yaml";
 import { hamDbTooltip } from "./scripts/hamdb.js";
 
 // Format a structured location object as a string.
-// location must have `name` and `address` fields.
+// location must have an `address` field; `name` is optional.
 // separator is placed between the name and each line of the address.
-export function formatAddress(location, separator = "<br/>") {
-  return (
-    location.name +
-    separator +
-    location.address.replace(/(\r\n|\n|\r)/g, separator)
-  );
+// defaultName is used when location.name is not set.
+export function formatAddress(
+  location,
+  separator = "<br/>",
+  defaultName = null,
+) {
+  const name = location.name ?? defaultName;
+  const address = location.address.replace(/(\r\n|\n|\r)/g, separator);
+  if (!name) return address;
+  return name + separator + address;
 }
 
 // This is used as the uuid v5 namespace by the uuid filter
