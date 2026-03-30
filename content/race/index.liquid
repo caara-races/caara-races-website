@@ -9,6 +9,7 @@ weight: 10
 <p class="noprint"><a href="/race/{{ current_year }}/races.ics">Add to calendar</a></p>
 
 {% assign sorted_races = collections.race | sort: 'data.date' %}
+{% assign now_ts = "now" | date: "%s" %}
 
 <table class="race-schedule">
   <thead>
@@ -30,7 +31,8 @@ weight: 10
 {% assign asset_base = race.page.inputPath | raceAssetBase %}
 {% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
 {% assign course_path = asset_base | append: race.page.fileSlug | append: ".gpx" %}
-  <tr>
+{% assign race_ts = race.data.date | date: "%s" %}
+  <tr{% if race_ts < now_ts %} class="past-race"{% endif %}>
     <td>{{ race_index }}</td>
     <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
     <td>
