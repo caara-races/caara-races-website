@@ -35,7 +35,9 @@
       }
     }).on('loaded', function (e) {
       var b = e.target.getBounds();
-      map.fitBounds(b);
+      if (b && b.isValid()) {
+        map.fitBounds(b);
+      }
       resolve(b);
     }).on('error', function () {
       resolve(null);
