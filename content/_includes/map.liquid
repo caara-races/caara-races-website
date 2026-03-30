@@ -21,7 +21,7 @@
 
   {% if course_url != "" %}
   var coursePromise = new Promise(function (resolve) {
-    new L.GPX('{{ course_url }}', {
+    var gpx = new L.GPX('{{ course_url }}', {
       async: true,
       gpx_options: { parseElements: ['track', 'route'] },
       marker_options: {
@@ -33,15 +33,13 @@
         color: '#4078c0',
         weight: 3
       }
-    }).on('loaded', function (e) {
-      var b = e.target.getBounds();
-      if (b && b.isValid()) {
-        map.fitBounds(b);
-      }
-      resolve(b);
-    }).on('error', function () {
+    });
+    gpx.on('loaded', function (e) {
+      resolve({ layer: gpx, bounds: e.target.getBounds() });
+    });
+    gpx.on('error', function () {
       resolve(null);
-    }).addTo(map);
+    });
   });
   {% else %}
   var coursePromise = Promise.resolve(null);
@@ -68,16 +66,16 @@
             color: 'black',
             fillColor: '#67e639',
             fillOpacity: 1.0
-          }).addTo(map);
+          });
         } else if (name === 'FINISH') {
           marker = L.circleMarker([lat, lon], {
             radius: 8,
             color: 'black',
             fillColor: '#e63946',
             fillOpacity: 1.0
-          }).addTo(map);
+          });
         } else {
-          marker = L.marker([lat, lon]).addTo(map);
+          marker = L.marker([lat, lon]);
         }
         markers.push(marker);
         if (name) {
@@ -87,7 +85,7 @@
           marker.bindPopup(desc);
         }
       });
-      return markers.length > 0 ? L.featureGroup(markers).getBounds() : null;
+      return markers.length > 0 ? { markers: markers, bounds: L.featureGroup(markers).getBounds() } : null;
     })
     .catch(function () { return null; });
   {% else %}
@@ -96,12 +94,21 @@
 
   Promise.all([coursePromise, checkpointsPromise]).then(function (results) {
     var bounds = null;
-    results.forEach(function (b) {
-      if (b) bounds = bounds ? bounds.extend(b) : b;
+    results.forEach(function (r) {
+      if (r && r.bounds) bounds = bounds ? bounds.extend(r.bounds) : r.bounds;
     });
     if (bounds && bounds.isValid()) {
       map.fitBounds(bounds);
     }
+    results.forEach(function (r) {
+      if (!r) return;
+      if (r.layer) {
+        r.layer.addTo(map);
+      }
+      if (r.markers) {
+        r.markers.forEach(function (m) { m.addTo(map); });
+      }
+    });
   });
 }());
 </script>
