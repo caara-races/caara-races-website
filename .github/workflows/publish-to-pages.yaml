@@ -1,4 +1,3 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy content to Pages
 
 on:
@@ -15,45 +14,25 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-env:
-  ELEVENTY_BASEURL: "${{ vars.ELEVENTY_BASEURL }}"
-
 jobs:
   validate:
     uses: ./.github/workflows/validate.yaml
 
-  publish:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    uses: ./.github/workflows/build.yaml
+    secrets:
+      GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
+    with:
+      ELEVENTY_BASEURL: /caara-races-website
+
+  publish-to-pages:
+    needs:
+      - build
+      - validate
     runs-on: ubuntu-latest
-    needs: validate
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Write google sheets secret to file
-        env:
-          GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
-        run: |
-          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
-        shell: bash
-      - name: Install packages
-        run: |
-          npm install
-      - name: Fetch data
-        env:
-          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
-        run: |
-          npm run fetch
-      - name: Build pages
-        run: |
-          npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: "_site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
