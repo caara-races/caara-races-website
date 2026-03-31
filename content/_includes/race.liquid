@@ -100,11 +100,16 @@ K1KML</a> if you can help.</p>
     </tr>
 {% for aro in volunteers %}
 {% assign role_key = aro.Role | downcase %}
-  <tr>
+<tr {% if aro.Callsign == blank %}class="unassigned"{% endif %}>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
     <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key].address | googleMapSearch }}">{{ race.checkpoints[role_key].address }}</a><br/>{{ race.checkpoints[role_key].position }}{% endif %}</td>
+{% if aro.Callsign != blank %}
     <td>{{ aro.Callsign | hamDbTooltip }}</td>
     <td>{{ aro.Name }}</td>
+{% else %}
+    <td><img class="icon" src="/image/warning-small.png"/></td>
+    <td><img class="icon" src="/image/warning-small.png"/></td>
+{% endif %}
     <td>{{ aro["On station"] }}</td>
   </tr>
 {% endfor %}
