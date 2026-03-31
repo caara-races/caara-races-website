@@ -26,6 +26,7 @@ from qgis.core import (
     QgsLayoutExporter,
     QgsLayoutItemLabel,
     QgsLayoutItemMap,
+    QgsLayoutItemPage,
     QgsLayoutPoint,
     QgsLayoutSize,
     QgsLineSymbol,
@@ -192,6 +193,9 @@ def render_pdf(
 ) -> None:
     """Create a print layout and export to PDF."""
     project = QgsProject.instance()
+    if project is None:
+        raise RuntimeError("failed to create QGIS project")
+
     crs = QgsCoordinateReferenceSystem("EPSG:3857")
     project.setCrs(crs)
 
@@ -199,18 +203,16 @@ def render_pdf(
     for layer in all_layers:
         project.addMapLayer(layer)
 
-    # Letter size in mm: 215.9 x 279.4
-    page_width = 215.9
-    page_height = 279.4
     margin = 12.7
     header_height = 15.0
 
     layout = QgsLayout(project)
     layout.initializeDefaults()
 
-    # Set page size to US Letter portrait
     page = layout.pageCollection().page(0)
-    page.setPageSize(QgsLayoutSize(page_width, page_height))
+    page.setPageSize("Letter", QgsLayoutItemPage.Portrait)
+    page_width = page.pageSize().width()
+    page_height = page.pageSize().height()
 
     # Header font (shared by title and date)
     header_fmt = QgsTextFormat()
