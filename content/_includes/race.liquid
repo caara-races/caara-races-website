@@ -11,7 +11,11 @@ layout: base
 <section class="raceinfo">
 <table class="raceinfo">
   <tr>
-    <th>When</th><td>{{ date | date: "%b %d, %Y (%a)"}}</td>
+    <th>When</th>
+    <td>
+      {{ date | date: "%b %d, %Y (%a)"}}
+      <a class="noprint" href="race.ics">Add to calendar</a>
+    </td>
   </tr>
   <tr>
     <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
@@ -34,8 +38,6 @@ layout: base
 </section>
 
 <section class="racelinks noprint">
-<p><a href="race.ics">Add to calendar</a></p>
-
 <ul>
   {% if race.url %}
     <li><a href="{{ race.url }}">YuKanRun Page</a></li>
