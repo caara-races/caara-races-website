@@ -92,19 +92,24 @@ td, th {
   padding: var(--space-sm);
 }
 
-.site-header h1 {
+.site-header {
   font-family: var(--font-header);
-  font-size: var(--font-size-header);
   font-weight: bold;
   color: var(--color-bg);
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.site-header h1 {
+  font-size: var(--font-size-header);
   margin-block-start: 0.25rem;
 }
 
 .site-header-org {
-  font-family: var(--font-header);
   font-size: calc(var(--font-size-header) * 0.65);
-  font-weight: normal;
-  color: var(--color-bg);
   line-height: 1.2;
 }
 
@@ -275,8 +280,10 @@ img.icon {
     color: var(--color-text);
   }
 
-  .site-header h1 {
+  .site-header h1,
+  .site-header-org {
     color: inherit;
+    text-shadow: none;
   }
 
   /* Remove all link underlines in print */
