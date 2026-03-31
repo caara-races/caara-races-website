@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Render a race map to PDF using QGIS.
 
 Usage:
@@ -14,9 +15,9 @@ Both --lines and --points can be specified multiple times.
 import argparse
 import os
 import sys
+from pathlib import Path
 
 from qgis.core import (
-    Qgis,
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
@@ -25,7 +26,6 @@ from qgis.core import (
     QgsLayoutExporter,
     QgsLayoutItemLabel,
     QgsLayoutItemMap,
-    QgsLayoutItemPage,
     QgsLayoutPoint,
     QgsLayoutSize,
     QgsLineSymbol,
@@ -43,6 +43,26 @@ from qgis.core import (
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor, QFont
 
+# --- Style constants ---
+LINE_COLOR = "0,102,204,220"
+LINE_WIDTH = "0.8"
+
+START_COLOR = "34,170,34,255"
+FINISH_COLOR = "204,0,0,255"
+CHECKPOINT_COLOR = "238,136,0,255"
+MARKER_OUTLINE_COLOR = "255,255,255,255"
+MARKER_OUTLINE_WIDTH = "0.4"
+MARKER_SIZE = "3.5"
+
+LABEL_FONT_FAMILY = "Arial"
+LABEL_FONT_SIZE = 9
+LABEL_BUFFER_SIZE = 1.5
+LABEL_BUFFER_OPACITY = 0.9
+LABEL_DISTANCE = 3.0
+
+EXTENT_PADDING = 0.05
+EXPORT_DPI = 150
+
 
 def create_basemap() -> QgsRasterLayer:
     """Create an XYZ tile layer for OpenStreetMap."""
@@ -54,8 +74,7 @@ def create_basemap() -> QgsRasterLayer:
     )
     layer = QgsRasterLayer(uri, "Basemap", "wms")
     if not layer.isValid():
-        print("ERROR: Failed to create basemap layer", file=sys.stderr)
-        sys.exit(1)
+        raise RuntimeError("Failed to create basemap layer")
     return layer
 
 
@@ -64,13 +83,12 @@ def load_line_layer(gpx_path: str, name: str) -> QgsVectorLayer:
     uri = f"{gpx_path}|layername=tracks"
     layer = QgsVectorLayer(uri, name, "ogr")
     if not layer.isValid():
-        print(f"ERROR: Failed to load tracks from: {gpx_path}", file=sys.stderr)
-        sys.exit(1)
+        raise RuntimeError(f"Failed to load tracks from: {gpx_path}")
 
     symbol = QgsLineSymbol.createSimple(
         {
-            "color": "0,102,204,220",
-            "width": "0.8",
+            "color": LINE_COLOR,
+            "width": LINE_WIDTH,
             "capstyle": "round",
             "joinstyle": "round",
         }
@@ -92,87 +110,74 @@ def load_line_layer(gpx_path: str, name: str) -> QgsVectorLayer:
     return layer
 
 
-def load_point_layer(gpx_path: str, name: str) -> list[QgsVectorLayer]:
+def _configure_point_labels(layer: QgsVectorLayer) -> None:
+    """Configure name labels with a white buffer for a point layer."""
+    text_format = QgsTextFormat()
+    text_format.setFont(QFont(LABEL_FONT_FAMILY, LABEL_FONT_SIZE))
+    text_format.setSize(LABEL_FONT_SIZE)
+    text_format.setColor(QColor(0, 0, 0))
+
+    buffer_settings = QgsTextBufferSettings()
+    buffer_settings.setEnabled(True)
+    buffer_settings.setSize(LABEL_BUFFER_SIZE)
+    buffer_settings.setColor(QColor(255, 255, 255))
+    buffer_settings.setOpacity(LABEL_BUFFER_OPACITY)
+    text_format.setBuffer(buffer_settings)
+
+    label_settings = QgsPalLayerSettings()
+    label_settings.fieldName = "name"
+    label_settings.setFormat(text_format)
+    label_settings.placement = QgsPalLayerSettings.Placement.AroundPoint
+    label_settings.dist = LABEL_DISTANCE
+
+    layer.setLabeling(QgsVectorLayerSimpleLabeling(label_settings))
+    layer.setLabelsEnabled(True)
+
+
+def _create_marker_layer(
+    uri: str,
+    layer_name: str,
+    subset: str,
+    shape: str,
+    color: str,
+) -> QgsVectorLayer:
+    """Create a styled and labeled marker layer from a waypoints URI."""
+    layer = QgsVectorLayer(uri, layer_name, "ogr")
+    layer.setSubsetString(subset)
+    if not layer.isValid():
+        raise RuntimeError(f"Failed to load waypoints for layer: {layer_name}")
+
+    symbol = QgsMarkerSymbol.createSimple(
+        {
+            "name": shape,
+            "color": color,
+            "outline_color": MARKER_OUTLINE_COLOR,
+            "outline_width": MARKER_OUTLINE_WIDTH,
+            "size": MARKER_SIZE,
+        }
+    )
+    layer.setRenderer(QgsSingleSymbolRenderer(symbol))
+    _configure_point_labels(layer)
+    return layer
+
+
+def load_point_layers(gpx_path: str, name: str) -> list[QgsVectorLayer]:
     """Load a GPX file as point layers (waypoints), split into start, finish, and checkpoints."""
     uri = f"{gpx_path}|layername=waypoints"
 
-    start_layer = QgsVectorLayer(uri, f"{name} - Start", "ogr")
-    start_layer.setSubsetString("\"name\" = 'START'")
-    if not start_layer.isValid():
-        print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
-        sys.exit(1)
-
-    finish_layer = QgsVectorLayer(uri, f"{name} - Finish", "ogr")
-    finish_layer.setSubsetString("\"name\" = 'FINISH'")
-    if not finish_layer.isValid():
-        print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
-        sys.exit(1)
-
-    cp_layer = QgsVectorLayer(uri, f"{name} - Checkpoints", "ogr")
-    cp_layer.setSubsetString("\"name\" NOT IN ('START', 'FINISH')")
-    if not cp_layer.isValid():
-        print(f"ERROR: Failed to load waypoints from: {gpx_path}", file=sys.stderr)
-        sys.exit(1)
-
-    # Green square for start
-    start_symbol = QgsMarkerSymbol.createSimple(
-        {
-            "name": "square",
-            "color": "34,170,34,255",
-            "outline_color": "255,255,255,255",
-            "outline_width": "0.4",
-            "size": "3.5",
-        }
+    start_layer = _create_marker_layer(
+        uri, f"{name} - Start", "\"name\" = 'START'", "square", START_COLOR
     )
-    start_layer.setRenderer(QgsSingleSymbolRenderer(start_symbol))
-
-    # Red square for finish
-    finish_symbol = QgsMarkerSymbol.createSimple(
-        {
-            "name": "square",
-            "color": "204,0,0,255",
-            "outline_color": "255,255,255,255",
-            "outline_width": "0.4",
-            "size": "3.5",
-        }
+    finish_layer = _create_marker_layer(
+        uri, f"{name} - Finish", "\"name\" = 'FINISH'", "square", FINISH_COLOR
     )
-    finish_layer.setRenderer(QgsSingleSymbolRenderer(finish_symbol))
-
-    # Orange circle for checkpoints
-    cp_symbol = QgsMarkerSymbol.createSimple(
-        {
-            "name": "circle",
-            "color": "238,136,0,255",
-            "outline_color": "255,255,255,255",
-            "outline_width": "0.4",
-            "size": "3.5",
-        }
+    cp_layer = _create_marker_layer(
+        uri,
+        f"{name} - Checkpoints",
+        "\"name\" NOT IN ('START', 'FINISH')",
+        "circle",
+        CHECKPOINT_COLOR,
     )
-    cp_layer.setRenderer(QgsSingleSymbolRenderer(cp_symbol))
-
-    # Configure labels for all
-    for layer in (start_layer, finish_layer, cp_layer):
-        text_format = QgsTextFormat()
-        text_format.setFont(QFont("Arial", 9))
-        text_format.setSize(9)
-        text_format.setColor(QColor(0, 0, 0))
-
-        buffer_settings = QgsTextBufferSettings()
-        buffer_settings.setEnabled(True)
-        buffer_settings.setSize(1.5)
-        buffer_settings.setColor(QColor(255, 255, 255))
-        buffer_settings.setOpacity(0.9)
-        text_format.setBuffer(buffer_settings)
-
-        label_settings = QgsPalLayerSettings()
-        label_settings.fieldName = "name"
-        label_settings.setFormat(text_format)
-        label_settings.placement = QgsPalLayerSettings.Placement.AroundPoint
-        label_settings.dist = 3.0
-
-        labeling = QgsVectorLayerSimpleLabeling(label_settings)
-        layer.setLabeling(labeling)
-        layer.setLabelsEnabled(True)
 
     return [start_layer, finish_layer, cp_layer]
 
@@ -255,7 +260,7 @@ def render_pdf(
         transform = QgsCoordinateTransform(source_crs, crs, project)
         extent = transform.transformBoundingBox(extent)
 
-    extent.grow(max(extent.width(), extent.height()) * 0.05)
+    extent.grow(max(extent.width(), extent.height()) * EXTENT_PADDING)
 
     # Expand extent to match the map item's aspect ratio so the map fills the page
     map_aspect = map_w / map_h
@@ -286,11 +291,10 @@ def render_pdf(
     # Export to PDF
     exporter = QgsLayoutExporter(layout)
     settings = QgsLayoutExporter.PdfExportSettings()
-    settings.dpi = 150
+    settings.dpi = EXPORT_DPI
     result = exporter.exportToPdf(output_path, settings)
     if result != QgsLayoutExporter.ExportResult.Success:
-        print(f"ERROR: PDF export failed with code {result}", file=sys.stderr)
-        sys.exit(1)
+        raise RuntimeError(f"PDF export failed with code {result}")
 
 
 def main() -> None:
@@ -324,16 +328,21 @@ def main() -> None:
         basemap = create_basemap()
 
         line_layers = []
-        for i, gpx_path in enumerate(args.lines):
-            line_layers.append(load_line_layer(gpx_path, f"Lines {i + 1}"))
+        for gpx_path in args.lines:
+            name = Path(gpx_path).stem
+            line_layers.append(load_line_layer(gpx_path, name))
 
         point_layers = []
-        for i, gpx_path in enumerate(args.points):
-            point_layers.extend(load_point_layer(gpx_path, f"Points {i + 1}"))
+        for gpx_path in args.points:
+            name = Path(gpx_path).stem
+            point_layers.extend(load_point_layers(gpx_path, name))
 
         render_pdf(
             args.output, args.title, args.date, basemap, line_layers, point_layers
         )
+    except RuntimeError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        sys.exit(1)
     finally:
         app.exitQgis()
 
