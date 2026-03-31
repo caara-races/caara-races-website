@@ -197,12 +197,17 @@ table.raceinfo {
 .icons ul {
   list-style-type: none;
   margin: 0;
-  padding: var(--space-sm);
+  padding: 0;
+  white-space: nowrap;
 }
 
 .icons li {
   display: inline-block;
-  padding: 0 var(--space-xs);
+  padding: 0 2px;
+}
+
+.icons img {
+  max-width: 16px;
 }
 
 /* =============================================================================
@@ -233,6 +238,12 @@ table.raceinfo {
 @media (min-width: 640px) {
   body {
     padding-inline: var(--space-page-inline);
+  }
+}
+
+@media (max-width: 640px) {
+  .icons  ul {
+    white-space: wrap;
   }
 }
 
