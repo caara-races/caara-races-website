@@ -1,0 +1,54 @@
+name: Build site content
+
+on:
+  workflow_call:
+    secrets:
+      GOOGLE_SHEETS_READER_SA:
+        required: true
+        description: Token used to access volunteer scheduling spreadsheet
+    inputs:
+      ELEVENTY_BASEURL:
+        type: string
+        required: false
+        default: "/"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ELEVENTY_BASEURL: ${{ inputs.ELEVENTY_BASEURL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Preserve build cache
+        id: eleventy-build-cache
+        uses: actions/cache@v5
+        with:
+          path: .cache
+          key: ${{ runner.os }}-cache
+
+      - name: Write google sheets secret to file
+        env:
+          GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
+        run: |
+          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
+        shell: bash
+      - name: Install packages
+        run: |
+          npm install
+      - name: Fetch data
+        env:
+          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
+        run: |
+          npm run fetch
+      - name: Build pages
+        run: |
+          npm run build
+      - name: Upload content artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
