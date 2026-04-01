@@ -17,7 +17,6 @@ import os
 import sys
 from pathlib import Path
 
-import pikepdf
 from qgis.core import (
     QgsApplication,
     QgsCoordinateReferenceSystem,
@@ -298,14 +297,6 @@ def render_pdf(
     result = exporter.exportToPdf(output_path, settings)
     if result != QgsLayoutExporter.ExportResult.Success:
         raise RuntimeError(f"PDF export failed with code {result}")
-
-    # Strip timestamps and metadata for deterministic output
-    with pikepdf.open(output_path, allow_overwriting_input=True) as pdf:
-        for key in list(pdf.docinfo.keys()):
-            del pdf.docinfo[key]
-        if "/Metadata" in pdf.Root:
-            del pdf.Root["/Metadata"]
-        pdf.save(output_path, deterministic_id=True)
 
 
 def main() -> None:

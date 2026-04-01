@@ -1,9 +1,12 @@
-import { execFileSync } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { execFileSync, execSync } from "node:child_process";
+import { access, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "glob";
 import { extractFrontmatter } from "./lib/frontmatter.js";
+
+const DOCKER_IMAGE = "qgis/qgis:3.44";
+const RENDER_SCRIPT = "scripts/render-map.py";
 
 function formatDate(dateStr) {
   const d = new Date(dateStr);
@@ -24,7 +27,18 @@ async function fileExists(filePath) {
   }
 }
 
-const RENDER_SCRIPT = new URL("render-map.py", import.meta.url).pathname;
+function dockerAvailable() {
+  try {
+    execSync("docker info", { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function shellQuote(s) {
+  return `'${s.replace(/'/g, "'\\''")}'`;
+}
 
 async function main() {
   const args = process.argv.slice(2);
@@ -33,7 +47,7 @@ async function main() {
 
   const raceFiles = (await glob("content/race/**/index.md")).sort();
 
-  let generated = 0;
+  const commands = [];
   let skipped = 0;
 
   for (const filePath of raceFiles) {
@@ -72,36 +86,80 @@ async function main() {
     console.log(`${filePath}: generating map...`);
 
     const pyArgs = [
+      "python3",
       RENDER_SCRIPT,
       "--lines",
-      path.resolve(courseGpxPath),
+      courseGpxPath,
       "--title",
       frontmatter.title,
       "--date",
       formatDate(frontmatter.date),
       "--output",
-      path.resolve(outPath),
+      outPath,
     ];
 
     const checkpointsGpxPath = path.join(raceDir, `${slug}-checkpoints.gpx`);
     if (await fileExists(checkpointsGpxPath)) {
-      pyArgs.push("--points", path.resolve(checkpointsGpxPath));
+      pyArgs.push("--points", checkpointsGpxPath);
     }
 
-    try {
-      execFileSync("python3", pyArgs, {
-        stdio: ["ignore", "inherit", "inherit"],
-        timeout: 60000,
-      });
-      console.log(`  Wrote ${outPath}`);
-      generated++;
-    } catch {
-      console.error(`  ERROR: failed to generate ${outPath}`);
-      skipped++;
-    }
+    commands.push({ outPath, line: pyArgs.map(shellQuote).join(" ") });
   }
 
-  console.log(`\nDone: ${generated} map(s) generated, ${skipped} skipped.`);
+  if (commands.length === 0) {
+    console.log(`\nDone: 0 map(s) generated, ${skipped} skipped.`);
+    return;
+  }
+
+  if (!dockerAvailable()) {
+    console.warn(
+      `WARN: Docker is not available; skipping generation of ${commands.length} map(s).`,
+    );
+    return;
+  }
+
+  const scriptContent = [
+    "#!/bin/sh",
+    "set -e",
+    ...commands.map((c) => c.line),
+  ].join("\n");
+
+  const scriptPath = path.join("scripts", ".render-maps.sh");
+  await writeFile(scriptPath, scriptContent, { mode: 0o755 });
+
+  try {
+    const workDir = process.cwd();
+    execFileSync(
+      "docker",
+      [
+        "run",
+        "--rm",
+        "-v",
+        `${workDir}:/work`,
+        "-w",
+        "/work",
+        DOCKER_IMAGE,
+        "bash",
+        scriptPath,
+      ],
+      {
+        stdio: ["ignore", "inherit", "inherit"],
+        timeout: commands.length * 60000,
+      },
+    );
+
+    for (const cmd of commands) {
+      console.log(`  Wrote ${cmd.outPath}`);
+    }
+    console.log(
+      `\nDone: ${commands.length} map(s) generated, ${skipped} skipped.`,
+    );
+  } catch {
+    console.error("ERROR: Docker map generation failed");
+    process.exit(1);
+  } finally {
+    await unlink(scriptPath).catch(() => {});
+  }
 }
 
 if (
