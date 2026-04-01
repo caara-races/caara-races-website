@@ -5,3 +5,5 @@
 /.creds/
 /.cache/
 content/race/**/_data.11tydata.json
+content/race/*/*/*.pdf
+scripts/.render-maps.sh
