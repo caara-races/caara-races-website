@@ -109,8 +109,9 @@ K1KML</a> if you can help.</p>
     <td>{{ aro.Callsign | hamDbTooltip }}</td>
     <td>{{ aro.Name }}</td>
 {% else %}
-    <td><img class="icon" src="/image/warning-small.png"/></td>
-    <td><img class="icon" src="/image/warning-small.png"/></td>
+{% for i in (1..2) %}
+    <td><img title="No volunteer is assigned to this checkpoint" class="icon" src="/image/warning-small.png"/></td>
+{% endfor %}
 {% endif %}
     <td>{{ aro["On station"] }}</td>
   </tr>
