@@ -17,6 +17,10 @@ function cacheKey(address) {
   return createHash("sha256").update(address).digest("hex");
 }
 
+function formatCoords(lat, lon) {
+  return `${lat.toFixed(6).padStart(10)}, ${lon.toFixed(6).padStart(11)}`;
+}
+
 async function readCache(address) {
   return libReadCache(CACHE_DIR, cacheKey(address), CACHE_TTL_MS);
 }
@@ -27,7 +31,7 @@ async function writeCache(address, lat, lon) {
 
 async function geocode(address, apiKey) {
   const cached = await readCache(address);
-  if (cached) return cached;
+  if (cached) return { ...cached, cached: true };
 
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
   const response = await fetch(url);
@@ -43,7 +47,7 @@ async function geocode(address, apiKey) {
 
   const { lat, lng } = json.results[0].geometry.location;
   await writeCache(address, lat, lng);
-  return { lat, lon: lng };
+  return { lat, lon: lng, cached: false };
 }
 
 function buildGpx(title, waypoints) {
@@ -125,13 +129,17 @@ async function main() {
           .split(",")
           .map((s) => parseFloat(s.trim()));
         startCoords = { lat, lon };
-        console.log(`  START: ${lat}, ${lon} (from coordinates field)`);
+        console.log(
+          `  START: ${formatCoords(lat, lon)} (from coordinates field)`,
+        );
       } else {
         const startName = location.name ?? "Start";
         const geocodeAddress = `${startName}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
         startCoords = await geocode(geocodeAddress, apiKey);
         if (startCoords) {
-          console.log(`  START: ${startCoords.lat}, ${startCoords.lon}`);
+          console.log(
+            `  START: ${formatCoords(startCoords.lat, startCoords.lon)}${startCoords.cached ? " [cached]" : ""}`,
+          );
         } else {
           console.warn(
             `  WARN: failed to geocode start/finish location, skipping`,
@@ -158,13 +166,17 @@ async function main() {
           .split(",")
           .map((s) => parseFloat(s.trim()));
         finishCoords = { lat, lon };
-        console.log(`  FINISH: ${lat}, ${lon} (from coordinates field)`);
+        console.log(
+          `  FINISH: ${formatCoords(lat, lon)} (from coordinates field)`,
+        );
       } else {
         const finishName = finish.name ?? "Finish";
         const geocodeAddress = `${finishName}, ${finish.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
         finishCoords = await geocode(geocodeAddress, apiKey);
         if (finishCoords) {
-          console.log(`  FINISH: ${finishCoords.lat}, ${finishCoords.lon}`);
+          console.log(
+            `  FINISH: ${formatCoords(finishCoords.lat, finishCoords.lon)}${finishCoords.cached ? " [cached]" : ""}`,
+          );
         } else {
           console.warn(`  WARN: failed to geocode finish location, skipping`);
         }
@@ -190,7 +202,9 @@ async function main() {
           .split(",")
           .map((s) => parseFloat(s.trim()));
         coords = { lat, lon };
-        console.log(`  ${name}: ${lat}, ${lon} (from coordinates field)`);
+        console.log(
+          `  ${name}: ${formatCoords(lat, lon)} (from coordinates field)`,
+        );
       } else if (cp.address) {
         coords = await geocode(cp.address, apiKey);
         if (!coords) {
@@ -199,7 +213,9 @@ async function main() {
           );
           continue;
         }
-        console.log(`  ${name}: ${coords.lat}, ${coords.lon}`);
+        console.log(
+          `  ${name}: ${formatCoords(coords.lat, coords.lon)}${coords.cached ? " [cached]" : ""}`,
+        );
       } else {
         console.warn(`  WARN: ${key} has no coordinates or address, skipping`);
         continue;
