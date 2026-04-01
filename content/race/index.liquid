@@ -30,7 +30,6 @@ weight: 10
 {% assign race_index = race_index | plus: 1 %}
 {% assign asset_base = race.page.inputPath | raceAssetBase %}
 {% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
-{% assign course_path = asset_base | append: race.page.fileSlug | append: ".gpx" %}
 {% assign race_ts = race.data.date | date: "%s" %}
   <tr{% if race_ts < now_ts %} class="past-race"{% endif %}>
     <td>{{ race_index }}</td>
@@ -51,14 +50,9 @@ weight: 10
     <li><img class="icon" src="/image/web-grey.png"></li>
   {% endif %}
   {% if map_path | fileExists %}
-    <li><a title="Map" href="{{ map_path }}"><img class="icon" src="/image/map.png"></a></li>
+    <li><a title="Course and checkpoint map" href="{{ map_path }}"><img class="icon" src="/image/map.png"></a></li>
   {% else %}
     <li><img class="icon" src="/image/map-grey.png"></li>
-  {% endif %}
-  {% if course_path | fileExists %}
-    <li><a title="GPX" href="{{ course_path }}"><img class="icon" src="/image/path.png"></a></li>
-  {% else %}
-    <li><img class="icon" src="/image/path-grey.png"></li>
   {% endif %}
       </ul>
     </td>
