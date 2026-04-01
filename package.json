@@ -11,7 +11,7 @@
 		"yaml": "^2.8.2"
 	},
 	"scripts": {
-		"build": "node scripts/generate-maps.js && eleventy",
+		"build": "bash scripts/build-site.sh",
 		"serve": "eleventy --watch --serve",
 		"fetch": "node scripts/fetch-sheets.js",
 		"test": "node --test scripts/*.test.js scripts/lib/*.test.js",

@@ -22,6 +22,7 @@ jobs:
     uses: ./.github/workflows/build.yaml
     secrets:
       GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
+      GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
     with:
       ELEVENTY_BASEURL: /caara-races-website
 

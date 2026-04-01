@@ -6,6 +6,9 @@ on:
       GOOGLE_SHEETS_READER_SA:
         required: true
         description: Token used to access volunteer scheduling spreadsheet
+      GOOGLE_GEOCODING_API_KEY:
+        required: true
+        description: Token used for geocoding checkpoints
     inputs:
       ELEVENTY_BASEURL:
         type: string
@@ -46,6 +49,8 @@ jobs:
         run: |
           npm run fetch
       - name: Build pages
+        env:
+          GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
         run: |
           npm run build
       - name: Upload content artifact
