@@ -21,7 +21,7 @@
 
   {% if course_url != "" %}
   var coursePromise = new Promise(function (resolve) {
-    var gpx = new L.GPX('{{ course_url }}', {
+    var gpx = new L.GPX('{{ course_url | htmlBaseUrl }}', {
       async: true,
       gpx_options: { parseElements: ['track', 'route'] },
       marker_options: {
@@ -46,7 +46,7 @@
   {% endif %}
 
   {% if checkpoints_url != "" %}
-  var checkpointsPromise = fetch('{{ checkpoints_url }}')
+  var checkpointsPromise = fetch('{{ checkpoints_url | htmlBaseUrl }}')
     .then(function (r) { return r.text(); })
     .then(function (xml) {
       var doc = new DOMParser().parseFromString(xml, 'application/xml');
