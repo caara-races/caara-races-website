@@ -6,4 +6,5 @@
 /.cache/
 content/race/**/_data.11tydata.json
 content/race/*/*/*.pdf
+content/race/*/*/*-checkpoints.gpx
 scripts/.render-maps.sh
