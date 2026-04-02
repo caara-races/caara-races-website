@@ -8,11 +8,9 @@
     "includes": [
       "**",
       "!!.worktrees",
-      "!!_site",
       "!!package.json",
       "!!firebase.json",
-      "!!content/css/reset.css",
-      "!!**/*.html"
+      "!!content/css/reset.css"
     ]
   },
   "formatter": {
