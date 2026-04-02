@@ -48,7 +48,7 @@ The CAARA race net Net Control operator:
 > if there are any stations with emergency or priority traffic for the
 > repeater, please call now.
 >
-> (*pause*)
+> (_pause_)
 >
 > The EVENT NAME safety net is now active. I request that all stations not
 > participating as volunteers for this event stand by for the duration of
@@ -66,26 +66,27 @@ The CAARA race net Net Control operator:
 > respond with your name and FCC callsign and indicate whether or not you
 > are at your station and ready for service.
 >
-> (*begin roll call; record check-ins on staffing sheet*)
+> (_begin roll call; record check-ins on staffing sheet_)
 >
 > Thank you everyone for volunteering. The race will start at START TIME.
 > CALLSIGN, standing by.
 
-Follow up as necessary if there are stations that don't respond to the initial roll call.
+Follow up as necessary if there are stations that don't respond to the
+initial roll call.
 
 ### Pre-race instructions
 
 > This is CALLSIGN, net control for the EVENT NAME safety net, with some
 > pre-race instructions for volunteers participating in today's net.
 >
-> If you have traffic for the net, call net control and identify with
-> your tactical callsign, then wait to be acknowledged by net control.
-> When net control has confirmed receipt of your message, you can conclude
-> your call with your FCC callsign to meet identification requirements.
+> If you have traffic for the net, call net control and identify with your
+> tactical callsign, then wait to be acknowledged by net control. When net
+> control has confirmed receipt of your message, you can conclude your call
+> with your FCC callsign to meet identification requirements.
 >
-> Checkpoints report to the net when the lead runner and when the
-> tail runner pass their location.  There is no need to include
-> other information such as bib number, gender or clothing colors.
+> Checkpoints report to the net when the lead runner and when the tail
+> runner pass their location. There is no need to include other information
+> such as bib number, gender or clothing colors.
 >
 > Immediately report medical or serious incidents to net control and wait
 > for any directions. If there is any delay in reaching net control and
@@ -105,10 +106,9 @@ If the number of runners is unknown:
 
 And then:
 
-> I request that all stations not participating as volunteers in
-> this event stand by for the duration of the race. The repeater will be
-> returned to regular amateur radio use at or around 12:00PM. CALLSIGN,
-> standing by.
+> I request that all stations not participating as volunteers in this event
+> stand by for the duration of the race. The repeater will be returned to
+> regular amateur radio use at or around 12:00PM. CALLSIGN, standing by.
 
 ### Periodic announcement
 
@@ -123,53 +123,66 @@ traffic:
 
 ### Closing the net
 
-> This is CALLSIGN, net control for the EVENT NAME safety net. At this time,
-> the directed net is now closed. I would like to thank all stations who
-> participated as volunteers in today's event. I would also like to thank
-> all stations who stood by while the net was in service. This repeater is
-> now available for regular use. CALLSIGN, clear.
+> This is CALLSIGN, net control for the EVENT NAME safety net. At this
+> time, the directed net is now closed. I would like to thank all stations
+> who participated as volunteers in today's event. I would also like to
+> thank all stations who stood by while the net was in service. This
+> repeater is now available for regular use. CALLSIGN, clear.
 
 ## Operating notes
 
-Respond to calling stations by repeating what you heard as the station's tactical call:
+Respond to calling stations by repeating what you heard as the station's
+tactical call:
 
 > This is net control answering checkpoint 5. Go ahead.
 
-After receiving a message, repeat the station's tactical call and repeat or paraphrase the message:
+After receiving a message, repeat the station's tactical call and repeat or
+paraphrase the message:
 
-> Net control copied Checkpoint 5. Lead vehicle and lead runner have
-> passed Checkpoint 5. Net control, CALLSIGN, standing by."
+> Net control copied Checkpoint 5. Lead vehicle and lead runner have passed
+> Checkpoint 5. Net control, CALLSIGN, standing by."
 
-As needed, remind stations that they should identify first by tactical callsign, e.g., "checkpoint 6", and clear using their personal callsign:
+As needed, remind stations that they should identify first by tactical
+callsign, e.g., "checkpoint 6", and clear using their personal callsign:
 
-> This is net control. Please use your tactical callsign when
-> contacting net control and then complete the exchange with your
-> personal callsign. CALLSIGN, standing by.
+> This is net control. Please use your tactical callsign when contacting
+> net control and then complete the exchange with your personal callsign.
+> CALLSIGN, standing by.
 
-As needed, remind stations that all traffic must go through net control unless specifically authorized by net control when circumstances warrant:
+As needed, remind stations that all traffic must go through net control
+unless specifically authorized by net control when circumstances warrant:
 
-> This is net control. This is a directed net. Please do not call
-> other stations unless explicitly directed to do so by net control.
-> Thank you. CALLSIGN, standing by.
+> This is net control. This is a directed net. Please do not call other
+> stations unless explicitly directed to do so by net control. Thank you.
+> CALLSIGN, standing by.
 
-Don't forget to tell stations they can secure after the tail runner has passed their location.
+Don't forget to tell stations they can secure after the tail runner has
+passed their location.
 
-> This is net control to TACTICAL CALLSIGN. You may now secure your station.
+> This is net control to TACTICAL CALLSIGN. You may now secure your
+> station.
 
 ## Additional Notes
 
-CAARA's Safety Team focuses on only the Half-Marathon when there is both a Half-Marathon and a 5K race. The exceptions are:
-The Newburyport races when the CAARA Lead Vehicle leads the 5K and not the Half-Marathon which is led by police. Only the Lead Vehicle needs to be reporting on the 5K. Checkpoints should not report 5K runner progress in order to avoid confusion.
+CAARA's Safety Team focuses on only the Half-Marathon when there is both a
+Half-Marathon and a 5K race. The exceptions are: The Newburyport races when
+the CAARA Lead Vehicle leads the 5K and not the Half-Marathon which is led
+by police. Only the Lead Vehicle needs to be reporting on the 5K.
+Checkpoints should not report 5K runner progress in order to avoid
+confusion.
 
-Runners who can be identified as 5K runners who have made a wrong turn and are lost (or may not know they are lost) should be reported to net control. Net control will advise Race Director and YuKanRun Safety Van (by text group message) .
+Runners who can be identified as 5K runners who have made a wrong turn and
+are lost (or may not know they are lost) should be reported to net control.
+Net control will advise Race Director and YuKanRun Safety Van (by text
+group message) .
 
 - Net control should have race documents printed out and available, namely:
   - Two copies of the staffing sheet
   - Race Day Info Sheet (especially locations of aid stations and toilets)
   - Course map
-- Net control should review the Staffing Sheet to specifically identify which
-  Checkpoints will see runners going outbound and inbound. This sets up a
-  schedule for securing (releasing) checkpoint personnel.
-- Net control should (like all volunteers) read the Volunteer Guidelines before
-  every race. It is helpful for the net controller to have a copy of the
-  Volunteer Guidelines accessible.
+- Net control should review the Staffing Sheet to specifically identify
+  which Checkpoints will see runners going outbound and inbound. This sets
+  up a schedule for securing (releasing) checkpoint personnel.
+- Net control should (like all volunteers) read the Volunteer Guidelines
+  before every race. It is helpful for the net controller to have a copy of
+  the Volunteer Guidelines accessible.
