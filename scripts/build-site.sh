@@ -1,12 +1,16 @@
 #!/bin/bash
 
-set -e
-
 echo "=== generate checkpoint gpx ==="
-node scripts/generate-checkpoints-gpx.js
+if ! node scripts/generate-checkpoints-gpx.js; then
+  ((CI)) && exit 1
+  echo "WARNING: failed to geocode checkpoints" >&2
+fi
 
 echo "=== generate maps ==="
-node scripts/generate-maps.js
+if ! node scripts/generate-maps.js; then
+  ((CI)) && exit 1
+  echo "WARNING: failed to generate maps" >&2
+fi
 
 echo "=== render site ==="
 npx eleventy

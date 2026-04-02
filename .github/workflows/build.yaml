@@ -52,6 +52,7 @@ jobs:
       - name: Build pages
         env:
           GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
+          CI: "1"
         run: |
           npm run build
 
