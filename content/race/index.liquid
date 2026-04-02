@@ -5,65 +5,12 @@ layout: page
 weight: 10
 ---
 
-{% assign current_year = "now" | date: "%Y" %}
-<p class="noprint"><a href="/race/{{ current_year }}/races.ics">Add to calendar</a></p>
-
-{% assign sorted_races = collections.race | sort: 'data.date' %}
-{% assign now_ts = "now" | date: "%s" %}
-
-<table class="race-schedule striped">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Description</th>
-      <th scope="col">Start time</th>
-      <th scope="col">Location</th>
-      <th scope="col" class="noprint">Links</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign race_index = 0 %}
-{% for race in sorted_races %}
-{% assign race_year = race.data.date | date: "%Y" %}
-{% if race_year == current_year %}
-{% assign race_index = race_index | plus: 1 %}
-{% assign asset_base = race.page.inputPath | raceAssetBase %}
-{% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
-{% assign race_ts = race.data.date | date: "%s" %}
-  <tr{% if race_ts < now_ts %} class="past-race"{% endif %}>
-    <td>{{ race.data.date | date: "%b&nbsp;%d (%a)" }}</td>
-    <td>
-      <a href="{{ race.page.url }}">{{ race.data.title }}</a>
-      {% if race.data.race.want %}
-      <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
-      {% endif %}
-    </td>
-    <td>{{ race.data.date | date: "%H:%M&nbsp;%p", "America/New_York" }}</td>
-    <td><a href="{{ race.data.race.start.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.data.race.start | formatAddress: ", " }}</a></td>
-    <td class="links noprint">
-      <ul>
-  {% if race.data.race.url %}
-    <li><a title="YuKanRun Page" href="{{ race.data.race.url }}"><img class="icon" src="/image/web.png"></a></li>
-  {% else %}
-    <li><img class="icon" src="/image/web-grey.png"></li>
+{% assign current_year = "now" | date: "%Y" | plus: 0 %}
+{% for yd in collections.raceYears %}
+  {% if yd.year == current_year %}
+    {% assign schedule_year = yd.year %}
+    {% assign schedule_races = yd.races %}
   {% endif %}
-  {% if map_path | fileExists %}
-    <li><a title="Course and checkpoint map" href="{{ map_path }}"><img class="icon" src="/image/map.png"></a></li>
-  {% else %}
-    <li><img class="icon" src="/image/map-grey.png"></li>
-  {% endif %}
-      </ul>
-    </td>
-  </tr>
-{% endif %}
 {% endfor %}
-</tbody>
-</table>
 
-<!--
-Icon credits:
-
-- Maps by Skyyy from <a href="https://thenounproject.com/browse/icons/term/maps/" target="_blank" title="Maps Icons">Noun Project</a> (CC BY 3.0)
-- path by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/path/" target="_blank" title="path Icons">Noun Project</a> (CC BY 3.0)
-- website by Omah Icon from <a href="https://thenounproject.com/browse/icons/term/website/" target="_blank" title="website Icons">Noun Project</a> (CC BY 3.0)
--->
+{% include "race-schedule.liquid" %}
