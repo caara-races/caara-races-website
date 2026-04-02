@@ -62,7 +62,7 @@ LABEL_BUFFER_OPACITY = 0.9
 LABEL_DISTANCE = 3.0
 
 EXTENT_PADDING = 0.05
-EXPORT_DPI = 150
+EXPORT_DPI = 300
 
 
 def create_basemap() -> QgsRasterLayer:
