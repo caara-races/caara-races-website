@@ -14,7 +14,6 @@ weight: 10
 <table class="race-schedule striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
       <th scope="col">Start time</th>
@@ -32,15 +31,14 @@ weight: 10
 {% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
 {% assign race_ts = race.data.date | date: "%s" %}
   <tr{% if race_ts < now_ts %} class="past-race"{% endif %}>
-    <td>{{ race_index }}</td>
-    <td>{{ race.data.date | date: "%b %d (%a)" }}</td>
+    <td>{{ race.data.date | date: "%b&nbsp;%d (%a)" }}</td>
     <td>
       <a href="{{ race.page.url }}">{{ race.data.title }}</a>
       {% if race.data.race.want %}
       <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
       {% endif %}
     </td>
-    <td>{{ race.data.date | date: "%H:%M %p", "America/New_York" }}</td>
+    <td>{{ race.data.date | date: "%H:%M&nbsp;%p", "America/New_York" }}</td>
     <td><a href="{{ race.data.race.start.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.data.race.start | formatAddress: ", " }}</a></td>
     <td class="links noprint">
       <ul>
