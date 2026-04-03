@@ -26,6 +26,7 @@
   </span>
 </div>
 
+{% assign current_year = "now" | date: "%Y" | plus: 0 %}
 {% assign now_ts = "now" | date: "%s" %}
 
 <table class="race-schedule striped">
@@ -43,11 +44,11 @@
 {% assign asset_base = race.page.inputPath | raceAssetBase %}
 {% assign map_path = asset_base | append: race.page.fileSlug | append: ".pdf" %}
 {% assign race_ts = race.data.date | date: "%s" %}
-  <tr{% if race_ts < now_ts %} class="past-race"{% endif %}>
+  <tr{% if schedule_year == current_year and race_ts < now_ts %} class="past-race"{% endif %}>
     <td>{{ race.data.date | date: "%b&nbsp;%d (%a)" }}</td>
     <td>
       <a href="{{ race.page.url }}">{{ race.data.title }}</a>
-      {% if race.data.race.want %}
+      {% if schedule_year >= current_year and race.data.race.want %}
       <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
       {% endif %}
     </td>
