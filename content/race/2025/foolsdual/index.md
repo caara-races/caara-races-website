@@ -1,7 +1,7 @@
 ---
 tags: race
 title: Fool's Dual Half Marathon
-date: 2025-04-25T09:00:00-04:00
+date: 2025-04-05T09:00:00-04:00
 race:
   start:
     name: O'Maley Middle School
@@ -15,4 +15,23 @@ race:
   towns:
     - rockport
     - gloucester
+  checkpoints:
+    cp1:
+      address: Washington St and Reynard St, Gloucester, MA
+      position: Mile 1 and 13
+    cp2:
+     address: Washington St and Stanwood St, Gloucester, MA
+     position: Mile 1.5 and 12
+    cp3:
+      address: Washington St and Leonard St, Gloucester, MA
+      position: Mile 3.5 and 10
+    cp4:
+      address: Washington St and Andrews St, Gloucester, MA
+      position: Mile 4.5 and 9
+    cp5:
+      address: Washington St and Woodbury Hill, Gloucester, MA
+      position: Mile 5.5 and 8
+    cp6:
+      address: Granite St and Phillips Ave, Rockport, MA
+      position: Mile 7
 ---
