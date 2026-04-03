@@ -67,8 +67,12 @@ export async function main() {
     }
 
     const courseGpxPath = path.join(raceDir, `${slug}.gpx`);
-    if (!(await fileExists(courseGpxPath))) {
-      console.log(`${filePath}: no course GPX (${slug}.gpx), skipping`);
+    const checkpointsGpxPath = path.join(raceDir, `${slug}-checkpoints.gpx`);
+    const hasCourse = await fileExists(courseGpxPath);
+    const hasCheckpoints = await fileExists(checkpointsGpxPath);
+
+    if (!hasCourse && !hasCheckpoints) {
+      console.log(`${filePath}: no GPX files found, skipping`);
       skipped++;
       continue;
     }
@@ -88,8 +92,6 @@ export async function main() {
     const pyArgs = [
       "python3",
       RENDER_SCRIPT,
-      "--lines",
-      courseGpxPath,
       "--title",
       frontmatter.title,
       "--date",
@@ -98,8 +100,10 @@ export async function main() {
       outPath,
     ];
 
-    const checkpointsGpxPath = path.join(raceDir, `${slug}-checkpoints.gpx`);
-    if (await fileExists(checkpointsGpxPath)) {
+    if (hasCourse) {
+      pyArgs.push("--lines", courseGpxPath);
+    }
+    if (hasCheckpoints) {
       pyArgs.push("--points", checkpointsGpxPath);
     }
 
