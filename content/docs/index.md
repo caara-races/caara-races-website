@@ -11,7 +11,6 @@ tags: page
 {% for doc in sorted -%}
 - [{{ doc.data.title }}]({{ doc.url }})
 {% endfor -%}
-- [Public service event log](Public_Service_Net_Log.pdf)
 
 ## Additional sources of information
 
