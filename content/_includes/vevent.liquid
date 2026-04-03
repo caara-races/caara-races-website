@@ -1,0 +1,11 @@
+BEGIN:VEVENT
+SUMMARY:{{ event.data.title }}
+DTSTART:{{ event.data.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+DTEND:{{ event.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
+DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
+UID:{{ event.data.date | date: "%Y-%m-%d" | append: event.data.title | uuid }}@caara-schedule
+DESCRIPTION:{{ event.data.title }}\nWhen: {{ event.data.date | date: "%b %d, %Y" }}\n
+ Location: {{ event.data.race.start | formatAddress: ", " }}\n
+ Start time: {{ event.data.date | date: "%H:%M %p"}}
+LOCATION:{{ event.data.race.start.address | replaceNewlines: ", " }}
+END:VEVENT

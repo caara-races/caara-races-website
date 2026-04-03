@@ -14,16 +14,7 @@ PRODID:-//CAARA Race Schedule//caara.org//
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALDESC:Half Marathon and Marathon Schedule
-X-WR-CALNAME:CAARA Race Schedule 2026 ({{ racePage.data.title }})
-BEGIN:VEVENT
-SUMMARY:{{ racePage.data.title }}
-DTSTART:{{ racePage.data.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTEND:{{ racePage.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
-UID:{{ racePage.data.date | date: "%Y-%m-%d" | append: racePage.data.title | uuid }}@caara-schedule
-DESCRIPTION:{{ racePage.data.title }}\nWhen: {{ racePage.data.date | date: "%b %d, %Y" }}\n
- Location: {{ racePage.data.race.start | formatAddress: ", " }}\n
- Start time: {{ racePage.data.date | date: "%H:%M %p"}}
-LOCATION:{{ racePage.data.race.start.address | replaceNewlines: ", " }}
-END:VEVENT
+X-WR-CALNAME:CAARA Race Schedule ({{ racePage.data.title }})
+{% assign event = racePage -%}
+{% include "vevent.liquid" %}
 END:VCALENDAR

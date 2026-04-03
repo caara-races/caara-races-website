@@ -8,18 +8,9 @@ PRODID:-//CAARA Race Schedule//caara.org//
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALDESC:Half Marathon and Marathon Schedule
-X-WR-CALNAME:CAARA Race Schedule 2026
+X-WR-CALNAME:CAARA Race Schedule
 {% for race in sorted_races -%}
-BEGIN:VEVENT
-SUMMARY:{{ race.data.title }}
-DTSTART:{{ race.data.date | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTEND:{{ race.data.date | date: "%s" | plus: 10800 | date: "%Y%m%dT%H%M%S", "UTC"}}Z
-DTSTAMP:{{ "now" | date: "%Y%m%dT%H%M%S", "UTC" }}Z
-UID:{{ race.data.date | date: "%Y-%m-%d" | append: race.data.title | uuid }}@caara-schedule
-DESCRIPTION:{{ race.data.title }}\nWhen: {{ race.data.date | date: "%b %d, %Y" }}\n
- Location: {{ race.data.race.start | formatAddress: ", " }}\n
- Start time: {{ race.data.date | date: "%H:%M %p"}}
-LOCATION:{{ race.data.race.start.address | replaceNewlines: ", " }}
-END:VEVENT
+{% assign event = race -%}
+{% include "vevent.liquid" %}
 {% endfor -%}
 END:VCALENDAR
