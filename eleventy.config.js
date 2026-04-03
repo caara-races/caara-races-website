@@ -6,7 +6,9 @@ import { HtmlBasePlugin } from "@11ty/eleventy";
 import markdownItAnchor from "markdown-it-anchor";
 import { v5 as uuidv5 } from "uuid";
 import YAML from "yaml";
-
+import { main as fetchSheets } from "./scripts/fetch-sheets.js";
+import { main as generateCheckpointsGpx } from "./scripts/generate-checkpoints-gpx.js";
+import { main as generateMaps } from "./scripts/generate-maps.js";
 import { hamDbTooltip } from "./scripts/hamdb.js";
 
 // Format a structured location object as a string.
@@ -43,6 +45,28 @@ function setupPassthroughCopy(eleventyConfig) {
   );
 }
 
+// Run pre-build steps (checkpoint GPX generation, map rendering).
+// In CI, failures are fatal; otherwise they produce warnings.
+async function runPreBuildSteps() {
+  const steps = [
+    { name: "fetch sheets", fn: fetchSheets },
+    { name: "generate checkpoint gpx", fn: generateCheckpointsGpx },
+    { name: "generate maps", fn: generateMaps },
+  ];
+
+  for (const step of steps) {
+    console.log(`=== ${step.name} ===`);
+    try {
+      await step.fn();
+    } catch (err) {
+      if (process.env.CI) {
+        throw err;
+      }
+      console.warn(`WARNING: failed to ${step.name}: ${err.message}`);
+    }
+  }
+}
+
 // Expose current run mode as global runMode variable
 function exposeRunMode(eleventyConfig) {
   let currentRunMode = "build";
@@ -53,6 +77,13 @@ function exposeRunMode(eleventyConfig) {
 
   // Make runMode available to templates
   eleventyConfig.addGlobalData("runMode", () => currentRunMode);
+}
+
+// Register pre-build steps as an eleventy.before event handler.
+function setupPreBuildSteps(eleventyConfig) {
+  eleventyConfig.on("eleventy.before", async () => {
+    await runPreBuildSteps();
+  });
 }
 
 // Configure collections
@@ -188,6 +219,7 @@ export default function (eleventyConfig) {
   eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(markdownItAnchor));
 
   exposeRunMode(eleventyConfig);
+  setupPreBuildSteps(eleventyConfig);
   setupPassthroughCopy(eleventyConfig);
   setupFilters(eleventyConfig);
   setupCollections(eleventyConfig);
