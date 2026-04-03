@@ -69,7 +69,7 @@ ${wptElements}
 `;
 }
 
-async function main() {
+export async function main() {
   const apiKey = process.env.GOOGLE_GEOCODING_API_KEY;
   if (!apiKey) throw new Error("GOOGLE_GEOCODING_API_KEY is not set");
 

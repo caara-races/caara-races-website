@@ -31,7 +31,7 @@ export async function resolveSheetUrl(filePath, frontmatter) {
   }
 }
 
-async function main() {
+export async function main() {
   const credsPath = process.env.GOOGLE_SHEETS_CREDENTIALS_PATH;
   if (!credsPath) throw new Error("GOOGLE_SHEETS_CREDENTIALS_PATH is not set");
   const creds = JSON.parse(await readFile(credsPath, "utf8"));
@@ -61,6 +61,7 @@ async function main() {
   }
 
   for (const [sheetUrl, races] of bySheet) {
+    console.log(`processing workbook ${sheetUrl}`);
     const id = extractSpreadsheetId(sheetUrl);
     const doc = new GoogleSpreadsheet(id, auth);
     await doc.loadInfo();

@@ -40,7 +40,7 @@ function shellQuote(s) {
   return `'${s.replace(/'/g, "'\\''")}'`;
 }
 
-async function main() {
+export async function main() {
   const args = process.argv.slice(2);
   const force = args.includes("--force");
   const filter = args.find((a) => !a.startsWith("--"));
@@ -155,8 +155,7 @@ async function main() {
       `\nDone: ${commands.length} map(s) generated, ${skipped} skipped.`,
     );
   } catch {
-    console.error("ERROR: Docker map generation failed");
-    process.exit(1);
+    throw new Error("Docker map generation failed");
   } finally {
     await unlink(scriptPath).catch(() => {});
   }
