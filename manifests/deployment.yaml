@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caara-races-website
+spec:
+  replicas: 1
+  template:
+    spec:
+      initContainers:
+        - name: strip-caps
+          image: docker.io/caddy:2
+          command: ["cp", "/usr/bin/caddy", "/caddy/caddy"]
+          volumeMounts:
+            - name: caddy-bin
+              mountPath: /caddy
+
+      containers:
+        - name: caddy
+          image: docker.io/caddy:2
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: caddy-config
+              mountPath: /config
+            - name: caddy-data
+              mountPath: /data
+            - name: caara-caddyfile
+              mountPath: /etc/caddy
+            - name: caddy-bin
+              mountPath: /caddy
+            - name: caara-content
+              mountPath: /srv
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          command:
+            - /caddy/caddy
+            - run
+            - --config
+            - /etc/caddy/Caddyfile
+            - --adapter
+            - caddyfile
+
+        - name: oauth2-proxy
+          image: quay.io/oauth2-proxy/oauth2-proxy:v7.7.1
+          args:
+            - --http-address=0.0.0.0:4180
+            - --provider=keycloak-oidc
+            - --email-domain=*
+            - --upstream=static://200
+            - --skip-provider-button=true
+            - --cookie-secure=true
+            - --cookie-samesite=lax
+            - --reverse-proxy=true
+            - --whitelist-domain=caara-races-dev.oddbit.com
+            - --code-challenge-method=S256
+          env:
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: caara-oidc
+                  key: client-id
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: caara-oidc
+                  key: client-secret
+            - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: caara-oidc
+                  key: issuer-url
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: caara-oidc
+                  key: cookie-secret
+            - name: OAUTH2_PROXY_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: caara-oidc
+                  key: redirect-url
+          ports:
+            - containerPort: 4180
+              name: oauth2
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+
+      volumes:
+        - name: caddy-bin
+          emptyDir: {}
+        - name: caddy-config
+          emptyDir: {}
+        - name: caddy-data
+          emptyDir: {}
+        - name: caara-caddyfile
+          configMap:
+            name: caara-caddyfile
+        - name: caara-content
+          persistentVolumeClaim:
+            claimName: caara-content

@@ -10,3 +10,4 @@
 /content/_data/repeaterCoords.json
 /scripts/.render-maps.sh
 *.log
+/manifests/secret.env
