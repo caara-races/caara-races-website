@@ -59,6 +59,10 @@ spec:
             - --reverse-proxy=true
             - --whitelist-domain=caara-races-dev.oddbit.com
             - --code-challenge-method=S256
+            - --skip-jwt-bearer-tokens=true
+            - --extra-jwt-issuers=https://auth.oddbit.com/realms/caara-races=caara-races-deployer
+            - --oidc-extra-audience=caara-races-deployer
+            - --oidc-email-claim=preferred_username
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
@@ -88,6 +92,28 @@ spec:
           ports:
             - containerPort: 4180
               name: oauth2
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+
+        - name: rclone
+          image: docker.io/rclone/rclone
+          args:
+            - serve
+            - webdav
+            - /srv
+            - --addr
+            - :9000
+          ports:
+            - containerPort: 9000
+              name: webdav
+          volumeMounts:
+            - name: caara-content
+              mountPath: /srv
           resources:
             requests:
               memory: "32Mi"

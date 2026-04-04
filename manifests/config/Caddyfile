@@ -22,6 +22,23 @@ handle /members/* {
 	file_server
 }
 
+# Protected: require OIDC authentication for /deploy/*
+handle /deploy/* {
+	forward_auth localhost:4180 {
+		uri /oauth2/auth
+		header_up X-Forwarded-Uri {http.request.uri}
+		header_up X-Forwarded-Proto https
+		copy_headers X-Auth-Request-User X-Auth-Request-Email
+
+		@unauthorized status 401
+		handle_response @unauthorized {
+			redir * /oauth2/sign_in?rd=https://{http.request.host}{http.request.uri}
+		}
+	}
+	uri strip_prefix /deploy
+	reverse_proxy localhost:9000
+}
+
 # Public: serve everything else without authentication
 handle {
 	root * /srv
