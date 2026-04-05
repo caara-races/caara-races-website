@@ -1,0 +1,70 @@
+name: Build w/ members-only content
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/members-only
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Restore build cache
+        uses: actions/cache/restore@v5
+        with:
+          path: .cache
+          key: ${{ runner.os }}-cache-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-cache-
+
+      - name: Write google sheets secret to file
+        env:
+          GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
+        run: |
+          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
+
+      - name: Write members-only deploy key secret to file
+        env:
+          MEMBERS_ONLY_DEPLOY_KEY: ${{ secrets.MEMBERS_ONLY_DEPLOY_KEY }}
+        run: |
+          echo "$MEMBERS_ONLY_DEPLOY_KEY" | base64 --decode > deploy-key
+          chmod 600 deploy-key
+
+      - name: Clone members-only content
+        env:
+          GIT_SSH_COMMAND: "ssh -i deploy-key"
+        run: |
+          git clone git@github.com:caara-races/members-only.git content/members
+
+      - name: Install packages
+        run: |
+          npm install
+          sudo apt update
+          sudo apt -y install rclone curl jq
+
+      - name: Build pages
+        env:
+          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
+          GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
+          CI: "1"
+        run: |
+          npm run build
+
+      - name: Save build cache
+        uses: actions/cache/save@v5
+        with:
+          path: .cache
+          key: ${{ runner.os }}-cache-${{ github.run_id }}
+
+      - name: Deploy pages
+        env:
+          RCLONE_CLIENT_SECRET: ${{ secrets.RCLONE_CLIENT_SECRET }}
+        run: |
+          ./scripts/rclone-sync.sh
