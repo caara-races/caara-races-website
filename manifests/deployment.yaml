@@ -63,6 +63,7 @@ spec:
             - --extra-jwt-issuers=https://auth.oddbit.com/realms/caara-races=caara-races-deployer
             - --oidc-extra-audience=caara-races-deployer
             - --oidc-email-claim=preferred_username
+            - --allowed-group=/approved
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:

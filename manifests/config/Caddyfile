@@ -2,7 +2,12 @@
 
 # Proxy oauth2-proxy endpoints (login, callback, etc.)
 handle /oauth2/* {
-	reverse_proxy localhost:4180
+	reverse_proxy localhost:4180 {
+		@forbidden status 403
+		handle_response @forbidden {
+			redir * /pending-approval/
+		}
+	}
 }
 
 # Protected: require OIDC authentication for /members/*
