@@ -5,7 +5,7 @@ handle /oauth2/* {
 	reverse_proxy localhost:4180 {
 		@forbidden status 403
 		handle_response @forbidden {
-			redir * /pending-approval/
+			redir * /errors/pending-approval/
 		}
 	}
 }
