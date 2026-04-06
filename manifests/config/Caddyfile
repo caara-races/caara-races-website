@@ -12,6 +12,7 @@ handle /oauth2/* {
 
 # Protected: require OIDC authentication for /members/*
 handle /members/* {
+	header Cache-Control "no-store"
 	forward_auth localhost:4180 {
 		uri /oauth2/auth
 		header_up X-Forwarded-Uri {http.request.uri}
