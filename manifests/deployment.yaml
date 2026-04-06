@@ -57,7 +57,7 @@ spec:
             - --cookie-secure=true
             - --cookie-samesite=lax
             - --reverse-proxy=true
-            - --whitelist-domain=caara-races-dev.oddbit.com
+            - --whitelist-domain=.oddbit.com
             - --code-challenge-method=S256
             - --skip-jwt-bearer-tokens=true
             - --extra-jwt-issuers=https://auth.oddbit.com/realms/caara-races=caara-races-deployer
