@@ -10,7 +10,7 @@ race:
       Marblehead, MA
   url: https://www.yukanrun.com/marblehead-half-marathon
   frequency:
-    primary: ns1ra-salem
+    primary: n1hsy
     backup: ns1ra-danvers
   towns:
     - marblehead
@@ -24,13 +24,13 @@ race:
       address: Lafayette St & Doane St, Marblehead, MA
       position: Mile 5 and 13
     cp3:
-      address: Lafayette St & Derby St, Salem, MA
+      address: Lafayette St & Loring Ave, Salem, MA
       position: Mile 7 and 11
     cp4:
       address: Lafayette St & Derby St, Salem, MA
       position: Mile 7 and 11
     cp5:
-      address: Derby St & Hawthorne Blvd, Salem, MA
+      address: Memorial Dr & Fort Ave, Salem, MA
 ---
 
 There will be aid stations with water and sports drink near miles 1, 4, 5.5, 8, 9, 10 and 12.5. A portable restroom will also be available near mile 1 and 4 on the course. Portable restrooms will be available at the start/finish area as well.
