@@ -23,6 +23,7 @@ jobs:
     secrets:
       GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
       GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
+      MAPTILER_API_KEY: ${{ secrets.MAPTILER_API_KEY }}
 
   publish-to-firebase:
     runs-on: ubuntu-latest

@@ -3,6 +3,9 @@ name: Build site content
 on:
   workflow_call:
     secrets:
+      MAPTILER_API_KEY:
+        required: true
+        description: API key for MapTiler vector tiles
       GOOGLE_SHEETS_READER_SA:
         required: true
         description: Token used to access volunteer scheduling spreadsheet
@@ -48,6 +51,7 @@ jobs:
         env:
           GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
           GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
+          MAPTILER_API_KEY: ${{ secrets.MAPTILER_API_KEY }}
           CI: "1"
         run: |
           npm run build
