@@ -158,6 +158,10 @@ def _simplify_gl_text_size(value):
     return value
 
 
+# Source layers whose labels are not useful on a race course map.
+_LABEL_LAYERS_TO_REMOVE = {"poi", "housenumber", "aeroway"}
+
+
 def _simplify_gl_style(style_dict: dict) -> dict:
     """Pre-process a Mapbox GL style to work around QGIS converter limitations.
 
@@ -165,10 +169,16 @@ def _simplify_gl_style(style_dict: dict) -> dict:
     ``text-field`` or ``interpolate`` expressions with nested ``case``/``match``
     in ``text-size``.  This rewrites those constructs into simpler forms that
     the converter handles correctly.
+
+    Labels from POI, housenumber, and aeroway layers are also stripped since
+    they add clutter without helping runners navigate the course.
     """
     for layer in style_dict.get("layers", []):
         layout = layer.get("layout", {})
         if "text-field" in layout:
+            if layer.get("source-layer") in _LABEL_LAYERS_TO_REMOVE:
+                del layout["text-field"]
+                continue
             layout["text-field"] = _simplify_gl_text_field(layout["text-field"])
         if "text-size" in layout:
             layout["text-size"] = _simplify_gl_text_size(layout["text-size"])
