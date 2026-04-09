@@ -13,11 +13,14 @@ Both --lines and --points can be specified multiple times.
 """
 
 import argparse
+import json
 import os
 import sys
+import urllib.request
 from pathlib import Path
 
 from qgis.core import (
+    Qgis,
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
@@ -30,16 +33,19 @@ from qgis.core import (
     QgsLayoutPoint,
     QgsLayoutSize,
     QgsLineSymbol,
+    QgsMapBoxGlStyleConversionContext,
+    QgsMapBoxGlStyleConverter,
+    QgsMapLayer,
     QgsMarkerSymbol,
     QgsPalLayerSettings,
     QgsProject,
-    QgsRasterLayer,
     QgsRectangle,
     QgsSingleSymbolRenderer,
     QgsTextBufferSettings,
     QgsTextFormat,
     QgsVectorLayer,
     QgsVectorLayerSimpleLabeling,
+    QgsVectorTileLayer,
 )
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor, QFont
@@ -64,18 +70,154 @@ LABEL_DISTANCE = 3.0
 EXTENT_PADDING = 0.05
 EXPORT_DPI = 300
 
+MAPTILER_STYLES = [
+    "aquarelle",
+    "backdrop",
+    "basic-v2",
+    "bright-v2",
+    "dataviz",
+    "hybrid",
+    "ocean",
+    "openstreetmap",
+    "outdoor-v2",
+    "satellite",
+    "streets",
+    "streets-v2",
+    "streets-v2-dark",
+    "streets-v2-light",
+    "streets-v2-pastel",
+    "topo-v2",
+    "winter-v2",
+]
 
-def create_basemap() -> QgsRasterLayer:
-    """Create an XYZ tile layer for OpenStreetMap."""
+
+def _simplify_gl_text_field(value):
+    """Simplify a Mapbox GL text-field expression for the QGIS converter.
+
+    The QGIS converter can handle simple templates like ``"{name:en}"`` but
+    not array expressions like ``["coalesce", ["get", "name:en"], ["get", "name"]]``.
+    This extracts the first ``get`` target and returns it as a template string.
+    """
+    if not isinstance(value, list) or not value:
+        return value
+    op = value[0]
+    if op == "coalesce":
+        for arg in reversed(value[1:]):
+            if isinstance(arg, list) and len(arg) == 2 and arg[0] == "get":
+                return "{" + arg[1] + "}"
+    if op == "concat":
+        parts = []
+        for arg in value[1:]:
+            if isinstance(arg, str):
+                parts.append(arg)
+            elif isinstance(arg, list) and len(arg) == 2 and arg[0] == "get":
+                parts.append("{" + arg[1] + "}")
+            else:
+                return value
+        if parts:
+            return "".join(parts)
+    return value
+
+
+def _extract_numeric_default(expr):
+    """Extract a fallback numeric value from a ``case`` or ``match`` expression."""
+    if isinstance(expr, (int, float)):
+        return expr
+    if isinstance(expr, list) and len(expr) >= 2:
+        if expr[0] in ("case", "match"):
+            return _extract_numeric_default(expr[-1])
+    return None
+
+
+def _simplify_gl_text_size(value):
+    """Simplify a Mapbox GL text-size expression for the QGIS converter.
+
+    The converter handles plain numbers and ``{"stops": [...]}`` objects but
+    not ``["interpolate", ...]`` expressions whose values contain nested
+    ``case`` or ``match`` sub-expressions.  This flattens them into a simple
+    stops object by extracting the fallback value at each zoom level.
+    """
+    if isinstance(value, (int, float)):
+        return value
+    if isinstance(value, dict) and "stops" in value:
+        return value
+    if not isinstance(value, list) or value[0] != "interpolate":
+        return value
+    pairs = value[3:]
+    stops = []
+    for i in range(0, len(pairs), 2):
+        zoom = pairs[i]
+        size = pairs[i + 1]
+        if isinstance(size, (int, float)):
+            stops.append([zoom, size])
+        else:
+            num = _extract_numeric_default(size)
+            if num is not None:
+                stops.append([zoom, num])
+    if stops:
+        return {"stops": stops}
+    return value
+
+
+def _simplify_gl_style(style_dict: dict) -> dict:
+    """Pre-process a Mapbox GL style to work around QGIS converter limitations.
+
+    ``QgsMapBoxGlStyleConverter`` cannot parse ``coalesce`` expressions in
+    ``text-field`` or ``interpolate`` expressions with nested ``case``/``match``
+    in ``text-size``.  This rewrites those constructs into simpler forms that
+    the converter handles correctly.
+    """
+    for layer in style_dict.get("layers", []):
+        layout = layer.get("layout", {})
+        if "text-field" in layout:
+            layout["text-field"] = _simplify_gl_text_field(layout["text-field"])
+        if "text-size" in layout:
+            layout["text-size"] = _simplify_gl_text_size(layout["text-size"])
+    return style_dict
+
+
+def create_basemap(style: str = "outdoor-v2") -> QgsVectorTileLayer:
+    """Create a MapTiler vector tile layer with the given style."""
+    api_key = os.environ.get("MAPTILER_API_KEY")
+    if not api_key:
+        raise RuntimeError("MAPTILER_API_KEY environment variable is not set")
+
     uri = (
         "type=xyz&"
-        "url=https://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png&"
-        "referer=https://caara.net/&"
-        "zmin=0&zmax=19"
+        f"url=https://api.maptiler.com/tiles/v3/%7Bz%7D/%7Bx%7D/%7By%7D.pbf?key={api_key}&"
+        "zmin=14&zmax=14"
     )
-    layer = QgsRasterLayer(uri, "Basemap", "wms")
+    layer = QgsVectorTileLayer(uri, "Basemap")
     if not layer.isValid():
-        raise RuntimeError("Failed to create basemap layer")
+        raise RuntimeError("Failed to create basemap vector tile layer")
+
+    style_url = f"https://api.maptiler.com/maps/{style}/style.json?key={api_key}"
+    try:
+        with urllib.request.urlopen(style_url) as response:
+            style_dict = json.loads(response.read().decode())
+    except Exception as e:
+        raise RuntimeError(f"Failed to fetch MapTiler style: {e}") from e
+
+    _simplify_gl_style(style_dict)
+
+    converter = QgsMapBoxGlStyleConverter()
+    context = QgsMapBoxGlStyleConversionContext()
+    # Convert pixel-based GL sizes to millimeters so they scale correctly at
+    # any output DPI (screen or print).  This matches what QGIS and the
+    # MapTiler plugin do internally — without it, sizes stay in pixels and
+    # become microscopic at print DPI.
+    context.setTargetUnit(Qgis.RenderUnit.Millimeters)
+    context.setPixelSizeConversionFactor(25.4 / 96.0)
+    result = converter.convert(style_dict, context)
+    if result != QgsMapBoxGlStyleConverter.Success:
+        raise RuntimeError(
+            f"Failed to convert MapTiler style: {converter.errorMessage()}"
+        )
+
+    layer.setRenderer(converter.renderer())
+    layer.setLabeling(converter.labeling())
+    layer.setLabelsEnabled(True)
+
     return layer
 
 
@@ -187,7 +329,7 @@ def render_pdf(
     output_path: str,
     title: str,
     date_str: str,
-    basemap: QgsRasterLayer,
+    basemap: QgsMapLayer,
     line_layers: list[QgsVectorLayer],
     point_layers: list[QgsVectorLayer],
 ) -> None:
@@ -313,10 +455,38 @@ def main() -> None:
         default=[],
         help="GPX file to load as points (waypoints); can be specified multiple times",
     )
-    parser.add_argument("--title", required=True, help="Race title")
-    parser.add_argument("--date", required=True, help="Formatted date string")
-    parser.add_argument("--output", "-o", required=True, help="Output PDF path")
+    parser.add_argument("--title", help="Race title")
+    parser.add_argument("--date", help="Formatted date string")
+    parser.add_argument("--output", "-o", help="Output PDF path")
+    parser.add_argument(
+        "--style",
+        default="outdoor-v2",
+        metavar="STYLE_ID",
+        help="MapTiler style ID (default: outdoor-v2)",
+    )
+    parser.add_argument(
+        "--list-styles",
+        action="store_true",
+        help="Print available MapTiler style IDs and exit",
+    )
     args = parser.parse_args()
+
+    if args.list_styles:
+        for style in MAPTILER_STYLES:
+            print(style)
+        return
+
+    missing = [
+        name
+        for name, val in [
+            ("--title", args.title),
+            ("--date", args.date),
+            ("--output", args.output),
+        ]
+        if val is None
+    ]
+    if missing:
+        parser.error(f"the following arguments are required: {', '.join(missing)}")
 
     if not args.lines and not args.points:
         parser.error("At least one --lines or --points file is required")
@@ -327,7 +497,7 @@ def main() -> None:
     app.initQgis()
 
     try:
-        basemap = create_basemap()
+        basemap = create_basemap(args.style)
 
         line_layers = []
         for gpx_path in args.lines:
