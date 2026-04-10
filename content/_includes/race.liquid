@@ -21,11 +21,11 @@ layout: base
     <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
   </tr>
   <tr>
-    <th>Start location</th><td><a href="{{ race.start.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.start | formatAddress: "<br/>", "Start" }}</a></td>
+    <th>Start location</th><td><a href="{{ race.start | googleMapUrl }}">{{ race.start | formatAddress: "<br/>", "Start" }}</a></td>
   </tr>
   {% if race.finish %}
   <tr>
-    <th>Finish location</th><td><a href="{{ race.finish.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.finish | formatAddress: "<br/>", "Finish" }}</a></td>
+    <th>Finish location</th><td><a href="{{ race.finish | googleMapUrl }}">{{ race.finish | formatAddress: "<br/>", "Finish" }}</a></td>
   </tr>
   {% endif %}
   <tr>
@@ -104,7 +104,7 @@ K1KML</a> if you can help.</p>
 {% assign role_key = aro.Role | downcase %}
 <tr {% if aro.Callsign == blank %}class="unassigned"{% endif %}>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
-    <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key].address | googleMapSearch }}">{{ race.checkpoints[role_key].address }}</a><br/>{{ race.checkpoints[role_key].position }}{% endif %}</td>
+    <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key] | googleMapUrl }}">{{ race.checkpoints[role_key].address }}</a><br/>{{ race.checkpoints[role_key].position }}{% endif %}</td>
 {% if aro.Callsign != blank %}
     <td>{{ aro.Callsign | hamDbTooltip }}</td>
     <td>{{ aro.Name }}</td>

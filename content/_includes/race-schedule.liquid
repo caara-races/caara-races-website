@@ -53,7 +53,7 @@
       {% endif %}
     </td>
     <td>{{ race.data.date | date: "%H:%M&nbsp;%p", "America/New_York" }}</td>
-    <td><a href="{{ race.data.race.start.address | replaceNewlines: ", " | googleMapSearch }}">{{ race.data.race.start | formatAddress: ", " }}</a></td>
+    <td><a href="{{ race.data.race.start | googleMapUrl }}">{{ race.data.race.start | formatAddress: ", " }}</a></td>
     <td class="links noprint">
       <ul>
   {% if race.data.race.url %}
