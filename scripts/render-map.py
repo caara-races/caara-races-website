@@ -24,7 +24,6 @@ from qgis.core import (
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
-    QgsLabelObstacleSettings,
     QgsLayout,
     QgsLayoutExporter,
     QgsLayoutItemLabel,
@@ -238,17 +237,7 @@ def load_line_layer(gpx_path: str, name: str) -> QgsVectorLayer:
     )
     layer.setRenderer(QgsSingleSymbolRenderer(symbol))
 
-    # Mark as obstacle for label placement
-    obstacle_settings = QgsLabelObstacleSettings()
-    obstacle_settings.setIsObstacle(True)
-    obstacle_settings.setFactor(1.0)
-
-    pal = QgsPalLayerSettings()
-    pal.setObstacleSettings(obstacle_settings)
-    pal.drawLabels = False
-
-    layer.setLabeling(QgsVectorLayerSimpleLabeling(pal))
-    layer.setLabelsEnabled(True)
+    layer.setLabelsEnabled(False)
 
     return layer
 
