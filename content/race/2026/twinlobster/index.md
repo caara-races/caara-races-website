@@ -17,22 +17,22 @@ race:
   checkpoints:
     cp1:
       address: Rogers St & Harbor Loop, Gloucester, MA
-      position: Mile 1 & 12
+      notes: Mile 1 & 12
     cp2:
       address: E. Main St & Sayward St, Gloucester, MA
-      position: Mile 2 & 11
+      notes: Mile 2 & 11
     cp3:
       address: Eastern Pt. Rd& Grapevine Rd, Gloucester, MA
-      position: Mile 3 & 10
+      notes: Mile 3 & 10
     cp4:
       address: Atlantic Rd & Lands End Ln, Gloucester, MA
-      position: Mile 4 & 9
+      notes: Mile 4 & 9
     cp5:
       address: Atlantic Rd & Moorland Rd, Gloucester, MA
-      position: Mile 5 & 7
+      notes: Mile 5 & 7
     cp6:
       address: Atlantic Rd & Bass Ave, Gloucester, MA
-      position: Mile 6
+      notes: Mile 6
 ---
 
 There will be six aid stations with water near miles 2, 3.5, 5.5, 6.5, 9.5 and 11. With warmer temperatures, runners are encouraged to carry additional water with their favorite hydration bottle, belt, vest or pack.

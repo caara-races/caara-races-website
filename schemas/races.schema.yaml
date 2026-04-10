@@ -18,10 +18,10 @@ definitions:
           of the location.
         examples:
           - Washington St & Reynard St, Gloucester, MA
-      position:
+      notes:
         type: string
         description: >-
-          Mile position along the course.
+          Additional information about the location
         examples:
           - Mile 1 and 13
       coordinates:
@@ -64,7 +64,7 @@ properties:
         description: >-
           Contains location information for each checkpoint in the race.
         additionalProperties:
-          $ref: '#/definitions/location'
+          $ref: "#/definitions/location"
       sheet:
         type: string
         description: >-
@@ -72,11 +72,11 @@ properties:
       start:
         description: >-
           Location of the race starting point.
-        $ref: '#/definitions/location'
+        $ref: "#/definitions/location"
       finish:
         description: >-
           Location of the race finish.
-        $ref: '#/definitions/location'
+        $ref: "#/definitions/location"
       url:
         type: string
         pattern: ^https?://

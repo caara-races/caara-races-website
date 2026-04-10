@@ -19,25 +19,25 @@ race:
   checkpoints:
     cp1:
       address: Parker St & Malcom Hoyt Dr, Newburyport, MA
-      position: Mile 1 & 12+
+      notes: Mile 1 & 12+
     cp2:
       address: Scotland Rd & Scotland Hgts., Newbury, MA
-      position: Mile 2+ & 11+
+      notes: Mile 2+ & 11+
     cp3:
       address: South St & Turkey Hill Rd, West Newbury, MA
-      position: Mile 3+ & 10
+      notes: Mile 3+ & 10
     cp4:
       address: Moulton St & Illsley Hill Rd, West Newbury, MA
-      position: Mile 6
+      notes: Mile 6
     cp5:
       address: Garden St & Indian Hill Rd, West Newbury, MA
-      position: Mile 7
+      notes: Mile 7
     cp6:
       address: Garden St & Rogers St, West Newbury, MA
-      position: Mile 7+
+      notes: Mile 7+
     cp7:
       address: Rogers St & Turkey Hill Rd, West Newbury, MA
-      position: Mile 8+
+      notes: Mile 8+
 ---
 
 There will be six aid stations with water approximately every two miles. Portable restrooms will be available at the start/finish and along the course as well.

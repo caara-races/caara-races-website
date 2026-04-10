@@ -18,22 +18,22 @@ race:
   checkpoints:
     cp1:
       address: Thatcher Rd & Farm Ln, Rockport, MA
-      position: Mile 1 & 12
+      notes: Mile 1 & 12
     cp2:
       address: Thatcher Rd & Tregony Bow, Rockport, MA
-      position: Mile 2 & 11
+      notes: Mile 2 & 11
     cp3:
       address: Penzance Rd & Eden Rd, Rockport, MA
-      position: Mile 3 & 10
+      notes: Mile 3 & 10
     cp4:
       address: Eden Rd & South St, Rockport, MA
-      position: Mile 4 & 9
+      notes: Mile 4 & 9
     cp5:
       address: Marmion Way & Shetland Rd, Rockport, MA
-      position: Mile 5 & 8
+      notes: Mile 5 & 8
     cp6:
       address: Old Garden Rd & Babcock Rd, Rockport, MA
-      position: Mile 6 & 7
+      notes: Mile 6 & 7
 ---
 
 There will be six aid stations with water near miles 1, 2.5, 5.5, 7.5, 10.5 and 12. A portable restroom will be available along the course near mile 2.5 & 10.
