@@ -169,6 +169,13 @@ function setupFilters(eleventyConfig) {
     return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
   });
 
+  // Transform a location object into a Google Maps URL, preferring explicit
+  // coordinates over the address when available.
+  eleventyConfig.addFilter("googleMapUrl", (location) => {
+    const query = location.coordinates || location.address.replace(/\n/g, ", ");
+    return `https://www.google.com/maps/search/?api=1&query=${url_escape(query)}`;
+  });
+
   // Return true if the given path is a directory. The path is relative to
   // the input directory.
   eleventyConfig.addFilter("dirExists", (relpath) => {
