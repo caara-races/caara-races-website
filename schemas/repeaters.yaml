@@ -1,6 +1,7 @@
 type: object
 additionalProperties:
   type: object
+  additionalProperties: false
   properties:
     display:
       type: string
@@ -13,8 +14,10 @@ additionalProperties:
       pattern: ^[+-]$
     tone:
       type: number
+    location:
+      type: string
   required:
     - callsign
     - frequency
     - offset
-    - tone
+    - location
