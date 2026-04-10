@@ -459,7 +459,7 @@ def main() -> None:
     parser.add_argument("--output", "-o", help="Output PDF path")
     parser.add_argument(
         "--style",
-        default="outdoor-v2",
+        default="dataviz",
         metavar="STYLE_ID",
         help="MapTiler style ID (default: outdoor-v2)",
     )
