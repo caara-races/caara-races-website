@@ -142,6 +142,8 @@ export async function main() {
         `${workDir}:/work`,
         "-w",
         "/work",
+        "-e",
+        "MAPTILER_API_KEY",
         DOCKER_IMAGE,
         "bash",
         scriptPath,
