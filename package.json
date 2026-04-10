@@ -19,6 +19,7 @@
 		"validate-races": "node scripts/validate-races.js",
 		"validate-towns": "node scripts/validate-data.js schemas/towns.yaml content/_data/towns.yaml",
 		"validate-repeaters": "node scripts/validate-data.js schemas/repeaters.yaml content/_data/repeaters.yaml",
+		"validate-references": "node scripts/validate-references.js",
 		"validate-markdown": "node scripts/validate-markdown.js",
 		"validate": "bash scripts/validate-all.sh",
 		"generate-checkpoints-gpx": "node scripts/generate-checkpoints-gpx.js",
