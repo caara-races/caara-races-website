@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: reportUninitializedInstanceVariable=false,reportUnusedCallResult=false
 """Render a race map to PDF using QGIS.
 
 Usage:
@@ -19,6 +20,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
+from numpy.dtypes import StrDType
 from qgis.core import (
     Qgis,
     QgsApplication,
@@ -324,15 +326,12 @@ def load_point_layers(gpx_path: str, name: str) -> list[QgsVectorLayer]:
     return [start_layer, finish_layer, cp_layer]
 
 
-def render_pdf(
-    output_path: str,
-    title: str,
-    date_str: str,
+def _setup_project(
     basemap: QgsMapLayer,
     line_layers: list[QgsVectorLayer],
     point_layers: list[QgsVectorLayer],
-) -> None:
-    """Create a print layout and export to PDF."""
+) -> tuple[QgsProject, QgsCoordinateReferenceSystem]:
+    """Create a QGIS project, set its CRS, and register all map layers."""
     project = QgsProject.instance()
     if project is None:
         raise RuntimeError("failed to create QGIS project")
@@ -340,27 +339,24 @@ def render_pdf(
     crs = QgsCoordinateReferenceSystem("EPSG:3857")
     project.setCrs(crs)
 
-    all_layers = [basemap] + line_layers + point_layers
-    for layer in all_layers:
+    for layer in [basemap] + line_layers + point_layers:
         project.addMapLayer(layer)
 
-    margin = 12.7
-    header_height = 15.0
+    return project, crs
 
-    layout = QgsLayout(project)
-    layout.initializeDefaults()
 
-    page = layout.pageCollection().page(0)
-    page.setPageSize("Letter", QgsLayoutItemPage.Portrait)
-    page_width = page.pageSize().width()
-    page_height = page.pageSize().height()
-
-    # Header font (shared by title and date)
+def _add_header_labels(
+    layout: QgsLayout,
+    title: str,
+    date_str: str,
+    page_width: float,
+    margin: float,
+) -> None:
+    """Add left-aligned title and right-aligned date labels to the layout."""
     header_fmt = QgsTextFormat()
     header_fmt.setFont(QFont("Helvetica"))
     header_fmt.setSize(14)
 
-    # Title label (left-justified)
     title_label = QgsLayoutItemLabel(layout)
     title_label.setText(title)
     title_label.setTextFormat(header_fmt)
@@ -369,7 +365,6 @@ def render_pdf(
     title_label.attemptResize(QgsLayoutSize(page_width - 2 * margin, 10))
     layout.addLayoutItem(title_label)
 
-    # Date label (right-justified, same line)
     date_label = QgsLayoutItemLabel(layout)
     date_label.setText(date_str)
     date_label.setTextFormat(header_fmt)
@@ -378,16 +373,16 @@ def render_pdf(
     date_label.attemptResize(QgsLayoutSize(page_width - 2 * margin, 10))
     layout.addLayoutItem(date_label)
 
-    # Map item
-    map_item = QgsLayoutItemMap(layout)
-    map_x = margin
-    map_y = margin + header_height
-    map_w = page_width - 2 * margin
-    map_h = page_height - map_y - margin
-    map_item.attemptMove(QgsLayoutPoint(map_x, map_y))
-    map_item.attemptResize(QgsLayoutSize(map_w, map_h))
 
-    # Compute extent from all vector layers
+def _compute_extent(
+    line_layers: list[QgsVectorLayer],
+    point_layers: list[QgsVectorLayer],
+    target_crs: QgsCoordinateReferenceSystem,
+    project: QgsProject,
+    map_width: float,
+    map_height: float,
+) -> QgsRectangle:
+    """Compute the map extent from vector layers, padded and aspect-ratio adjusted."""
     extent = QgsRectangle()
     source_crs = None
     for layer in line_layers + point_layers:
@@ -400,44 +395,118 @@ def render_pdf(
                 source_crs = layer.crs()
 
     if source_crs is not None:
-        transform = QgsCoordinateTransform(source_crs, crs, project)
+        transform = QgsCoordinateTransform(source_crs, target_crs, project)
         extent = transform.transformBoundingBox(extent)
 
     extent.grow(max(extent.width(), extent.height()) * EXTENT_PADDING)
 
     # Expand extent to match the map item's aspect ratio so the map fills the page
-    map_aspect = map_w / map_h
+    map_aspect = map_width / map_height
     extent_aspect = extent.width() / extent.height() if extent.height() > 0 else 1.0
     if extent_aspect > map_aspect:
-        # Extent is wider than map area — expand height
         new_height = extent.width() / map_aspect
         center_y = extent.center().y()
         extent.setYMinimum(center_y - new_height / 2)
         extent.setYMaximum(center_y + new_height / 2)
     else:
-        # Extent is taller than map area — expand width
         new_width = extent.height() * map_aspect
         center_x = extent.center().x()
         extent.setXMinimum(center_x - new_width / 2)
         extent.setXMaximum(center_x + new_width / 2)
 
+    return extent
+
+
+def _add_map_item(
+    layout: QgsLayout,
+    extent: QgsRectangle,
+    crs: QgsCoordinateReferenceSystem,
+    basemap: QgsMapLayer,
+    line_layers: list[QgsVectorLayer],
+    point_layers: list[QgsVectorLayer],
+    map_x: float,
+    map_y: float,
+    map_width: float,
+    map_height: float,
+) -> None:
+    """Create, configure, and add the map item to the layout."""
+    map_item = QgsLayoutItemMap(layout)
+    map_item.attemptMove(QgsLayoutPoint(map_x, map_y))
+    map_item.attemptResize(QgsLayoutSize(map_width, map_height))
     map_item.setExtent(extent)
     map_item.setCrs(crs)
 
-    # Layer order: points on top, then lines, then basemap
     render_order = (
         list(reversed(point_layers)) + list(reversed(line_layers)) + [basemap]
     )
     map_item.setLayers(render_order)
     layout.addLayoutItem(map_item)
 
-    # Export to PDF
+
+def _export_layout(layout: QgsLayout, output_path: str) -> None:
+    """Export a print layout to PDF."""
     exporter = QgsLayoutExporter(layout)
     settings = QgsLayoutExporter.PdfExportSettings()
     settings.dpi = EXPORT_DPI
     result = exporter.exportToPdf(output_path, settings)
     if result != QgsLayoutExporter.ExportResult.Success:
         raise RuntimeError(f"PDF export failed with code {result}")
+
+
+def render_pdf(
+    output_path: str,
+    title: str,
+    date_str: str,
+    basemap: QgsMapLayer,
+    line_layers: list[QgsVectorLayer],
+    point_layers: list[QgsVectorLayer],
+) -> None:
+    """Create a print layout and export to PDF."""
+    project, crs = _setup_project(basemap, line_layers, point_layers)
+
+    margin = 12.7
+    header_height = 15.0
+
+    layout = QgsLayout(project)
+    layout.initializeDefaults()
+
+    page = layout.pageCollection().page(0)
+    page.setPageSize("Letter", QgsLayoutItemPage.Portrait)
+    page_width = page.pageSize().width()
+    page_height = page.pageSize().height()
+
+    _add_header_labels(layout, title, date_str, page_width, margin)
+
+    map_x = margin
+    map_y = margin + header_height
+    map_w = page_width - 2 * margin
+    map_h = page_height - map_y - margin
+
+    extent = _compute_extent(line_layers, point_layers, crs, project, map_w, map_h)
+    _add_map_item(
+        layout,
+        extent,
+        crs,
+        basemap,
+        line_layers,
+        point_layers,
+        map_x,
+        map_y,
+        map_w,
+        map_h,
+    )
+
+    _export_layout(layout, output_path)
+
+
+class Args:
+    lines: list[str]
+    points: list[str]
+    title: str | None
+    date: str | None
+    output: str | None
+    style: str
+    list_styles: bool
 
 
 def main() -> None:
@@ -468,7 +537,7 @@ def main() -> None:
         action="store_true",
         help="Print available MapTiler style IDs and exit",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(namespace=Args)
 
     if args.list_styles:
         for style in MAPTILER_STYLES:
