@@ -18,7 +18,7 @@ layout: base
     </td>
   </tr>
   <tr>
-    <th>Start time</th><td>{{ date | date: "%H:%M"}}</td>
+    <th>Start time</th><td>{{ date | date: "%H:%M %p", "America/New_York"}}</td>
   </tr>
   <tr>
     <th>Start location</th><td><a href="{{ race.start | googleMapUrl }}">{{ race.start | formatAddress: "<br/>", "Start" }}</a></td>
