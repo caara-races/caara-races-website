@@ -17,22 +17,22 @@ race:
   checkpoints:
     cp1:
       address: High St & Mile Ln, Ipswich, MA
-      position: Mile 2
+      notes: Mile 2
     cp2:
       address: High St & Mineral St, Ipswich, MA
-      position: Mile 4 & 12
+      notes: Mile 4 & 12
     cp3:
       address: East St & Jeffrey's Neck Rd, Ipswich, MA
-      position: Mile 5 & 11
+      notes: Mile 5 & 11
     cp4:
       address: Jeffrey's Neck Rd & Island Park Rd, Ipswich, MA
-      position: Mile 6 & 10
+      notes: Mile 6 & 10
     cp5:
       address: Clark Rd& North Ridge Rd, Ipswich, MA
-      position: Mile 8
+      notes: Mile 8
     cp6:
       address: Jeffrey's Neck Rd & N. Ridge Rd, Ipswich, MA
-      position: Mile 9 &10
+      notes: Mile 9 &10
 ---
 
 Portable restrooms are available at the start/finish. A portable restroom will be available along the course near mile 2, 5 & 11. There will be six aid stations with water near miles 2, 4, 6, 8, 10 and 12.

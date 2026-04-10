@@ -18,22 +18,22 @@ race:
   checkpoints:
     cp1:
       address: Central St & Pine St, Manchester-by-the-Sea, MA
-      position: Mile 1 & 12
+      notes: Mile 1 & 12
     cp2:
       address: Pine St & Crooked Ln, Manchester-by-the-Sea, MA
-      position: Mile 2 & 11
+      notes: Mile 2 & 11
     cp3:
       address: Pine St & Pond St & Chebacco Rd, Hamilton, MA
-      position: Mile 3 & 9
+      notes: Mile 3 & 9
     cp4:
       address: 340 Chebacco Rd Near Boat Access, South Hamilton, MA
-      position: Mile 4 & 9
+      notes: Mile 4 & 9
     cp5:
       address: Chebacco Rd & Essex St, Hamilton, MA
-      position: Mile 5+ & 8
+      notes: Mile 5+ & 8
     cp6:
       address: Forest St & Essex St, Hamilton, MA
-      position: Mile 7
+      notes: Mile 7
 ---
 
 There will be six aid stations with water and Gatorade near miles 1, 3, 5, 7.5, 9.5 & 11.5.

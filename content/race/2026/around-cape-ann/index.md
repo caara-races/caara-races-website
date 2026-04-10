@@ -23,22 +23,22 @@ race:
   checkpoints:
     cp1:
       address: Thatcher Rd & South St, Rockport, MA
-      position: Mile 2
+      notes: Mile 2
     cp2:
       address: South St & Lanes Farm Way, Rockport, MA
-      position: Mile 4
+      notes: Mile 4
     cp3:
       address: Granite St & Curtis St, Rockport, MA
-      position: Mile 6
+      notes: Mile 6
     cp4:
       address: Langsford St & Washington St, Gloucester, MA
-      position: Mile 8
+      notes: Mile 8
     cp5:
       address: Washington St & Revere St, Gloucester, MA
-      position: Mile 10
+      notes: Mile 10
     cp6:
       address: Washington St & Deacon Farm Ln, Gloucester, MA
-      position: Mile 12
+      notes: Mile 12
 ---
 
 Free shuttle buses will bring participants to the starting line at nearby Good Harbor Beach about 3 miles away. Shuttles available 7:30am - 8:30am. ONLY race participants will be allowed on the shuttles. Please do not delay getting on the shuttle bus to the start. (The system does not work if everyone waits until the last minute to load the shuttle!) The start has restrooms and gear check.

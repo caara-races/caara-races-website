@@ -18,22 +18,22 @@ race:
   checkpoints:
     cp1:
       address: Washington St & Reynard St, Gloucester, MA
-      position: Mile 1 and 13
+      notes: Mile 1 and 13
     cp2:
       address: Washington St & Stanwood St, Gloucester, MA
-      position: Mile 1.5 and 12
+      notes: Mile 1.5 and 12
     cp3:
       address: Washington St & Leonard St, Gloucester, MA
-      position: Mile 3.5 and 10
+      notes: Mile 3.5 and 10
     cp4:
       address: Washington St & Andrews St, Gloucester, MA
-      position: Mile 4.5 and 9
+      notes: Mile 4.5 and 9
     cp5:
       address: Washington St & Woodbury Hill, Gloucester, MA
-      position: Mile 5.5 and 8
+      notes: Mile 5.5 and 8
     cp6:
       address: Granite St & Phillips Ave, Rockport, MA
-      position: Mile 7
+      notes: Mile 7
 ---
 
 ## Course Info
