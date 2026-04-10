@@ -194,7 +194,8 @@ function setupFilters(eleventyConfig) {
 
   eleventyConfig.addFilter("formatRepeater", (repeater) => {
     const display = repeater.display ?? repeater.callsign.toUpperCase();
-    return `${display} ${repeater.frequency} (${repeater.offset}) Tone ${repeater.tone} (${repeater.location})`;
+    const tone = repeater.tone != null ? ` Tone ${repeater.tone}` : "";
+    return `${display} ${repeater.frequency} (${repeater.offset})${tone} (${repeater.location})`;
   });
 
   eleventyConfig.addFilter("townName", (slug, town) => {
