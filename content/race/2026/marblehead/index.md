@@ -25,12 +25,13 @@ race:
       notes: Mile 5 and 13
     cp3:
       address: Lafayette St & Loring Ave, Salem, MA
-      notes: Mile 7 and 11
+      notes: Mile 6.5 and 11.5
     cp4:
       address: Lafayette St & Derby St, Salem, MA
-      notes: Mile 7 and 11
+      notes: Mile 7.5 and 10.5
     cp5:
       address: Memorial Dr & Fort Ave, Salem, MA
+      notes: Mile 8.5
 ---
 
 There will be aid stations with water and sports drink near miles 1, 4, 5.5, 8, 9, 10 and 12.5. A portable restroom will also be available near mile 1 and 4 on the course. Portable restrooms will be available at the start/finish area as well.
