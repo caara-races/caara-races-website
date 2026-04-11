@@ -1,20 +1,40 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: caara-races/town
+description: >-
+  Map town names to emergency contact information.
 type: object
 additionalProperties:
-  type: object
-  properties:
-    display:
-      type: string
-    contacts:
-      type: array
-      items:
-        type: object
-        properties:
-          name:
-            type: string
-          number:
-            type: string
-        required:
-          - name
-          - number
-  required:
-    - contacts
+  $ref: "#/definitions/town"
+definitions:
+  emergencyContact:
+    type: object
+    description: >-
+      A single contact entry.
+    properties:
+      name:
+        type: string
+        description: >-
+          Name of this contact.
+      number:
+        type: string
+        description: >-
+          Phone number for this contact.
+    required:
+      - name
+      - number
+  town:
+    description: >-
+      A list of emergency contacts for a town.
+    type: object
+    properties:
+      display:
+        type: string
+        description: >-
+          Display name for the town. If this is not provided, the display name
+          is the key with the first letter converted to uppercase.
+      contacts:
+        type: array
+        items:
+          $ref: "#/definitions/emergencyContact"
+    required:
+      - contacts

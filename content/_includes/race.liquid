@@ -29,10 +29,10 @@ layout: base
   </tr>
   {% endif %}
   <tr>
-    <th>Frequencies</th><td>Primary: {{ repeaters[race.frequency.primary] | formatRepeater }}</td>
+    <th>Frequencies</th><td>Primary: {{ repeaters[race.repeaters.primary] | formatRepeater }}</td>
   </tr>
   <tr>
-    <th></th><td>Backup: {{ repeaters[race.frequency.backup] | formatRepeater }}</td>
+    <th></th><td>Backup: {{ repeaters[race.repeaters.backup] | formatRepeater }}</td>
   </tr>
 </table>
 </section>

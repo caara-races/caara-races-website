@@ -10,7 +10,7 @@ race:
       Gloucester, MA
     coordinates: 42.620615, -70.632187
   url: https://www.yukanrun.com/twin-lights-half-marathon
-  frequency:
+  repeaters:
     primary: w1glo-uhf
     backup: w1glo-vhf
   towns:

@@ -9,7 +9,7 @@ race:
       2 Humphrey Street
       Marblehead, MA
   url: https://www.yukanrun.com/marblehead-half-marathon
-  frequency:
+  repeaters:
     primary: n1hsy
     backup: ns1ra-danvers
   towns:

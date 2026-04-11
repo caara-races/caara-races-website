@@ -9,7 +9,7 @@ race:
       40 Parker St
       Newburyport, MA
   url: https://www.yukanrun.com/town-and-country-half-marathon
-  frequency:
+  repeaters:
     primary: k1kkm
     backup: n1hsy
   towns:

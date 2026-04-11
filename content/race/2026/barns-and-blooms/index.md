@@ -9,7 +9,7 @@ race:
       775 Bay Road South
       Hamilton, MA
   url: https://www.yukanrun.com/barns-blooms-half-marathon
-  frequency:
+  repeaters:
     primary: n1hsy
     backup: w1em
   towns:

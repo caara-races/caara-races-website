@@ -9,7 +9,7 @@ race:
       36 Lincoln St
       Manchester-by-the-Sea, MA
   url: https://www.yukanrun.com/half-marathon-by-the-sea
-  frequency:
+  repeaters:
     primary: w1glo-vhf
     backup: ns1ra-danvers
   towns:

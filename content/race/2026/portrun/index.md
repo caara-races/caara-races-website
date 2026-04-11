@@ -9,7 +9,7 @@ race:
       40 Parker St
       Newburyport, MA
   url: https://www.yukanrun.com/portrun-half-marathon-5k
-  frequency:
+  repeaters:
     primary: k1kkm
     backup: n1hsy
   towns:
