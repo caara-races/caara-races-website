@@ -9,7 +9,7 @@ race:
       134 High Street
       Ipswich, MA
   url: https://www.yukanrun.com/oceanview-half-marathon-5k
-  frequency:
+  repeaters:
     primary: n1hsy
     backup: w1glo-vhf
   towns:

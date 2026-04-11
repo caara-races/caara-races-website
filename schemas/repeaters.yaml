@@ -1,23 +1,45 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: caara-races/repeater
+description: >-
+  Map repeater ids to repeater metadata.
 type: object
 additionalProperties:
-  type: object
-  additionalProperties: false
-  properties:
-    display:
-      type: string
-    callsign:
-      type: string
-    frequency:
-      type: number
-    offset:
-      type: string
-      pattern: ^[+-]$
-    tone:
-      type: number
-    location:
-      type: string
-  required:
-    - callsign
-    - frequency
-    - offset
-    - location
+  $ref: "#/definitions/repeater"
+definitions:
+  repeater:
+    type: object
+    description: >-
+      Information about a single repeater.
+    additionalProperties: false
+    properties:
+      display:
+        type: string
+        description: >-
+          Display name of this repeater. If this is not provider, the repeater key
+          will be converted to uppercase and used as the display name.
+      callsign:
+        type: string
+        description: >-
+          The FCC callsign associated with the repeater.
+      frequency:
+        type: number
+        description: >-
+          The repeater output frequency.
+      offset:
+        type: string
+        pattern: ^[+-]$
+        description: >-
+          Input frequency offset from output frequency.
+      tone:
+        type: number
+        description: >-
+          CTCSS tone used to activate the repeater.
+      location:
+        type: string
+        description: >-
+          Free-form description of the location of the repeater.
+    required:
+      - callsign
+      - frequency
+      - offset
+      - location

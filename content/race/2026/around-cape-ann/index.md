@@ -14,7 +14,7 @@ race:
       32 Cherry St.
       Gloucester, MA 01930
   url: https://www.yukanrun.com/around-cape-ann-half-marathon
-  frequency:
+  repeaters:
     primary: n1hsy
     backup: w1em
   towns:

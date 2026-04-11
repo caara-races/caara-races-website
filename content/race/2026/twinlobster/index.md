@@ -9,7 +9,7 @@ race:
       32 Leslie O Johnson Road
       Gloucester, MA
   url: https://www.yukanrun.com/twin-lobster-half-marathon
-  frequency:
+  repeaters:
     primary: w1glo-vhf
     backup: w1glo-uhf
   towns:

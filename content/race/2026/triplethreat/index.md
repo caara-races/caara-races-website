@@ -9,7 +9,7 @@ race:
       24 Jerdens Lane
       Rockport, MA
   url: https://www.yukanrun.com/triplethreat-half-marathon-5k
-  frequency:
+  repeaters:
     primary: w1glo-vhf
     backup: w1glo-uhf
   towns:
