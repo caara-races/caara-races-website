@@ -11,7 +11,7 @@ race:
   url: https://www.yukanrun.com/marblehead-half-marathon
   repeaters:
     primary: n1hsy
-    backup: ns1ra-danvers
+    backup: ns1ra-salem
   towns:
     - marblehead
     - salem
