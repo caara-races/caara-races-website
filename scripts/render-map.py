@@ -15,6 +15,7 @@ Both --lines and --points can be specified multiple times.
 
 import argparse
 import json
+import math
 import os
 import sys
 import urllib.request
@@ -332,13 +333,28 @@ def load_point_layers(gpx_path: str, name: str) -> list[QgsVectorLayer]:
     return [start_layer, finish_layer, cp_layer]
 
 
+def _utm_epsg_code(longitude: float, latitude: float) -> int:
+    """Return the EPSG code for the UTM zone containing the given WGS84 coordinate."""
+    zone = int(math.floor((longitude + 180) / 6)) + 1
+    return 32600 + zone if latitude >= 0 else 32700 + zone
+
+
+def _utm_crs_for_layer(layer: QgsVectorLayer) -> QgsCoordinateReferenceSystem:
+    """Determine the appropriate UTM CRS for a vector layer based on its extent."""
+    wgs84 = QgsCoordinateReferenceSystem("EPSG:4326")
+    transform = QgsCoordinateTransform(layer.crs(), wgs84, QgsProject.instance())
+    center = transform.transform(layer.extent().center())
+    epsg = _utm_epsg_code(center.x(), center.y())
+    return QgsCoordinateReferenceSystem(f"EPSG:{epsg}")
+
+
 def generate_mile_markers(line_layer: QgsVectorLayer) -> QgsVectorLayer:
     """Generate mile marker points at one-mile intervals along a course line."""
-    utm_crs = QgsCoordinateReferenceSystem("EPSG:32619")
+    utm_crs = _utm_crs_for_layer(line_layer)
     transform = QgsCoordinateTransform(line_layer.crs(), utm_crs, QgsProject.instance())
 
     layer = QgsVectorLayer(
-        "Point?crs=EPSG:32619&field=mile:integer",
+        f"Point?crs={utm_crs.authid()}&field=mile:integer",
         f"{line_layer.name()} - Mile Markers",
         "memory",
     )
