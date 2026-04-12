@@ -20,12 +20,12 @@ import sys
 import urllib.request
 from pathlib import Path
 
-from numpy.dtypes import StrDType
 from qgis.core import (
     Qgis,
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
+    QgsFeature,
     QgsLayout,
     QgsLayoutExporter,
     QgsLayoutItemLabel,
@@ -61,6 +61,12 @@ CHECKPOINT_COLOR = "238,136,0,255"
 MARKER_OUTLINE_COLOR = "255,255,255,255"
 MARKER_OUTLINE_WIDTH = "0.4"
 MARKER_SIZE = "3.5"
+
+MILE_MARKER_COLOR = "0,0,0,255"
+MILE_MARKER_SIZE = "1.8"
+MILE_LABEL_FONT_SIZE = 7
+MILE_LABEL_DISTANCE = 2.0
+MILE_METERS = 1609.344
 
 LABEL_FONT_FAMILY = "Arial"
 LABEL_FONT_SIZE = 9
@@ -326,10 +332,74 @@ def load_point_layers(gpx_path: str, name: str) -> list[QgsVectorLayer]:
     return [start_layer, finish_layer, cp_layer]
 
 
+def generate_mile_markers(line_layer: QgsVectorLayer) -> QgsVectorLayer:
+    """Generate mile marker points at one-mile intervals along a course line."""
+    utm_crs = QgsCoordinateReferenceSystem("EPSG:32619")
+    transform = QgsCoordinateTransform(line_layer.crs(), utm_crs, QgsProject.instance())
+
+    layer = QgsVectorLayer(
+        "Point?crs=EPSG:32619&field=mile:integer",
+        f"{line_layer.name()} - Mile Markers",
+        "memory",
+    )
+    provider = layer.dataProvider()
+
+    for feature in line_layer.getFeatures():
+        geom = feature.geometry()
+        geom.transform(transform)
+        total_length = geom.length()
+
+        mile = 1
+        while mile * MILE_METERS <= total_length:
+            point = geom.interpolate(mile * MILE_METERS)
+            feat = QgsFeature()
+            feat.setGeometry(point)
+            feat.setAttributes([mile])
+            provider.addFeature(feat)
+            mile += 1
+
+    layer.updateExtents()
+
+    symbol = QgsMarkerSymbol.createSimple(
+        {
+            "name": "circle",
+            "color": MILE_MARKER_COLOR,
+            "outline_color": MARKER_OUTLINE_COLOR,
+            "outline_width": MARKER_OUTLINE_WIDTH,
+            "size": MILE_MARKER_SIZE,
+        }
+    )
+    layer.setRenderer(QgsSingleSymbolRenderer(symbol))
+
+    text_format = QgsTextFormat()
+    text_format.setFont(QFont(LABEL_FONT_FAMILY, MILE_LABEL_FONT_SIZE))
+    text_format.setSize(MILE_LABEL_FONT_SIZE)
+    text_format.setColor(QColor(0, 0, 0))
+
+    buffer_settings = QgsTextBufferSettings()
+    buffer_settings.setEnabled(True)
+    buffer_settings.setSize(LABEL_BUFFER_SIZE)
+    buffer_settings.setColor(QColor(255, 255, 255))
+    buffer_settings.setOpacity(LABEL_BUFFER_OPACITY)
+    text_format.setBuffer(buffer_settings)
+
+    label_settings = QgsPalLayerSettings()
+    label_settings.fieldName = "mile"
+    label_settings.setFormat(text_format)
+    label_settings.placement = QgsPalLayerSettings.Placement.AroundPoint
+    label_settings.dist = MILE_LABEL_DISTANCE
+
+    layer.setLabeling(QgsVectorLayerSimpleLabeling(label_settings))
+    layer.setLabelsEnabled(True)
+
+    return layer
+
+
 def _setup_project(
     basemap: QgsMapLayer,
     line_layers: list[QgsVectorLayer],
     point_layers: list[QgsVectorLayer],
+    mile_layers: list[QgsVectorLayer],
 ) -> tuple[QgsProject, QgsCoordinateReferenceSystem]:
     """Create a QGIS project, set its CRS, and register all map layers."""
     project = QgsProject.instance()
@@ -339,7 +409,7 @@ def _setup_project(
     crs = QgsCoordinateReferenceSystem("EPSG:3857")
     project.setCrs(crs)
 
-    for layer in [basemap] + line_layers + point_layers:
+    for layer in [basemap] + line_layers + mile_layers + point_layers:
         project.addMapLayer(layer)
 
     return project, crs
@@ -424,6 +494,7 @@ def _add_map_item(
     basemap: QgsMapLayer,
     line_layers: list[QgsVectorLayer],
     point_layers: list[QgsVectorLayer],
+    mile_layers: list[QgsVectorLayer],
     map_x: float,
     map_y: float,
     map_width: float,
@@ -437,7 +508,10 @@ def _add_map_item(
     map_item.setCrs(crs)
 
     render_order = (
-        list(reversed(point_layers)) + list(reversed(line_layers)) + [basemap]
+        list(reversed(point_layers))
+        + list(reversed(mile_layers))
+        + list(reversed(line_layers))
+        + [basemap]
     )
     map_item.setLayers(render_order)
     layout.addLayoutItem(map_item)
@@ -460,9 +534,10 @@ def render_pdf(
     basemap: QgsMapLayer,
     line_layers: list[QgsVectorLayer],
     point_layers: list[QgsVectorLayer],
+    mile_layers: list[QgsVectorLayer],
 ) -> None:
     """Create a print layout and export to PDF."""
-    project, crs = _setup_project(basemap, line_layers, point_layers)
+    project, crs = _setup_project(basemap, line_layers, point_layers, mile_layers)
 
     margin = 12.7
     header_height = 15.0
@@ -490,6 +565,7 @@ def render_pdf(
         basemap,
         line_layers,
         point_layers,
+        mile_layers,
         map_x,
         map_y,
         map_w,
@@ -572,13 +648,23 @@ def main() -> None:
             name = Path(gpx_path).stem
             line_layers.append(load_line_layer(gpx_path, name))
 
+        mile_layers = []
+        for line_layer in line_layers:
+            mile_layers.append(generate_mile_markers(line_layer))
+
         point_layers = []
         for gpx_path in args.points:
             name = Path(gpx_path).stem
             point_layers.extend(load_point_layers(gpx_path, name))
 
         render_pdf(
-            args.output, args.title, args.date, basemap, line_layers, point_layers
+            args.output,
+            args.title,
+            args.date,
+            basemap,
+            line_layers,
+            point_layers,
+            mile_layers,
         )
     except RuntimeError as e:
         print(f"ERROR: {e}", file=sys.stderr)
