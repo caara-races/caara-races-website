@@ -13,6 +13,27 @@ _simplify_gl_text_field = _mod._simplify_gl_text_field
 _extract_numeric_default = _mod._extract_numeric_default
 _simplify_gl_text_size = _mod._simplify_gl_text_size
 _simplify_gl_style = _mod._simplify_gl_style
+_utm_epsg_code = _mod._utm_epsg_code
+
+
+# --- _utm_epsg_code ---
+
+
+class TestUtmEpsgCode:
+    def test_cape_ann(self):
+        assert _utm_epsg_code(-70.6, 42.6) == 32619
+
+    def test_los_angeles(self):
+        assert _utm_epsg_code(-118.2, 34.0) == 32611
+
+    def test_london(self):
+        assert _utm_epsg_code(-0.1, 51.5) == 32630
+
+    def test_southern_hemisphere(self):
+        assert _utm_epsg_code(151.2, -33.9) == 32756
+
+    def test_zone_boundary(self):
+        assert _utm_epsg_code(-180.0, 45.0) == 32601
 
 
 # --- _simplify_gl_text_field ---
