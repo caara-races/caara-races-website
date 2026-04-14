@@ -63,6 +63,6 @@ jobs:
           key: ${{ runner.os }}-cache-${{ github.run_id }}
 
       - name: Upload content artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
