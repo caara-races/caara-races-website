@@ -53,6 +53,7 @@ jobs:
         env:
           GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
           GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
+          MAPTILER_API_KEY: ${{ secrets.MAPTILER_API_KEY }}
           CI: "1"
         run: |
           npm run build
