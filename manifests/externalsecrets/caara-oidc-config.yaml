@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: caara-oidc-config
+spec:
+  dataFrom:
+    - extract:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: caara-races/oidc-config
+        metadataPolicy: None
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: caara-races-secrets
+  target:
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    name: caara-oidc-config

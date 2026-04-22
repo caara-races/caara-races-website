@@ -70,28 +70,25 @@ spec:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: caara-oidc
+                  name: caara-oidc-config
                   key: client-id
             - name: OAUTH2_PROXY_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: caara-oidc
+                  name: caara-oidc-config
                   key: client-secret
             - name: OAUTH2_PROXY_OIDC_ISSUER_URL
               valueFrom:
                 secretKeyRef:
-                  name: caara-oidc
+                  name: caara-oidc-config
                   key: issuer-url
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: caara-oidc
+                  name: caara-oauth2-config
                   key: cookie-secret
             - name: OAUTH2_PROXY_REDIRECT_URL
-              valueFrom:
-                secretKeyRef:
-                  name: caara-oidc
-                  key: redirect-url
+              value: https://caara-races-dev.oddbit.com/oauth2/callback
           ports:
             - containerPort: 4180
               name: oauth2

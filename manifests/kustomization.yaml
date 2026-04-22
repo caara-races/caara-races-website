@@ -11,11 +11,8 @@ resources:
   - service.yaml
   - ingress.yaml
   - pvc.yaml
-
-secretGenerator:
-  - name: caara-oidc
-    envs:
-      - secret.env
+  - sa.yaml
+  - externalsecrets
 
 configMapGenerator:
   - name: caara-caddyfile
