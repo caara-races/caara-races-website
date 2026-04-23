@@ -42,7 +42,7 @@ jobs:
         env:
           GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
         run: |
-          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
+          printf "%s" "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
         shell: bash
       - name: Install packages
         run: |
