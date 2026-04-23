@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
@@ -23,12 +24,6 @@ jobs:
           key: ${{ runner.os }}-cache-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-cache-
-
-      - name: Write google sheets secret to file
-        env:
-          GOOGLE_SHEETS_READER_SA: ${{ secrets.GOOGLE_SHEETS_READER_SA }}
-        run: |
-          echo "$GOOGLE_SHEETS_READER_SA" | base64 --decode > google-sheets-creds.json
 
       - name: Write members-only deploy key secret to file
         env:
@@ -49,12 +44,34 @@ jobs:
           sudo apt update
           sudo apt -y install rclone curl jq
 
+      #     - name: Debug JWT claims
+      #       run: |
+      #         token=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+      #           "${ACTIONS_ID_TOKEN_REQUEST_URL}" | jq -r '.value')
+      #         echo "$token" | cut -d. -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq '{aud, iss, sub}'
+
+      - name: Get secrets from vault
+        uses: hashicorp/vault-action@v3
+        with:
+          url: https://vault.oddbit.com
+          method: jwt
+          jwtGithubAudience: urn:vault.oddbit.com:caara-races
+          path: github-actions
+          role: caara-races-reader
+          secrets: |
+            caara-races/data/github-publish-workflow client-secret | RCLONE_CLIENT_SECRET ;
+            caara-races/data/maptiler api-key | MAPTILER_API_KEY ;
+            caara-races/data/google/geocoding-api api-key | GOOGLE_GEOCODING_API_KEY ;
+            caara-races/data/google/sheets service-account | GOOGLE_SHEETS_READER_SA
+
+      - name: Write google sheets secret to file
+        run: |
+          echo "$GOOGLE_SHEETS_READER_SA"  > google-sheets-creds.json
+
       - name: Build pages
         env:
-          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
-          GOOGLE_GEOCODING_API_KEY: ${{ secrets.GOOGLE_GEOCODING_API_KEY }}
-          MAPTILER_API_KEY: ${{ secrets.MAPTILER_API_KEY }}
           CI: "1"
+          GOOGLE_SHEETS_CREDENTIALS_PATH: google-sheets-creds.json
         run: |
           npm run build
 
@@ -65,7 +82,5 @@ jobs:
           key: ${{ runner.os }}-cache-${{ github.run_id }}
 
       - name: Deploy pages
-        env:
-          RCLONE_CLIENT_SECRET: ${{ secrets.RCLONE_CLIENT_SECRET }}
         run: |
           ./scripts/rclone-sync.sh
