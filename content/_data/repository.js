@@ -1,4 +1,4 @@
 export default {
-  url: "https://github.com/larsks/caara-races",
+  url: "https://github.com/caara-races/caara-races-website",
   ref: "main",
 };
