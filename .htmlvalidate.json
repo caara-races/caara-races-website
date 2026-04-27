@@ -1,0 +1,10 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "no-trailing-whitespace": "off",
+    "prefer-tbody": "off",
+    "wcag/h37": "off",
+    "wcag/h67": "off",
+    "wcag/h30": "off"
+  }
+}
