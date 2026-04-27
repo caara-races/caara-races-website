@@ -47,4 +47,22 @@ describe("formatAddress", () => {
       "Marblehead High School<br/>2 Humphrey Street<br/>Marblehead, MA",
     );
   });
+
+  it("escapes ampersands in address text", () => {
+    const loc = { address: "Harbor Ave & Ocean Ave, Marblehead, MA" };
+    assert.equal(
+      formatAddress(loc),
+      "Harbor Ave &amp; Ocean Ave, Marblehead, MA",
+    );
+  });
+
+  it("escapes ampersands in name", () => {
+    const loc = { name: "Town & Country", address: "123 Main St" };
+    assert.equal(formatAddress(loc), "Town &amp; Country<br/>123 Main St");
+  });
+
+  it("escapes HTML special characters in address", () => {
+    const loc = { address: 'Corner of 1st & "Main" St' };
+    assert.equal(formatAddress(loc), "Corner of 1st &amp; &quot;Main&quot; St");
+  });
 });

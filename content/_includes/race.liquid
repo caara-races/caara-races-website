@@ -104,7 +104,7 @@ K1KML</a> if you can help.</p>
 {% assign role_key = aro.Role | downcase %}
 <tr {% if aro.Callsign == blank %}class="unassigned"{% endif %}>
     <td>{{ rolenames[aro.Role] | default: aro.Role }}</td>
-    <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key] | googleMapUrl }}">{{ race.checkpoints[role_key].address }}</a><br/>{{ race.checkpoints[role_key].notes }}{% endif %}</td>
+    <td>{% if race.checkpoints[role_key].address %}<a href="{{ race.checkpoints[role_key] | googleMapUrl }}">{{ race.checkpoints[role_key].address | escape }}</a><br/>{{ race.checkpoints[role_key].notes | escape }}{% endif %}</td>
 {% if aro.Callsign != blank %}
     <td>{{ aro.Callsign | hamDbTooltip }}</td>
     <td>{{ aro.Name }}</td>

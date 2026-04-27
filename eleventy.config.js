@@ -10,6 +10,7 @@ import { main as fetchSheets } from "./scripts/fetch-sheets.js";
 import { main as generateCheckpointsGpx } from "./scripts/generate-checkpoints-gpx.js";
 import { main as generateMaps } from "./scripts/generate-maps.js";
 import { hamDbTooltip } from "./scripts/hamdb.js";
+import { escapeHtml } from "./scripts/lib/escape.js";
 
 // Format a structured location object as a string.
 // location must have an `address` field; `name` is optional.
@@ -21,9 +22,12 @@ export function formatAddress(
   defaultName = null,
 ) {
   const name = location.name ?? defaultName;
-  const address = location.address.replace(/(\r\n|\n|\r)/g, separator);
+  const address = escapeHtml(location.address).replace(
+    /(\r\n|\n|\r)/g,
+    separator,
+  );
   if (!name) return address;
-  return name + separator + address;
+  return escapeHtml(name) + separator + address;
 }
 
 // This is used as the uuid v5 namespace by the uuid filter
@@ -166,14 +170,14 @@ function setupFilters(eleventyConfig) {
 
   // Transform the given input into a URL for a google map search.
   eleventyConfig.addFilter("googleMapSearch", (s) => {
-    return `https://www.google.com/maps/search/?api=1&query=${url_escape(s)}`;
+    return `https://www.google.com/maps/search/?api=1&amp;query=${url_escape(s)}`;
   });
 
   // Transform a location object into a Google Maps URL, preferring explicit
   // coordinates over the address when available.
   eleventyConfig.addFilter("googleMapUrl", (location) => {
     const query = location.coordinates || location.address.replace(/\n/g, ", ");
-    return `https://www.google.com/maps/search/?api=1&query=${url_escape(query)}`;
+    return `https://www.google.com/maps/search/?api=1&amp;query=${url_escape(query)}`;
   });
 
   // Return true if the given path is a directory. The path is relative to
@@ -224,7 +228,19 @@ function setupFilters(eleventyConfig) {
 }
 
 export default function (eleventyConfig) {
-  eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(markdownItAnchor));
+  eleventyConfig.amendLibrary("md", (mdLib) =>
+    mdLib.use(markdownItAnchor, {
+      slugify: (s) =>
+        s
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[/]/g, "-")
+          .replace(/[^a-z0-9_-]/g, "")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, ""),
+    }),
+  );
 
   exposeRunMode(eleventyConfig);
   setupPreBuildSteps(eleventyConfig);
