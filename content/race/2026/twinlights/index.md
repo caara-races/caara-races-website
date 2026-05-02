@@ -11,8 +11,8 @@ race:
     coordinates: 42.620615, -70.632187
   url: https://www.yukanrun.com/twin-lights-half-marathon
   repeaters:
-    primary: w1glo-uhf
-    backup: w1glo-vhf
+    primary: w1glo-vhf
+    backup: w1glo-uhf
   towns:
     - rockport
     - gloucester
