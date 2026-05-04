@@ -10,8 +10,8 @@ race:
       Hamilton, MA
   url: https://www.yukanrun.com/barns-blooms-half-marathon
   repeaters:
-    primary: n1hsy
-    backup: w1em
+    primary: ns1ra-danvers
+    backup: n1hsy
   towns:
     - hamilton
     - essex
@@ -37,3 +37,5 @@ race:
       notes: Mile 12
 ---
 
+<!-- markdownlint-disable-next-line MD052 -->
+Third alternate repeater is {{ repeaters["w1em"] | formatRepeater }}.
