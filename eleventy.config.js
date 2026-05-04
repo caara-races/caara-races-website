@@ -134,6 +134,12 @@ function setupCollections(eleventyConfig) {
   });
 }
 
+function formatRepeater(repeater) {
+  const display = repeater.display ?? repeater.callsign.toUpperCase();
+  const tone = repeater.tone != null ? ` Tone ${repeater.tone}` : "";
+  return `${display} ${repeater.frequency} (${repeater.offset})${tone} (${repeater.location})`;
+}
+
 // Configure filters
 function setupFilters(eleventyConfig) {
   // Return the web-accessible base path for a race's static assets (cover
@@ -197,9 +203,7 @@ function setupFilters(eleventyConfig) {
   eleventyConfig.addFilter("formatAddress", formatAddress);
 
   eleventyConfig.addFilter("formatRepeater", (repeater) => {
-    const display = repeater.display ?? repeater.callsign.toUpperCase();
-    const tone = repeater.tone != null ? ` Tone ${repeater.tone}` : "";
-    return `${display} ${repeater.frequency} (${repeater.offset})${tone} (${repeater.location})`;
+    return formatRepeater(repeater);
   });
 
   eleventyConfig.addFilter("townName", (slug, town) => {
@@ -265,6 +269,14 @@ export default function (eleventyConfig) {
   // This shortcode is used in the copyright notice to ensure it always shows
   // the current year.
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+
+  // We need to use function syntax (vs arrow syntax) in order to access the
+  // appropriate value of "this".
+  eleventyConfig.addShortcode("repeater", function (callsign) {
+    const repeater = this.ctx.environments.repeaters[callsign];
+    if (!repeater) return callsign;
+    return formatRepeater(repeater);
+  });
 
   // Allow the use of YAML for data files
   eleventyConfig.addDataExtension("yaml", (contents) => YAML.parse(contents));

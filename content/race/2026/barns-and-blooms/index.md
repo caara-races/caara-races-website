@@ -38,4 +38,4 @@ race:
 ---
 
 <!-- markdownlint-disable-next-line MD052 -->
-Third alternate repeater is {{ repeaters["w1em"] | formatRepeater }}.
+Third alternate repeater is {% repeater "w1em" %}.
