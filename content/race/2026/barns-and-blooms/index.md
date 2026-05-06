@@ -10,8 +10,8 @@ race:
       Hamilton, MA
   url: https://www.yukanrun.com/barns-blooms-half-marathon
   repeaters:
-    primary: ns1ra-danvers
-    backup: n1hsy
+    primary: n1hsy
+    backup: w1em
   towns:
     - hamilton
     - essex
@@ -38,7 +38,7 @@ race:
 ---
 
 <!-- markdownlint-disable-next-line MD052 -->
-Third alternate repeater is {% repeater "w1em" %}.
+Third alternate repeater is {% repeater "ns1ra-danvers" %}.
 
 There will be six aid stations with water and sports drink near miles 2, 4, 6,
 8, 10 and 12. Energy gels will be available near mile 6. A portable restroom
