@@ -11,7 +11,7 @@ race:
   url: https://www.yukanrun.com/town-and-country-half-marathon
   repeaters:
     primary: k1kkm
-    backup: n1hsy
+    backup: w1vyi
   towns:
     - newburyport
     - newbury

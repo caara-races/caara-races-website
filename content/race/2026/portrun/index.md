@@ -11,7 +11,7 @@ race:
   url: https://www.yukanrun.com/portrun-half-marathon-5k
   repeaters:
     primary: k1kkm
-    backup: n1hsy
+    backup: w1vyi
   towns:
     - newburyport
     - newbury

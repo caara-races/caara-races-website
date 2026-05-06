@@ -10,7 +10,7 @@ race:
       Hamilton, MA
   url: https://www.yukanrun.com/barns-blooms-half-marathon
   repeaters:
-    primary: n1hsy
+    primary: w1vyi
     backup: w1em
   towns:
     - hamilton

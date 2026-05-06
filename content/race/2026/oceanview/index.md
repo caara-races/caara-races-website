@@ -10,7 +10,7 @@ race:
       Ipswich, MA
   url: https://www.yukanrun.com/oceanview-half-marathon-5k
   repeaters:
-    primary: n1hsy
+    primary: w1vyi
     backup: w1glo-vhf
   towns:
     - ipswich

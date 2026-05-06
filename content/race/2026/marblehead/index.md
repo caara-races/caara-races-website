@@ -10,7 +10,7 @@ race:
       Marblehead, MA
   url: https://www.yukanrun.com/marblehead-half-marathon
   repeaters:
-    primary: n1hsy
+    primary: w1vyi
     backup: ns1ra-salem
   towns:
     - marblehead

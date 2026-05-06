@@ -15,7 +15,7 @@ race:
       Gloucester, MA 01930
   url: https://www.yukanrun.com/around-cape-ann-half-marathon
   repeaters:
-    primary: n1hsy
+    primary: w1vyi
     backup: w1em
   towns:
     - rockport
