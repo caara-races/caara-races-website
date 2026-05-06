@@ -1,0 +1,72 @@
+---
+title: Repeaters
+tags: page
+layout: page
+weight: 20
+---
+
+<link rel="stylesheet" href="/css/map.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.css">
+
+<section class="noprint">
+<h2>Repeater Map</h2>
+
+This map shows the approximate location of the repeaters used in most of the events we support.
+<div id="repeater-map"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
+<script>
+(function () {
+  var repeaters = [
+    {% for pair in repeaters %}
+    {% assign key = pair[0] %}
+    {% assign r = pair[1] %}
+    {% assign coords = repeaterCoords[key] %}
+    {% if coords %}
+    {% if r.display %}{% assign rlabel = r.display %}{% else %}{% assign rlabel = r.callsign | upcase %}{% endif %}
+    {
+      label: {{ rlabel | json }},
+      callsign: {{ r.callsign | upcase | json }},
+      frequency: {{ r.frequency | json }},
+      offset: {{ r.offset | json }},
+      tone: {{ r.tone | json }},
+      location: {{ r.location | json }},
+      lat: {{ coords.lat }},
+      lon: {{ coords.lon }}
+    },
+    {% endif %}
+    {% endfor %}
+  ];
+
+  var map = L.map('repeater-map', { fullscreenControl: true });
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var markers = [];
+  repeaters.forEach(function (r) {
+    var marker = L.marker([r.lat, r.lon]);
+    marker.bindTooltip(r.label, { permanent: true, direction: 'top' });
+    marker.bindPopup(
+      '<table>' +
+      '<tr><th>Callsign</th><td>' + r.callsign + '</td></tr>' +
+      '<tr><th>Frequency</th><td>' + r.frequency + '</td></tr>' +
+      '<tr><th>Offset</th><td>' + r.offset + '</td></tr>' +
+      '<tr><th>Tone</th><td>' + r.tone + '</td></tr>' +
+      '<tr><th>Location</th><td>' + r.location + '</td></tr>' +
+      '</table>'
+    );
+    marker.addTo(map);
+    markers.push(marker);
+  });
+
+  if (markers.length > 0) {
+    map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [30, 30] });
+  }
+}());
+</script>

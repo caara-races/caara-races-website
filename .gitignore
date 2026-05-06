@@ -7,4 +7,6 @@
 /content/race/*/*/_data.11tydata.json
 /content/race/**/*.pdf
 /content/race/**/*-checkpoints.gpx
+/content/_data/repeaterCoords.json
 /scripts/.render-maps.sh
+*.log

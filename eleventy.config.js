@@ -9,6 +9,7 @@ import YAML from "yaml";
 import { main as fetchSheets } from "./scripts/fetch-sheets.js";
 import { main as generateCheckpointsGpx } from "./scripts/generate-checkpoints-gpx.js";
 import { main as generateMaps } from "./scripts/generate-maps.js";
+import { main as geocodeRepeaters } from "./scripts/geocode-repeaters.js";
 import { hamDbTooltip } from "./scripts/hamdb.js";
 import { escapeHtml } from "./scripts/lib/escape.js";
 
@@ -55,6 +56,7 @@ async function runPreBuildSteps() {
   const steps = [
     { name: "fetch sheets", fn: fetchSheets },
     { name: "generate checkpoint gpx", fn: generateCheckpointsGpx },
+    { name: "geocode repeaters", fn: geocodeRepeaters },
     { name: "generate maps", fn: generateMaps },
   ];
 

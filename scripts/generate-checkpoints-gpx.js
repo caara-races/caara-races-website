@@ -1,53 +1,13 @@
-import { createHash } from "node:crypto";
 import { access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "glob";
-import {
-  readCache as libReadCache,
-  writeCache as libWriteCache,
-} from "./lib/cache.js";
 import { escapeHtml } from "./lib/escape.js";
 import { extractFrontmatter } from "./lib/frontmatter.js";
-
-const CACHE_DIR = ".cache/geocoding";
-const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-
-function cacheKey(address) {
-  return createHash("sha256").update(address).digest("hex");
-}
+import { geocode } from "./lib/geocode.js";
 
 function formatCoords(lat, lon) {
   return `${lat.toFixed(6).padStart(10)}, ${lon.toFixed(6).padStart(11)}`;
-}
-
-async function readCache(address) {
-  return libReadCache(CACHE_DIR, cacheKey(address), CACHE_TTL_MS);
-}
-
-async function writeCache(address, lat, lon) {
-  return libWriteCache(CACHE_DIR, cacheKey(address), { lat, lon });
-}
-
-async function geocode(address, apiKey) {
-  const cached = await readCache(address);
-  if (cached) return { ...cached, cached: true };
-
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
-  const response = await fetch(url);
-  if (!response.ok) return null;
-
-  const json = await response.json();
-  if (json.status !== "OK" || !json.results.length) {
-    console.warn(
-      `  WARN: geocoding API returned status ${json.status} for "${address}"`,
-    );
-    return null;
-  }
-
-  const { lat, lng } = json.results[0].geometry.location;
-  await writeCache(address, lat, lng);
-  return { lat, lon: lng, cached: false };
 }
 
 function buildGpx(title, waypoints) {
