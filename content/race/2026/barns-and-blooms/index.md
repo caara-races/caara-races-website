@@ -39,3 +39,8 @@ race:
 
 <!-- markdownlint-disable-next-line MD052 -->
 Third alternate repeater is {% repeater "w1em" %}.
+
+There will be six aid stations with water and sports drink near miles 2, 4, 6,
+8, 10 and 12. Energy gels will be available near mile 6. A portable restroom
+will also be available near mile 7 along the course. Portable restrooms will be
+available at the start/finish area as well.
