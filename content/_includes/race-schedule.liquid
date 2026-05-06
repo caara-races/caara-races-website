@@ -50,7 +50,7 @@
     <td>
       <a href="{{ race.page.url }}">{{ race.data.title }}</a>
 {% if schedule_year == current_year and past_race != true and race.data.race.want %}
-      <p class="noprint">Needs {{race.data.race.want}} additional volunteers</p>
+      <p class="noprint">Needs {{race.data.race.want}} additional {{ race.data.race.want | pluralize: "volunteer", "volunteers" }}</p>
 {% endif %}
     </td>
     <td>{{ race.data.date | date: "%H:%M&nbsp;%p", "America/New_York" }}</td>

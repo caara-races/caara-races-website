@@ -86,7 +86,7 @@ layout: base
 <h2>Staffing</h2>
 
 {% if race.want %}
-<p class="wantnote">We are in need of {{ race.want }} additional volunteers for
+<p class="wantnote">We are in need of {{ race.want }} additional {{ race.want | pluralize: "volunteer", "volunteers" }} for
 this event. Please email <a href="mailto:kevinlyonsk1kl@gmail.com">Kevin,
 K1KML</a> if you can help.</p>
 {% endif %}

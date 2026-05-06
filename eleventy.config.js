@@ -229,6 +229,10 @@ function setupFilters(eleventyConfig) {
   });
 
   eleventyConfig.addAsyncFilter("hamDbTooltip", hamDbTooltip);
+
+  eleventyConfig.addFilter("pluralize", (count, singular, plural) => {
+    return count === 1 ? singular : plural;
+  });
 }
 
 export default function (eleventyConfig) {
