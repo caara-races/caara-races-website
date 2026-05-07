@@ -92,11 +92,57 @@
   var checkpointsPromise = Promise.resolve(null);
   {% endif %}
 
+  var raceRepeaters = [
+    {% for pair in race.repeaters %}
+    {% assign slug = pair[1] %}
+    {% assign r = repeaters[slug] %}
+    {% assign coords = repeaterCoords[slug] %}
+    {% if r and coords %}
+    {% if r.display %}{% assign rlabel = r.display %}{% else %}{% assign rlabel = r.callsign | upcase %}{% endif %}
+    {
+      label: {{ rlabel | json }},
+      callsign: {{ r.callsign | upcase | json }},
+      frequency: {{ r.frequency | json }},
+      offset: {{ r.offset | json }},
+      tone: {{ r.tone | json }},
+      location: {{ r.location | json }},
+      lat: {{ coords.lat }},
+      lon: {{ coords.lon }}
+    },
+    {% endif %}
+    {% endfor %}
+  ];
+
+  var repeaterMarkers = [];
+  raceRepeaters.forEach(function (r) {
+    var marker = L.circleMarker([r.lat, r.lon], {
+      radius: 8,
+      color: 'black',
+      fillColor: '#8b0000',
+      fillOpacity: 1.0
+    });
+    marker.bindTooltip(r.label, { permanent: true, direction: 'top' });
+    marker.bindPopup(
+      '<table>' +
+      '<tr><th>Callsign</th><td>' + r.callsign + '</td></tr>' +
+      '<tr><th>Frequency</th><td>' + r.frequency + '</td></tr>' +
+      '<tr><th>Offset</th><td>' + r.offset + '</td></tr>' +
+      '<tr><th>Tone</th><td>' + r.tone + '</td></tr>' +
+      '<tr><th>Location</th><td>' + r.location + '</td></tr>' +
+      '</table>'
+    );
+    repeaterMarkers.push(marker);
+  });
+
   Promise.all([coursePromise, checkpointsPromise]).then(function (results) {
     var bounds = null;
     results.forEach(function (r) {
       if (r && r.bounds) bounds = bounds ? bounds.extend(r.bounds) : r.bounds;
     });
+    if (repeaterMarkers.length > 0) {
+      var rBounds = L.featureGroup(repeaterMarkers).getBounds();
+      bounds = bounds ? bounds.extend(rBounds) : rBounds;
+    }
     if (bounds && bounds.isValid()) {
       map.fitBounds(bounds);
     }
@@ -109,6 +155,7 @@
         r.markers.forEach(function (m) { m.addTo(map); });
       }
     });
+    repeaterMarkers.forEach(function (m) { m.addTo(map); });
   });
 }());
 </script>
