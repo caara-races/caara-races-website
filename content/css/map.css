@@ -8,3 +8,11 @@
 #repeater-map {
   height: 600px;
 }
+
+.repeater-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #8b0000;
+  border: 2px solid black;
+}

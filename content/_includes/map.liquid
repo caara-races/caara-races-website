@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="/css/map.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 
 <section class="noprint">
 <h2>{{ map_title }}</h2>
@@ -15,6 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet-gpx@1.7.0/gpx.min.js"></script>
 {% endif %}
 <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
 (function () {
   var map = L.map('{{ map_id }}', { fullscreenControl: true });
@@ -139,13 +142,14 @@
     {% endif %}
   ];
 
-  var repeaterMarkers = [];
+  var repeaterCluster = L.markerClusterGroup({ maxClusterRadius: 20 });
   mapRepeaters.forEach(function (r) {
-    var marker = L.circleMarker([r.lat, r.lon], {
-      radius: 8,
-      color: 'black',
-      fillColor: '#8b0000',
-      fillOpacity: 1.0
+    var marker = L.marker([r.lat, r.lon], {
+      icon: L.divIcon({
+        className: 'repeater-icon',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+      })
     });
     marker.bindTooltip(r.label, { permanent: true, direction: 'top' });
     marker.bindPopup(
@@ -157,7 +161,7 @@
       '<tr><th>Location</th><td>' + r.location + '</td></tr>' +
       '</table>'
     );
-    repeaterMarkers.push(marker);
+    repeaterCluster.addLayer(marker);
   });
 
   Promise.all([coursePromise, checkpointsPromise]).then(function (results) {
@@ -165,8 +169,8 @@
     results.forEach(function (r) {
       if (r && r.bounds) bounds = bounds ? bounds.extend(r.bounds) : r.bounds;
     });
-    if (repeaterMarkers.length > 0) {
-      var rBounds = L.featureGroup(repeaterMarkers).getBounds();
+    if (repeaterCluster.getLayers().length > 0) {
+      var rBounds = repeaterCluster.getBounds();
       bounds = bounds ? bounds.extend(rBounds) : rBounds;
     }
     if (bounds && bounds.isValid()) {
@@ -181,7 +185,7 @@
         r.markers.forEach(function (m) { m.addTo(map); });
       }
     });
-    repeaterMarkers.forEach(function (m) { m.addTo(map); });
+    repeaterCluster.addTo(map);
   });
 }());
 </script>
