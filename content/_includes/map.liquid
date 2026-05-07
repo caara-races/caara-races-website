@@ -1,18 +1,23 @@
+{% assign map_id = map_id | default: "race-map" %}
+{% assign map_title = map_title | default: "Course Map and Checkpoints" %}
+
 <link rel="stylesheet" href="/css/map.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.css">
 
 <section class="noprint">
-<h2>Course Map and Checkpoints</h2>
-<div id="race-map"></div>
+<h2>{{ map_title }}</h2>
+<div id="{{ map_id }}" class="leaflet-map"></div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+{% if course_url != "" %}
 <script src="https://cdn.jsdelivr.net/npm/leaflet-gpx@1.7.0/gpx.min.js"></script>
+{% endif %}
 <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
 <script>
 (function () {
-  var map = L.map('race-map', { fullscreenControl: true });
+  var map = L.map('{{ map_id }}', { fullscreenControl: true });
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -92,7 +97,27 @@
   var checkpointsPromise = Promise.resolve(null);
   {% endif %}
 
-  var raceRepeaters = [
+  var mapRepeaters = [
+    {% if all_repeaters %}
+    {% for pair in repeaters %}
+    {% assign key = pair[0] %}
+    {% assign r = pair[1] %}
+    {% assign coords = repeaterCoords[key] %}
+    {% if coords %}
+    {% if r.display %}{% assign rlabel = r.display %}{% else %}{% assign rlabel = r.callsign | upcase %}{% endif %}
+    {
+      label: {{ rlabel | json }},
+      callsign: {{ r.callsign | upcase | json }},
+      frequency: {{ r.frequency | json }},
+      offset: {{ r.offset | json }},
+      tone: {{ r.tone | json }},
+      location: {{ r.location | json }},
+      lat: {{ coords.lat }},
+      lon: {{ coords.lon }}
+    },
+    {% endif %}
+    {% endfor %}
+    {% else %}
     {% for pair in race.repeaters %}
     {% assign slug = pair[1] %}
     {% assign r = repeaters[slug] %}
@@ -111,10 +136,11 @@
     },
     {% endif %}
     {% endfor %}
+    {% endif %}
   ];
 
   var repeaterMarkers = [];
-  raceRepeaters.forEach(function (r) {
+  mapRepeaters.forEach(function (r) {
     var marker = L.circleMarker([r.lat, r.lon], {
       radius: 8,
       color: 'black',
@@ -144,7 +170,7 @@
       bounds = bounds ? bounds.extend(rBounds) : rBounds;
     }
     if (bounds && bounds.isValid()) {
-      map.fitBounds(bounds);
+      map.fitBounds(bounds, { padding: [30, 30] });
     }
     results.forEach(function (r) {
       if (!r) return;

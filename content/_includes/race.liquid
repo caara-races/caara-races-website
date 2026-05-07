@@ -57,6 +57,8 @@ layout: base
 <section class="racemain">
 {{ content }}
 
+{% assign map_id = "race-map" %}
+{% assign map_title = "Course Map and Checkpoints" %}
 {% assign course_url = "" %}
 {% if course_path | fileExists %}{% assign course_url = course_path %}{% endif %}
 {% assign checkpoints_url = "" %}

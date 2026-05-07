@@ -1,7 +1,10 @@
-#race-map,
-#repeater-map {
+.leaflet-map {
   height: 400px;
   width: 100%;
   margin-block: 1rem;
   border: var(--border-width) solid var(--color-border);
+}
+
+#repeater-map {
+  height: 600px;
 }
