@@ -3,44 +3,51 @@ k1kkm:
   frequency: 146.625
   offset: "-"
   tone: 131.8
-  location: West Newbury, MA
+  location:
+    address: West Newbury, MA
 w1vyi:
   callsign: w1vyi
   frequency: 147.285
   offset: "+"
   tone: 100.0
-  location: Topsfield, MA
+  location:
+    address: Topsfield, MA
 w1glo-vhf:
   callsign: w1glo
   display: "W1GLO 2m"
   frequency: 145.13
   offset: "-"
   tone: 107.2
-  location: Gloucester, MA
+  location:
+    address: Gloucester, MA
 w1glo-uhf:
   callsign: w1glo
   display: "W1GLO 70cm"
   frequency: 443.7
   offset: "+"
   tone: 107.2
-  location: Gloucester, MA
+  location:
+    address: Gloucester, MA
 ns1ra-salem:
   callsign: ns1ra
   display: "NS1RA Salem"
   frequency: 146.88
   offset: "-"
   tone: 118.8
-  location: Salem, MA
+  location:
+    address: Salem, MA
 ns1ra-danvers:
   callsign: ns1ra
   display: "NS1RA Danvers"
   frequency: 145.470
   offset: "-"
   tone: 136.5
-  location: Danvers, MA
+  location:
+    address: Danvers, MA
 w1em:
   callsign: w1em
   frequency: 145.490
   offset: "-"
   tone: 131.8
-  location: Ipswich, MA
+  location:
+    address: Ipswich, MA

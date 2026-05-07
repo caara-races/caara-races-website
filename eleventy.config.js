@@ -139,7 +139,7 @@ function setupCollections(eleventyConfig) {
 function formatRepeater(repeater) {
   const display = repeater.display ?? repeater.callsign.toUpperCase();
   const tone = repeater.tone != null ? ` Tone ${repeater.tone}` : "";
-  return `${display} ${repeater.frequency} (${repeater.offset})${tone} (${repeater.location})`;
+  return `${display} ${repeater.frequency} (${repeater.offset})${tone} (${repeater.location.address})`;
 }
 
 // Configure filters

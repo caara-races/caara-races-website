@@ -1,0 +1,51 @@
+$schema: http://json-schema.org/draft-07/schema#
+description: >-
+  Shared definitions used by race and repeater schemas.
+definitions:
+  coordinates:
+    description: >-
+      Geographic coordinates as a latitude,longitude tuple.
+    type: string
+    pattern: ^[+-]?[0-9]+(\.[0-9]+)?,\s*[+-]?[0-9]+(\.[0-9]+)?$
+    examples:
+      - 42.491789,-70.847104
+  location:
+    type: object
+    description: >-
+      A geographic location. Addresses will be geocoded, or you can
+      provide explicit coordinates.
+    examples:
+      - name: Good Harbor Beach
+        address: |-
+          100 Thatcher Road
+          Gloucester, MA
+        coordinates: 42.620615, -70.632187
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+        description: >-
+          A human-readable name for the location (e.g., "Marblehead High School").
+          If omitted, a default is used: "Start" for the start location, "Finish"
+          for the finish location, or the checkpoint key (e.g., "cp1") for checkpoints.
+      address:
+        type: string
+        description: >-
+          The intersection or street address of the location, including town and state.
+          We feed this to Google's geocoding API to discover the geographic coordinates
+          of the location.
+        examples:
+          - Washington St & Reynard St, Gloucester, MA
+      notes:
+        type: string
+        description: >-
+          Additional information about the location
+        examples:
+          - Mile 1 and 13
+      coordinates:
+        description: >-
+          Explicit geographic coordinates for the location. This allows us to set an explicit
+          location if Google's geocoding API fails to find the correct location.
+        $ref: "#/definitions/coordinates"
+    required:
+      - address

@@ -4,7 +4,13 @@ import { pathToFileURL } from "node:url";
 import { glob } from "glob";
 import { escapeHtml } from "./lib/escape.js";
 import { extractFrontmatter } from "./lib/frontmatter.js";
-import { geocode } from "./lib/geocode.js";
+import { resolveLocation } from "./lib/geocode.js";
+
+function formatSource(source) {
+  if (source === "coordinates") return " (from coordinates field)";
+  if (source === "cached") return " [cached]";
+  return "";
+}
 
 function formatCoords(lat, lon) {
   return `${lat.toFixed(6).padStart(10)}, ${lon.toFixed(6).padStart(11)}`;
@@ -83,103 +89,61 @@ export async function main() {
     const waypoints = [];
 
     if (location) {
-      let startCoords = null;
-      if (location.coordinates) {
-        const [lat, lon] = location.coordinates
-          .split(",")
-          .map((s) => parseFloat(s.trim()));
-        startCoords = { lat, lon };
-        console.log(
-          `  START: ${formatCoords(lat, lon)} (from coordinates field)`,
-        );
-      } else {
-        const startName = location.name ?? "Start";
-        const geocodeAddress = `${startName}, ${location.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
-        startCoords = await geocode(geocodeAddress, apiKey);
-        if (startCoords) {
-          console.log(
-            `  START: ${formatCoords(startCoords.lat, startCoords.lon)}${startCoords.cached ? " [cached]" : ""}`,
-          );
-        } else {
-          console.warn(
-            `  WARN: failed to geocode start/finish location, skipping`,
-          );
-        }
-      }
+      const startCoords = await resolveLocation(location, apiKey);
       if (startCoords) {
-        const startName = location.name ?? "Start";
+        console.log(
+          `  START: ${formatCoords(startCoords.lat, startCoords.lon)}${formatSource(startCoords.source)}`,
+        );
         waypoints.push({
           name: "START",
-          desc: `${startName}\n${location.address}`,
+          desc: `${location.name ?? "Start"}\n${location.address}`,
           lat: startCoords.lat,
           lon: startCoords.lon,
           sym: "Flag, Green",
         });
+      } else {
+        console.warn(`  WARN: failed to geocode start location, skipping`);
       }
     }
 
     const finish = frontmatter.race?.finish;
     if (finish) {
-      let finishCoords = null;
-      if (finish.coordinates) {
-        const [lat, lon] = finish.coordinates
-          .split(",")
-          .map((s) => parseFloat(s.trim()));
-        finishCoords = { lat, lon };
-        console.log(
-          `  FINISH: ${formatCoords(lat, lon)} (from coordinates field)`,
-        );
-      } else {
-        const finishName = finish.name ?? "Finish";
-        const geocodeAddress = `${finishName}, ${finish.address.replace(/(\r\n|\n|\r)/g, ", ")}`;
-        finishCoords = await geocode(geocodeAddress, apiKey);
-        if (finishCoords) {
-          console.log(
-            `  FINISH: ${formatCoords(finishCoords.lat, finishCoords.lon)}${finishCoords.cached ? " [cached]" : ""}`,
-          );
-        } else {
-          console.warn(`  WARN: failed to geocode finish location, skipping`);
-        }
-      }
+      const finishCoords = await resolveLocation(finish, apiKey);
       if (finishCoords) {
-        const finishName = finish.name ?? "Finish";
+        console.log(
+          `  FINISH: ${formatCoords(finishCoords.lat, finishCoords.lon)}${formatSource(finishCoords.source)}`,
+        );
         waypoints.push({
           name: "FINISH",
-          desc: `${finishName}\n${finish.address}`,
+          desc: `${finish.name ?? "Finish"}\n${finish.address}`,
           lat: finishCoords.lat,
           lon: finishCoords.lon,
           sym: "Flag, Red",
         });
+      } else {
+        console.warn(`  WARN: failed to geocode finish location, skipping`);
       }
     }
 
     for (const [key, cp] of Object.entries(checkpoints)) {
       const name = cp.name ?? key.toUpperCase();
-      let coords;
 
-      if (cp.coordinates) {
-        const [lat, lon] = cp.coordinates
-          .split(",")
-          .map((s) => parseFloat(s.trim()));
-        coords = { lat, lon };
-        console.log(
-          `  ${name}: ${formatCoords(lat, lon)} (from coordinates field)`,
-        );
-      } else if (cp.address) {
-        coords = await geocode(cp.address, apiKey);
-        if (!coords) {
-          console.warn(
-            `  WARN: failed to geocode "${cp.address}" (${key}), skipping`,
-          );
-          continue;
-        }
-        console.log(
-          `  ${name}: ${formatCoords(coords.lat, coords.lon)}${coords.cached ? " [cached]" : ""}`,
-        );
-      } else {
-        console.warn(`  WARN: ${key} has no coordinates or address, skipping`);
+      if (!cp.address) {
+        console.warn(`  WARN: ${key} has no address, skipping`);
         continue;
       }
+
+      const coords = await resolveLocation(cp, apiKey);
+      if (!coords) {
+        console.warn(
+          `  WARN: failed to geocode "${cp.address}" (${key}), skipping`,
+        );
+        continue;
+      }
+
+      console.log(
+        `  ${name}: ${formatCoords(coords.lat, coords.lon)}${formatSource(coords.source)}`,
+      );
       waypoints.push({
         name,
         desc: cp.address,

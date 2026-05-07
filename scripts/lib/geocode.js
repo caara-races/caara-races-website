@@ -19,6 +19,26 @@ async function writeCache(address, lat, lon) {
   return libWriteCache(CACHE_DIR, cacheKey(address), { lat, lon });
 }
 
+function parseCoordinates(str) {
+  const [lat, lon] = str.split(",").map((s) => parseFloat(s.trim()));
+  return { lat, lon };
+}
+
+export async function resolveLocation(location, apiKey) {
+  if (location.coordinates) {
+    return { ...parseCoordinates(location.coordinates), source: "coordinates" };
+  }
+
+  const result = await geocode(location.address, apiKey);
+  if (!result) return null;
+
+  return {
+    lat: result.lat,
+    lon: result.lon,
+    source: result.cached ? "cached" : "geocoded",
+  };
+}
+
 export async function geocode(address, apiKey) {
   const cached = await readCache(address);
   if (cached) return { ...cached, cached: true };

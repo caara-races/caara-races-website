@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { extname } from "node:path";
+import { dirname, extname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import Ajv from "ajv";
 import yaml from "yaml";
@@ -14,6 +14,19 @@ async function parseFile(filePath) {
   return JSON.parse(content);
 }
 
+function findExternalRefs(obj, refs = new Set()) {
+  if (obj && typeof obj === "object") {
+    if (typeof obj.$ref === "string" && obj.$ref.includes("#")) {
+      const file = obj.$ref.split("#")[0];
+      if (file) refs.add(file);
+    }
+    for (const value of Object.values(obj)) {
+      findExternalRefs(value, refs);
+    }
+  }
+  return refs;
+}
+
 export async function validateFiles(
   schemaPath,
   dataFiles,
@@ -21,6 +34,17 @@ export async function validateFiles(
 ) {
   const schema = await parseFile(schemaPath);
   const ajv = new Ajv();
+
+  const schemaDir = dirname(schemaPath);
+  const baseId = schema.$id || "";
+  const baseUri = baseId.includes("/")
+    ? baseId.substring(0, baseId.lastIndexOf("/") + 1)
+    : "";
+  for (const ref of findExternalRefs(schema)) {
+    const refSchema = await parseFile(join(schemaDir, ref));
+    ajv.addSchema(refSchema, baseUri + ref);
+  }
+
   const validate = ajv.compile(schema);
 
   let hasErrors = false;

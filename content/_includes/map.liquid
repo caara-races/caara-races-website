@@ -114,7 +114,7 @@
       frequency: {{ r.frequency | json }},
       offset: {{ r.offset | json }},
       tone: {{ r.tone | json }},
-      location: {{ r.location | json }},
+      location: {{ r.location.address | json }},
       lat: {{ coords.lat }},
       lon: {{ coords.lon }}
     },
@@ -133,7 +133,7 @@
       frequency: {{ r.frequency | json }},
       offset: {{ r.offset | json }},
       tone: {{ r.tone | json }},
-      location: {{ r.location | json }},
+      location: {{ r.location.address | json }},
       lat: {{ coords.lat }},
       lon: {{ coords.lon }}
     },

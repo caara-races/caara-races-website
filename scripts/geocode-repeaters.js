@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import YAML from "yaml";
-import { geocode } from "./lib/geocode.js";
+import { resolveLocation } from "./lib/geocode.js";
 
 const REPEATERS_PATH = "content/_data/repeaters.yaml";
 const OUTPUT_PATH = "content/_data/repeaterCoords.json";
@@ -22,22 +22,28 @@ export async function main() {
   for (const [key, repeater] of Object.entries(repeaters)) {
     const display = repeater.display ?? repeater.callsign.toUpperCase();
 
-    if (!repeater.location) {
-      console.warn(`  WARN: ${key} has no location, skipping`);
+    if (!repeater.location?.address) {
+      console.warn(`  WARN: ${key} has no location address, skipping`);
       continue;
     }
 
-    const result = await geocode(repeater.location, apiKey);
+    const result = await resolveLocation(repeater.location, apiKey);
     if (!result) {
       console.warn(
-        `  WARN: failed to geocode "${repeater.location}" (${key}), skipping`,
+        `  WARN: failed to geocode "${repeater.location.address}" (${key}), skipping`,
       );
       continue;
     }
 
     coords[key] = { lat: result.lat, lon: result.lon };
+    const tag =
+      result.source === "coordinates"
+        ? " (from coordinates field)"
+        : result.source === "cached"
+          ? " [cached]"
+          : "";
     console.log(
-      `  ${display}: ${result.lat.toFixed(6)}, ${result.lon.toFixed(6)}${result.cached ? " [cached]" : ""}`,
+      `  ${display}: ${result.lat.toFixed(6)}, ${result.lon.toFixed(6)}${tag}`,
     );
   }
 

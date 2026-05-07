@@ -35,9 +35,7 @@ definitions:
         description: >-
           CTCSS tone used to activate the repeater.
       location:
-        type: string
-        description: >-
-          Free-form description of the location of the repeater.
+        $ref: "common.yaml#/definitions/location"
     required:
       - callsign
       - frequency

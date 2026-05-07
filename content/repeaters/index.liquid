@@ -5,7 +5,8 @@ layout: page
 weight: 20
 ---
 
-<p>These are the repeaters used to support our race safety nets. This map shows only approximate locations.</p>
+<p>These are the repeaters used to support our race safety nets. The locations
+shown are only approximate.</p>
 
 <table class="striped data-table">
   <tr>
@@ -22,7 +23,7 @@ weight: 20
     <td>{{ repeater[1].frequency }}</td>
     <td>{{ repeater[1].offset }}</td>
     <td>{{ repeater[1].tone }}</td>
-    <td><a href="{{ repeater[1].location | googleMapSearch }}">{{ repeater[1].location }}</a></td>
+    <td><a href="{{ repeater[1].location | googleMapUrl }}">{{ repeater[1].location.address }}</a></td>
   </tr>
 {% endfor %}
 </table>
