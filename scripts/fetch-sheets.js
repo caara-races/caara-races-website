@@ -4,9 +4,17 @@ import { pathToFileURL } from "node:url";
 import { glob } from "glob";
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet } from "google-spreadsheet";
+import { readCache, writeCache } from "./lib/cache.js";
 import { extractFrontmatter } from "./lib/frontmatter.js";
 
 export { extractFrontmatter };
+
+const CACHE_DIR = ".cache/sheets";
+const CACHE_TTL_MS = Infinity;
+
+export function sheetCacheKey(spreadsheetId, slug) {
+  return `${spreadsheetId}-${slug}`;
+}
 
 export function extractSpreadsheetId(url) {
   const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
@@ -64,7 +72,36 @@ export async function main() {
     console.log(`processing workbook ${sheetUrl}`);
     const id = extractSpreadsheetId(sheetUrl);
     const doc = new GoogleSpreadsheet(id, auth);
-    await doc.loadInfo();
+
+    try {
+      await doc.loadInfo();
+    } catch (err) {
+      let allCached = true;
+      for (const { filePath, slug } of races) {
+        const cached = await readCache(
+          CACHE_DIR,
+          sheetCacheKey(id, slug),
+          CACHE_TTL_MS,
+        );
+        if (cached) {
+          const outPath = path.join(
+            path.dirname(filePath),
+            "_data.11tydata.json",
+          );
+          await writeFile(
+            outPath,
+            JSON.stringify({ volunteers: cached }, null, 2),
+          );
+          console.warn(
+            `${filePath}: failed to load workbook (${err.message}), using cached data`,
+          );
+        } else {
+          allCached = false;
+        }
+      }
+      if (!allCached) throw err;
+      continue;
+    }
 
     for (const { filePath, slug } of races) {
       console.log(`${filePath}: fetching sheet data...`);
@@ -73,8 +110,27 @@ export async function main() {
         console.warn(`${filePath}: no sheet tab named "${slug}", skipping`);
         continue;
       }
-      const rows = await sheet.getRows();
-      const volunteers = rows.map((row) => row.toObject());
+
+      let volunteers;
+      try {
+        const rows = await sheet.getRows();
+        volunteers = rows.map((row) => row.toObject());
+        await writeCache(CACHE_DIR, sheetCacheKey(id, slug), volunteers);
+      } catch (err) {
+        const cached = await readCache(
+          CACHE_DIR,
+          sheetCacheKey(id, slug),
+          CACHE_TTL_MS,
+        );
+        if (cached) {
+          volunteers = cached;
+          console.warn(
+            `${filePath}: failed to fetch sheet data (${err.message}), using cached data`,
+          );
+        } else {
+          throw err;
+        }
+      }
 
       const outPath = path.join(path.dirname(filePath), "_data.11tydata.json");
       await writeFile(outPath, JSON.stringify({ volunteers }, null, 2));

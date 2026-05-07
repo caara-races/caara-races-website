@@ -7,6 +7,7 @@ import {
   extractFrontmatter,
   extractSpreadsheetId,
   resolveSheetUrl,
+  sheetCacheKey,
 } from "./fetch-sheets.js";
 
 describe("extractSpreadsheetId", () => {
@@ -112,6 +113,18 @@ describe("resolveSheetUrl", () => {
     } finally {
       await rm(tmp, { recursive: true });
     }
+  });
+});
+
+describe("sheetCacheKey", () => {
+  it("combines spreadsheet ID and slug", () => {
+    assert.equal(
+      sheetCacheKey(
+        "1XzPijv-n7dFzoGK9roMNr12XNxfJET4HIs2mqLIQvOM",
+        "marblehead",
+      ),
+      "1XzPijv-n7dFzoGK9roMNr12XNxfJET4HIs2mqLIQvOM-marblehead",
+    );
   });
 });
 
