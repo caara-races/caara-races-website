@@ -18,9 +18,7 @@ Safety Support is a team endeavor. Real-time training is provided to all volunte
 
 Volunteering can be on a trial basis with no long-term commitment.  Join the team!
 
-Interested? Email [Kevin, K1KL] to learn more or sign-up.
-
-[kevin, k1kl]: mailto:kevinlyonsk1kl@gmail.com
+Interested? Email <races@caara.net> to learn more or sign-up.
 
 ## Half Marathons Are Our Largest Activity
 
@@ -29,4 +27,4 @@ CAARA provides Radio Safety Net support for all YuKanRun  sponsored races in the
 <!-- markdownlint-disable-next-line MD026 -->
 ## Pick your spot!
 
-Find a preferred check point (CP) or vehicle role (Lead or Trail Vehicle) in each of the races in which you can participate and email [Kevin, K1KL] to request your preferences. If you are looking to be a new participant, Kevin will pair you up with a veteran for your first race experience.
+Find a preferred check point (CP) or vehicle role (Lead or Trail Vehicle) in each of the races in which you can participate and email <races@caaranet> to request your preferences. If you are looking to be a new participant, Kevin will pair you up with a veteran for your first race experience.
