@@ -5,6 +5,28 @@ layout: page
 weight: 20
 ---
 
+<p>These are the repeaters used to support our race safety nets. This map shows only approximate locations.</p>
+
+<table class="striped data-table">
+  <tr>
+    <th>Callsign</th>
+    <th>Frequency</th>
+    <th>Offset</th>
+    <th>Tone</th>
+    <th>Location</th>
+  </tr>
+
+{% for repeater in repeaters %}
+  <tr>
+    <td>{{ repeater[1].callsign | upcase }}</td>
+    <td>{{ repeater[1].frequency }}</td>
+    <td>{{ repeater[1].offset }}</td>
+    <td>{{ repeater[1].tone }}</td>
+    <td><a href="{{ repeater[1].location | googleMapSearch }}">{{ repeater[1].location }}</a></td>
+  </tr>
+{% endfor %}
+</table>
+
 {% assign map_id = "repeater-map" %}
 {% assign map_title = "Repeater Map" %}
 {% assign course_url = "" %}
