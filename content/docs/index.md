@@ -11,6 +11,7 @@ tags: page
 {% for doc in sorted -%}
 - [{{ doc.data.title }}]({{ doc.url }})
 {% endfor -%}
+- [Communication log (pdf)](communication_log.pdf)
 
 ## Additional sources of information
 
