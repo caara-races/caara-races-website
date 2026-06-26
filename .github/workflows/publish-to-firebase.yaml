@@ -43,8 +43,38 @@ jobs:
           tar -C _site -xv -f artifact.tar
           ls -l
 
-      - run: npm install
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Compute site content hash
+        id: hash
+        run: |
+          HASH=$(find _site -type f -print0 | sort -z | xargs -0 sed '/^DTSTAMP:/d' | sha256sum | awk '{print $1}')
+          echo "site_hash=$HASH" >> "$GITHUB_OUTPUT"
+          echo "Site content hash: $HASH"
+
+      - name: Check if content changed since last deploy
+        id: changed
+        uses: actions/cache@v4
+        with:
+          path: /tmp/site-hash.txt
+          key: firebase-deploy-hash-${{ steps.hash.outputs.site_hash }}
+          lookup-only: true
+
+      - name: Save deploy hash
+        if: steps.changed.outputs.cache-hit != 'true'
+        run: |
+          echo "${{ steps.hash.outputs.site_hash }}" > /tmp/site-hash.txt
+
+      - name: Cache deploy hash
+        if: steps.changed.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/site-hash.txt
+          key: firebase-deploy-hash-${{ steps.hash.outputs.site_hash }}
+
+      - if: steps.changed.outputs.cache-hit != 'true'
+        run: npm install
+
+      - if: steps.changed.outputs.cache-hit != 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
