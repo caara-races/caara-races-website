@@ -52,7 +52,7 @@ jobs:
 
       - name: Check if content changed since last deploy
         id: changed
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: /tmp/site-hash.txt
           key: firebase-deploy-hash-${{ steps.hash.outputs.site_hash }}
@@ -65,7 +65,7 @@ jobs:
 
       - name: Cache deploy hash
         if: steps.changed.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: /tmp/site-hash.txt
           key: firebase-deploy-hash-${{ steps.hash.outputs.site_hash }}
