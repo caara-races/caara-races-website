@@ -21,7 +21,7 @@ race:
       address: Parker St & Malcom Hoyt Dr, Newburyport, MA
       notes: Mile 1 & 12+
     cp2:
-      address: Scotland Rd & Scotland Hgts., Newbury, MA
+      address: Scotland Rd & Scotland Heights, Newbury, MA
       notes: Mile 2+ & 11+
     cp3:
       address: South St & Turkey Hill Rd, West Newbury, MA
