@@ -28,7 +28,7 @@ race:
       address: Jeffrey's Neck Rd & Island Park Rd, Ipswich, MA
       notes: Mile 6 & 10
     cp5:
-      address: Clark Rd& North Ridge Rd, Ipswich, MA
+      address: Clark Rd & North Ridge Rd, Ipswich, MA
       notes: Mile 8
     cp6:
       address: Jeffrey's Neck Rd & N. Ridge Rd, Ipswich, MA
