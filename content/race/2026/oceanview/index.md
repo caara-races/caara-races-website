@@ -28,11 +28,11 @@ race:
       address: Jeffrey's Neck Rd & Island Park Rd, Ipswich, MA
       notes: Mile 6 & 10
     cp5:
-      address: Clark Rd & North Ridge Rd, Ipswich, MA
-      notes: Mile 8
-    cp6:
       address: Jeffrey's Neck Rd & N. Ridge Rd, Ipswich, MA
-      notes: Mile 9 &10
+      notes: Mile 6 & 10
+    cp6:
+      address: Clark Rd & North Ridge Rd, Ipswich, MA
+      notes: Mile 9
 ---
 
 Portable restrooms are available at the start/finish. A portable restroom will be available along the course near mile 2, 5 & 11. There will be six aid stations with water near miles 2, 4, 6, 8, 10 and 12.
