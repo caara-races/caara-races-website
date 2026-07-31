@@ -34,6 +34,7 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
+      <th scope="col">Net Control</th>
       <th scope="col">Start time</th>
       <th scope="col">Location</th>
       <th scope="col" class="noprint">Links</th>
@@ -53,6 +54,7 @@
       <p class="noprint">Needs {{race.data.race.want}} additional {{ race.data.race.want | pluralize: "volunteer", "volunteers" }}</p>
 {% endif %}
     </td>
+    <td>{% for vol in race.data.volunteers %}{% if vol.Role == "NC" %}{{ vol.Callsign | hamDbTooltip }}{% endif %}{% endfor %}</td>
     <td>{{ race.data.date | date: "%H:%M&nbsp;%p", "America/New_York" }}</td>
     <td><a href="{{ race.data.race.start | googleMapUrl }}">{{ race.data.race.start | formatAddress: ", " }}</a></td>
     <td class="links noprint">
