@@ -117,6 +117,26 @@ function setupCollections(eleventyConfig) {
       }));
   });
 
+  // Group news posts by year, newest year and newest posts first.
+  eleventyConfig.addCollection("newsYears", (collection) => {
+    const posts = collection.getFilteredByTag("news");
+    const yearMap = new Map();
+    for (const post of posts) {
+      const year = new Date(post.data.date || post.date).getFullYear();
+      if (!yearMap.has(year)) yearMap.set(year, []);
+      yearMap.get(year).push(post);
+    }
+    return [...yearMap.entries()]
+      .sort(([a], [b]) => b - a)
+      .map(([year, posts]) => ({
+        year,
+        posts: posts.sort(
+          (a, b) =>
+            new Date(b.data.date || b.date) - new Date(a.data.date || a.date),
+        ),
+      }));
+  });
+
   // Group races by year+month, sorted chronologically within each month.
   eleventyConfig.addCollection("raceMonths", (collection) => {
     const races = collection.getFilteredByTag("race");
