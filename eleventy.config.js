@@ -60,6 +60,11 @@ async function runPreBuildSteps() {
     { name: "generate maps", fn: generateMaps },
   ];
 
+  if (process.env.SKIP_PREBUILD_STEPS) {
+    console.warn("WARNING: skipping pre-build steps");
+    return;
+  }
+
   for (const step of steps) {
     console.log(`=== ${step.name} ===`);
     try {
