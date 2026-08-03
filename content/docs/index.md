@@ -15,12 +15,6 @@ tags: page
 
 ## Additional sources of information
 
-- [Collin County ARES](https://www.collinares.net/public-service)
-
-  This page has a great deal of information relating to [ARES], public service, and emergency communications.
-
-  [ares]: https://www.arrl.org/ares
-
 - [ARES Field Resources Manual](https://www.arrl.org/files/file/ARES_FR_Manual.pdf)
 
   "A Quick Trainer and Field Resource Guide for the Emergency Communicator"
