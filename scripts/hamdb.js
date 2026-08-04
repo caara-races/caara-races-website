@@ -58,6 +58,7 @@ export function buildTooltip(callsign, data) {
 
 export async function hamDbTooltip(callsign) {
   if (!callsign) return callsign;
+  callsign = callsign.toUpperCase();
   try {
     const data = await lookupHamDb(callsign);
     return buildTooltip(callsign, data);
