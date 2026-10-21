@@ -4,6 +4,11 @@ import os from "node:os";
 import path from "node:path";
 import { after, before, describe, it } from "node:test";
 import { readCache, writeCache } from "./cache.js";
+import {
+  hashContent,
+  readStoredHash,
+  writeStoredHash,
+} from "./content-hash.js";
 import { escapeHtml } from "./escape.js";
 import { extractFrontmatter } from "./frontmatter.js";
 
@@ -90,5 +95,57 @@ describe("readCache / writeCache", () => {
     await writeCache(subDir, "dirtest", { ok: true });
     const result = await readCache(subDir, "dirtest", 60_000);
     assert.deepEqual(result, { ok: true });
+  });
+});
+
+// ── hashContent / readStoredHash / writeStoredHash ──────────────────────────
+
+describe("hashContent", () => {
+  it("returns the same hash for the same inputs", () => {
+    assert.equal(hashContent(["a", "b"]), hashContent(["a", "b"]));
+  });
+
+  it("returns a different hash when an input changes", () => {
+    assert.notEqual(hashContent(["a", "b"]), hashContent(["a", "c"]));
+  });
+
+  it("treats part boundaries as significant", () => {
+    // Without a separator between parts, ["a", "bc"] and ["ab", "c"] would
+    // collide; make sure they don't.
+    assert.notEqual(hashContent(["a", "bc"]), hashContent(["ab", "c"]));
+  });
+
+  it("treats null/undefined parts as empty strings", () => {
+    assert.equal(hashContent([null, "a"]), hashContent(["", "a"]));
+    assert.equal(hashContent([undefined, "a"]), hashContent(["", "a"]));
+  });
+});
+
+describe("readStoredHash / writeStoredHash", () => {
+  let tmpDir;
+
+  before(async () => {
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "content-hash-test-"));
+  });
+
+  after(async () => {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+  });
+
+  it("write then read returns the same hash", async () => {
+    const hashPath = path.join(tmpDir, "out.pdf.hash");
+    await writeStoredHash(hashPath, "deadbeef");
+    assert.equal(await readStoredHash(hashPath), "deadbeef");
+  });
+
+  it("returns null when the hash file does not exist", async () => {
+    const hashPath = path.join(tmpDir, "missing.pdf.hash");
+    assert.equal(await readStoredHash(hashPath), null);
+  });
+
+  it("trims trailing whitespace from the stored hash", async () => {
+    const hashPath = path.join(tmpDir, "whitespace.pdf.hash");
+    await fs.writeFile(hashPath, "deadbeef\n", "utf8");
+    assert.equal(await readStoredHash(hashPath), "deadbeef");
   });
 });

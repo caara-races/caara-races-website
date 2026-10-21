@@ -3,6 +3,11 @@ import { access, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "glob";
+import {
+  hashContent,
+  readStoredHash,
+  writeStoredHash,
+} from "./lib/content-hash.js";
 import { extractFrontmatter } from "./lib/frontmatter.js";
 
 const DOCKER_IMAGE = "qgis/qgis:3.44";
@@ -78,13 +83,29 @@ export async function main() {
     }
 
     const outPath = path.join(raceDir, `${slug}.pdf`);
+    const hashPath = `${outPath}.hash`;
+    const courseContent = hasCourse
+      ? await readFile(courseGpxPath, "utf8")
+      : "";
+    const checkpointsContent = hasCheckpoints
+      ? await readFile(checkpointsGpxPath, "utf8")
+      : "";
+    const currentHash = hashContent([
+      frontmatter.title,
+      formatDate(frontmatter.date),
+      courseContent,
+      checkpointsContent,
+    ]);
 
-    if (!force && (await fileExists(outPath))) {
-      console.log(
-        `${outPath}: already exists, skipping (use --force to overwrite)`,
-      );
-      skipped++;
-      continue;
+    if (!force) {
+      const storedHash = await readStoredHash(hashPath);
+      if (storedHash === currentHash) {
+        console.log(
+          `${outPath}: up to date, skipping (use --force to regenerate)`,
+        );
+        skipped++;
+        continue;
+      }
     }
 
     console.log(`${filePath}: generating map...`);
@@ -107,7 +128,12 @@ export async function main() {
       pyArgs.push("--points", checkpointsGpxPath);
     }
 
-    commands.push({ outPath, line: pyArgs.map(shellQuote).join(" ") });
+    commands.push({
+      outPath,
+      hashPath,
+      currentHash,
+      line: pyArgs.map(shellQuote).join(" "),
+    });
   }
 
   if (commands.length === 0) {
@@ -155,6 +181,7 @@ export async function main() {
     );
 
     for (const cmd of commands) {
+      await writeStoredHash(cmd.hashPath, cmd.currentHash);
       console.log(`  Wrote ${cmd.outPath}`);
     }
     console.log(

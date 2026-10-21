@@ -1,7 +1,12 @@
-import { access, readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "glob";
+import {
+  hashContent,
+  readStoredHash,
+  writeStoredHash,
+} from "./lib/content-hash.js";
 import { escapeHtml } from "./lib/escape.js";
 import { extractFrontmatter } from "./lib/frontmatter.js";
 import { resolveLocation } from "./lib/geocode.js";
@@ -62,6 +67,7 @@ export async function main() {
     }
 
     const location = frontmatter.race?.start;
+    const finish = frontmatter.race?.finish;
     const checkpoints = frontmatter.race?.checkpoints;
     if (!checkpoints || Object.keys(checkpoints).length === 0) {
       console.log(`${filePath}: no checkpoints, skipping`);
@@ -69,16 +75,23 @@ export async function main() {
     }
 
     const outPath = path.join(raceDir, `${slug}-checkpoints.gpx`);
+    const hashPath = `${outPath}.hash`;
+    const currentHash = hashContent([
+      JSON.stringify({
+        title: frontmatter.title,
+        location,
+        finish,
+        checkpoints,
+      }),
+    ]);
 
     if (!force) {
-      try {
-        await access(outPath);
+      const storedHash = await readStoredHash(hashPath);
+      if (storedHash === currentHash) {
         console.log(
-          `${outPath}: already exists, skipping (use --force to overwrite)`,
+          `${outPath}: up to date, skipping (use --force to regenerate)`,
         );
         continue;
-      } catch {
-        // File doesn't exist, proceed
       }
     }
 
@@ -106,7 +119,6 @@ export async function main() {
       }
     }
 
-    const finish = frontmatter.race?.finish;
     if (finish) {
       const finishCoords = await resolveLocation(finish, apiKey);
       if (finishCoords) {
@@ -159,6 +171,7 @@ export async function main() {
 
     const gpx = buildGpx(frontmatter.title, waypoints);
     await writeFile(outPath, gpx, "utf8");
+    await writeStoredHash(hashPath, currentHash);
     console.log(`  Wrote ${waypoints.length} waypoints → ${outPath}`);
   }
 }
