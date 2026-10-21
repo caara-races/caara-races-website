@@ -8,12 +8,12 @@ race:
     address: |-
       100 Thatcher Road
       Gloucester, MA
+    coordinates: 42.620615, -70.632187
   finish:
     name: The O'Maley Middle School
     address: |-
       32 Cherry St.
       Gloucester, MA 01930
-    coordinates: 42.620615, -70.632187
   url: https://www.yukanrun.com/around-cape-ann-half-marathon
   repeaters:
     primary: w1vyi
