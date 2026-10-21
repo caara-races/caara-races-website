@@ -1,7 +1,7 @@
 ---
 tags: race
 title: Around Cape Ann Half Marathon
-date: 2026-10-18T08:00:00-04:00
+date: 2026-10-18T09:00:00-04:00
 race:
   start:
     name: Good Harbor Beach
